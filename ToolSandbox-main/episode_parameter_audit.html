@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ToolSandbox Episode Parameter Audit</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5d6a76;
+      --line: #d9e0e6;
+      --soft: #f5f7f9;
+      --paper: #ffffff;
+      --accent: #176b87;
+      --accent-soft: #e8f4f7;
+      --warning: #8a4b08;
+      --warning-soft: #fff1dd;
+      --single: #2457a6;
+      --multi: #7b3fa0;
+      --turn: #16745b;
+      --insufficient: #a33c3c;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #eef2f5;
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .page {
+      width: min(1540px, calc(100% - 32px));
+      margin: 24px auto 56px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgb(26 39 52 / 9%);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 30px 34px 24px;
+      color: white;
+      background: linear-gradient(125deg, #123c52, #176b87 58%, #27869d);
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(24px, 3vw, 38px); line-height: 1.15; }
+    header p { margin: 0; max-width: 960px; color: #dbeef3; font-size: 15px; }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 12px;
+      padding: 18px 34px;
+      background: #f7fafb;
+      border-bottom: 1px solid var(--line);
+    }
+    .metric {
+      padding: 12px 14px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .metric strong { display: block; font-size: 22px; color: var(--accent); }
+    .metric span { color: var(--muted); }
+
+    .notice {
+      margin: 20px 34px 0;
+      padding: 13px 16px;
+      border-left: 4px solid var(--warning);
+      border-radius: 8px;
+      color: #633707;
+      background: var(--warning-soft);
+    }
+    .notice strong { color: #5c3002; }
+
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto auto;
+      gap: 10px;
+      padding: 16px 34px;
+      background: rgb(255 255 255 / 96%);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    input, select, button {
+      min-height: 40px;
+      padding: 8px 11px;
+      border: 1px solid #bcc7d0;
+      border-radius: 8px;
+      background: white;
+      color: var(--ink);
+      font: inherit;
+    }
+    input:focus, select:focus { outline: 3px solid #b9e3ec; border-color: var(--accent); }
+    button { cursor: pointer; color: white; background: var(--accent); border-color: var(--accent); }
+
+    .table-wrap { padding: 0 34px 32px; overflow-x: auto; }
+    table { width: 100%; min-width: 1040px; border-collapse: separate; border-spacing: 0; }
+    caption { padding: 18px 0 10px; text-align: left; color: var(--muted); }
+    thead th {
+      position: sticky;
+      top: 73px;
+      z-index: 5;
+      padding: 11px 12px;
+      color: white;
+      background: #233746;
+      border-right: 1px solid #405261;
+      text-align: left;
+    }
+    thead th:first-child { border-radius: 8px 0 0; }
+    thead th:last-child { border-radius: 0 8px 0 0; border-right: 0; }
+    tbody td {
+      padding: 11px 12px;
+      vertical-align: top;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: white;
+    }
+    tbody td:first-child { border-left: 1px solid var(--line); }
+    tbody tr:hover td { background: #f8fbfc; }
+    td.task-cell { width: 27%; background: var(--soft); }
+    td.parameter-cell { width: 18%; font-weight: 650; }
+    td.value-cell { width: 34%; }
+    td.file-cell { width: 21%; color: var(--muted); }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 5px;
+      color: #24384a;
+      background: #eaf0f4;
+      font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow-wrap: anywhere;
+    }
+    .task-name { display: block; margin: 7px 0 5px; font-weight: 750; overflow-wrap: anywhere; }
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+    .single { background: var(--single); }
+    .multi { background: var(--multi); }
+    .turn { background: var(--turn); }
+    .insufficient { background: var(--insufficient); }
+    .structural {
+      display: inline-block;
+      margin-left: 5px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      color: var(--warning);
+      background: var(--warning-soft);
+      font-size: 10px;
+      font-weight: 750;
+      text-transform: uppercase;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .file-link { display: block; margin-bottom: 3px; }
+    .empty { padding: 42px; text-align: center; color: var(--muted); }
+
+    footer {
+      padding: 22px 34px 28px;
+      color: var(--muted);
+      background: var(--soft);
+      border-top: 1px solid var(--line);
+    }
+    footer pre {
+      margin: 12px 0 0;
+      padding: 14px;
+      overflow: auto;
+      color: #e9f3f6;
+      background: #203542;
+      border-radius: 9px;
+      font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    @media (max-width: 800px) {
+      .page { width: 100%; margin: 0; border-radius: 0; }
+      header, .summary, .controls, .table-wrap, footer { padding-left: 18px; padding-right: 18px; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+      .controls { grid-template-columns: 1fr; }
+      thead th { top: 166px; }
+      .notice { margin-left: 18px; margin-right: 18px; }
+    }
+
+    @media print {
+      body { background: white; font-size: 10px; }
+      .page { width: 100%; margin: 0; border: 0; box-shadow: none; }
+      .controls { display: none; }
+      thead th { position: static; }
+      header { color: black; background: white; border-bottom: 2px solid black; }
+      header p { color: #333; }
+      .summary { grid-template-columns: repeat(4, 1fr); }
+      .table-wrap { overflow: visible; }
+      tbody { break-inside: avoid; }
+      a { color: black; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>ToolSandbox Episode Parameter Audit</h1>
+      <p>Forty scenario definitions traced across task wording, starting databases, device state, tool availability, milestone targets, minefields, and user-simulator behavior.</p>
+    </header>
+
+    <section class="summary" aria-label="Audit summary">
+      <div class="metric"><strong id="taskCount">40</strong><span>tasks</span></div>
+      <div class="metric"><strong id="parameterCount">0</strong><span>parameter rows</span></div>
+      <div class="metric"><strong>4</strong><span>scenario families</span></div>
+      <div class="metric"><strong>1:1</strong><span>paired condition manifest</span></div>
+    </section>
+
+    <div class="notice">
+      <strong>Structural parameter:</strong> changing a tool-denial rule, service prerequisite, ambiguity pattern, or multi-turn disclosure policy changes task difficulty or solvability. These values should be stratified, not freely randomized.
+    </div>
+
+    <section class="controls" aria-label="Table controls">
+      <input id="search" type="search" placeholder="Search task, parameter, value, or file..." aria-label="Search audit">
+      <select id="group" aria-label="Filter by scenario family">
+        <option value="all">All scenario families</option>
+        <option value="single">Single call</option>
+        <option value="multi">Multiple tool call</option>
+        <option value="turn">Multiple user turn</option>
+        <option value="insufficient">Insufficient information</option>
+      </select>
+      <button id="print" type="button">Print / Save PDF</button>
+    </section>
+
+    <div class="table-wrap">
+      <table id="auditTable">
+        <caption id="caption">Showing all 40 tasks.</caption>
+        <thead>
+          <tr><th>Task</th><th>Parameter</th><th>Current value</th><th>Python file(s)</th></tr>
+        </thead>
+        <tbody id="auditBody"></tbody>
+      </table>
+      <div id="empty" class="empty" hidden>No tasks match the current filters.</div>
+    </div>
+
+    <footer>
+      <strong>Required coupling for valid episode randomization</strong>
+      <pre>sampled parameter
+    -> user/system task text
+    -> starting database or device state
+    -> expected tool arguments
+    -> milestone or minefield
+    -> expected final answer</pre>
+      <p>Generate one parameter manifest per <code>(scenario_name, episode_number)</code> and reuse it in both <code>memory=none</code> and <code>memory=full</code>. Do not include memory mode in the sampling seed.</p>
+    </footer>
+  </main>
+
+  <script>
+    const ROOT = "/Users/chupeng/Documents/Meng_CCDS/task_repeater/ToolSandbox-main/tool_sandbox/";
+    const files = {
+      ST: { name: "single_tool_call_scenarios.py", path: ROOT + "scenarios/single_tool_call_scenarios.py" },
+      MT: { name: "multiple_tool_call_scenarios.py", path: ROOT + "scenarios/multiple_tool_call_scenarios.py" },
+      MUT: { name: "multiple_user_turn_scenarios.py", path: ROOT + "scenarios/multiple_user_turn_scenarios.py" },
+      II: { name: "insufficient_information_scenarios.py", path: ROOT + "scenarios/insufficient_information_scenarios.py" },
+      BASE: { name: "base_scenarios.py", path: ROOT + "scenarios/base_scenarios.py" },
+      USIM: { name: "user_simulator_few_shot_examples.py", path: ROOT + "scenarios/user_simulator_few_shot_examples.py" },
+      CU: { name: "common/utils.py", path: ROOT + "common/utils.py" },
+      TU: { name: "tools/utilities.py", path: ROOT + "tools/utilities.py" },
+      EC: { name: "execution_context.py", path: ROOT + "common/execution_context.py" }
+    };
+
+    const p = (parameter, value, refs, structural = false) => ({ parameter, value, refs, structural });
+    const task = (name, group, parameters) => ({ name, group, parameters });
+
+    const tasks = [
+      task("update_contact_with_id_and_phone_number", "single", [
+        p("Target contact", "Fredrik Thordendal; ID 9e137f06-916a-5310-8174-cf0b7e9f7054", [["ST","552-612"],["BASE","76-108"],["CU","389-398"]]),
+        p("Target initial state", "Phone +12453344098; relationship friend; is_self=False", [["BASE","86-92"],["ST","572-586"]]),
+        p("Replacement phone", "+19876543210", [["ST","552-612"]])
+      ]),
+      task("search_sender_phone_number_with_content", "single", [
+        p("Message-content cue", "Asked whether User A wants GPUs; backing content: 'Hey kid, you want some GPU?'", [["ST","613-669"],["BASE","112-123"]]),
+        p("Expected sender phone", "+18307976530", [["ST","613-669"],["BASE","113-118"]]),
+        p("Matching message/time", "message_0; unknown sender contact; created now - 3d 4h 5m 6s", [["BASE","112-123"]])
+      ]),
+      task("send_message_with_phone_number_and_content", "single", [
+        p("Recipient phone", "+12453344098", [["ST","670-721"]]),
+        p("Message content", "How's the new album coming along", [["ST","670-721"]])
+      ]),
+      task("add_contact_with_name_and_phone_number", "single", [
+        p("New contact name", "Stephen Sondheim", [["ST","437-496"]]),
+        p("New phone", "+19876543210", [["ST","437-496"]]),
+        p("Relationship", "None; evaluator requires an exact null value", [["ST","461-475"]])
+      ]),
+      task("search_name_with_relationship", "single", [
+        p("Relationship query", "boss", [["ST","320-376"]]),
+        p("Expected contact", "Homer S", [["ST","320-376"],["BASE","100-106"]]),
+        p("Matching-contact cardinality", "One matching contact", [["BASE","76-108"]], true)
+      ]),
+      task("find_days_till_holiday_wifi_off", "multi", [
+        p("Holiday", "Christmas Day", [["MT","2083-2285"],["TU","234-280"]]),
+        p("Year/reference clock", "year=None or current year; reference is live datetime.now()", [["MT","2153-2167"],["TU","27-33"],["TU","253-270"]]),
+        p("Wi-Fi transition", "False -> True", [["MT","2085"],["MT","2130-2141"],["BASE","218-250"]], true),
+        p("Expected result", "Days derived from current and holiday timestamps", [["MT","2176-2277"]])
+      ]),
+      task("modify_contact_with_message_recency", "multi", [
+        p("Recency selector/target", "Last person User A sent a message to: Homer S", [["MT","389-514"],["BASE","148-159"]]),
+        p("Message ordering", "Target outgoing message created now - 1h 2m 3s; remaining messages are distractors", [["BASE","109-171"]]),
+        p("Replacement phone", "+10293847563", [["MT","389-514"]])
+      ]),
+      task("send_message_with_contact_content_cellular_off", "multi", [
+        p("Target contact/phone", "Fredrik Thordendal; +12453344098", [["MT","1355-1451"],["BASE","86-92"]]),
+        p("Message content", "How's the new album coming along", [["MT","1355-1451"]]),
+        p("Cellular transition", "False -> True", [["MT","1357"],["MT","1380-1391"],["BASE","218-250"]], true)
+      ]),
+      task("modify_reminder_with_recency_latest", "multi", [
+        p("Selected reminder", "reminder_2; created now - 1h; currently due now + 1h", [["MT","5339-5435"],["BASE","200-211"]]),
+        p("Target day", "Tomorrow", [["MT","5343-5354"],["MT","5420-5425"],["CU","425-431"]]),
+        p("Target time", "17:00; minute and second default to zero", [["MT","5420-5425"]])
+      ]),
+      task("update_contact_relationship_with_relationship", "multi", [
+        p("Source relationship", "friend", [["MT","1548-1638"],["BASE","86-99"]]),
+        p("Destination relationship", "enemy", [["MT","1548-1638"]]),
+        p("Matching contact set", "Fredrik Thordendal and John Petrucci", [["MT","1589-1612"],["BASE","86-99"]], true)
+      ]),
+      task("update_contact_relationship_with_relationship_twice_multiple_user_turn", "turn", [
+        p("Source contact set", "All friend contacts: Fredrik Thordendal and John Petrucci", [["MUT","1103-1240"],["BASE","86-99"]]),
+        p("First transition", "friend -> enemy", [["MUT","1141-1178"]]),
+        p("Second transition", "enemy -> friend", [["MUT","1193-1228"]]),
+        p("Dialogue structure", "Opens with 'Who are my friends?', then requests both transitions", [["MUT","1103-1120"]], true)
+      ]),
+      task("modify_contact_with_message_recency_multiple_user_turn", "turn", [
+        p("Recency target", "Homer S, selected from the last outgoing message", [["MUT","402-529"],["BASE","148-159"]]),
+        p("Replacement phone", "+10293847563", [["MUT","402-529"]]),
+        p("Initial disclosure", "'Who did I talk to last'; update goal and phone are initially hidden", [["MUT","402-426"]], true),
+        p("Simulator example", "Behavioral example uses Bart and +17568390043; these are not evaluated values", [["USIM","97-147"]], true)
+      ]),
+      task("find_days_till_holiday_wifi_off_multiple_user_turn", "turn", [
+        p("Holiday/date", "Christmas Day; 12/25/current-year", [["MUT","1425-1627"],["TU","234-280"]]),
+        p("Reference clock", "Live current timestamp", [["MUT","1458-1477"],["TU","27-33"]]),
+        p("Wi-Fi transition", "False -> True", [["MUT","1427"],["MUT","1479-1490"],["BASE","218-250"]], true),
+        p("Initial disclosure", "'Christmas Day when?'; days-until intent is initially hidden", [["MUT","1425-1441"]], true)
+      ]),
+      task("send_message_with_contact_content_cellular_off_multiple_user_turn", "turn", [
+        p("Target contact/phone", "Fredrik Thordendal; +12453344098", [["MUT","814-912"],["BASE","86-92"]]),
+        p("Message content", "How's the new album coming along", [["MUT","814-912"]]),
+        p("Cellular transition", "False -> True", [["MUT","816"],["MUT","842-853"],["BASE","218-250"]], true),
+        p("Dialogue structure", "Opens with 'Send a message'; recipient and content are disclosed later", [["MUT","814-837"],["USIM","200-270"]], true)
+      ]),
+      task("add_reminder_content_and_weekday_delta_and_time_multiple_user_turn", "turn", [
+        p("Reminder content", "Buy chocolate milk", [["MUT","2637-2711"]]),
+        p("Target weekday", "Next Friday; ISO weekday 5", [["MUT","2684-2693"],["CU","434-445"]]),
+        p("Target time", "17:00", [["MUT","2684-2697"]]),
+        p("Initial disclosure", "Content is given; Friday and 17:00 are initially omitted", [["MUT","2637-2653"]], true)
+      ]),
+
+      task("remove_contact_with_id", "single", [
+        p("Target contact/ID", "Fredrik Thordendal; 9e137f06-916a-5310-8174-cf0b7e9f7054", [["ST","497-551"],["BASE","86-92"],["CU","389-398"]]),
+        p("Target backing row", "Phone +12453344098; relationship friend", [["BASE","86-92"]])
+      ]),
+      task("search_relationship_with_phone_number", "single", [
+        p("Input phone", "+10000000000", [["ST","377-436"],["BASE","100-106"]]),
+        p("Expected relationship", "boss", [["ST","377-436"],["BASE","104"]])
+      ]),
+      task("search_phone_number_with_name", "single", [
+        p("Input contact", "Homer S", [["ST","249-319"],["BASE","100-106"]]),
+        p("Expected phone", "+10000000000", [["ST","249-319"],["BASE","103"]])
+      ]),
+      task("find_thanksgiving_timestamp", "single", [
+        p("Holiday", "Thanksgiving", [["ST","722-766"],["TU","234-280"]]),
+        p("Year", "None; resolved to the live current year", [["ST","749-754"],["TU","253-270"]])
+      ]),
+      task("cellular_off", "single", [
+        p("Setting", "cellular", [["ST","45-91"],["EC","215-234"]]),
+        p("State transition", "True -> False", [["ST","63-74"],["EC","225"]], true)
+      ]),
+      task("remove_reminder_with_recency_latest", "multi", [
+        p("Recency selector", "Upcoming reminder", [["MT","5533-5623"]]),
+        p("Selected reminder", "reminder_2; due now + 1h", [["MT","5603-5614"],["BASE","200-211"]]),
+        p("Reference clock", "Live current timestamp", [["MT","5579-5600"],["TU","27-33"]])
+      ]),
+      task("search_reminder_with_creation_recency_yesterday_implicit", "multi", [
+        p("Temporal field/window", "creation_timestamp; yesterday", [["MT","4604-4703"],["BASE","173-213"]]),
+        p("Expected reminder/content", "reminder_1; 'Buy tickets for Merrily next week'", [["MT","4668-4696"],["BASE","188-199"]]),
+        p("Implicit wording", "What's the todo item I made yesterday?", [["MT","4618-4622"]], true)
+      ]),
+      task("search_reminder_with_recency_yesterday_implicit", "multi", [
+        p("Temporal field/window", "reminder_timestamp; yesterday", [["MT","4405-4503"],["BASE","173-213"]]),
+        p("Expected reminder/content", "reminder_0; 'Look for Company SF tickets'", [["MT","4469-4496"],["BASE","176-187"]]),
+        p("Implicit wording", "What's my todo yesterday?", [["MT","4418-4422"]], true)
+      ]),
+      task("turn_on_wifi_low_battery_mode_implicit", "multi", [
+        p("Initial device state", "Low-battery mode on; Wi-Fi, location, and cellular off", [["MT","1014-1081"],["BASE","218-250"]], true),
+        p("Required transition", "low_battery_mode True -> False, then wifi False -> True", [["MT","1038-1061"]], true),
+        p("Implicit wording", "Get me connected to the internet.", [["MT","1027-1031"]])
+      ]),
+      task("add_reminder_content_and_weekday_delta_and_time", "multi", [
+        p("Reminder content", "Buy chocolate milk", [["MT","4975-5049"]]),
+        p("Target weekday", "Next Friday; ISO weekday 5", [["MT","5022-5035"],["CU","434-445"]]),
+        p("Target time", "17:00", [["MT","5022-5039"]])
+      ]),
+      task("search_message_with_recency_oldest_multiple_user_turn", "turn", [
+        p("Recency selector", "Oldest message", [["MUT","212-306"],["BASE","109-171"]]),
+        p("Expected message", "message_0; 'Hey kid, you want some GPU?'", [["MUT","270-299"],["BASE","112-123"]]),
+        p("Message ordering", "Target created now - 3d 4h 5m 6s", [["BASE","119-122"]]),
+        p("Dialogue structure", "Opens with 'I wanna find a message'; simulator later specifies oldest", [["MUT","212-234"],["USIM","54-96"]], true)
+      ]),
+      task("remove_contact_by_phone_multiple_user_turn", "turn", [
+        p("Input phone", "+12453344098", [["MUT","658-735"],["BASE","86-92"]]),
+        p("Resolved target", "Fredrik Thordendal; ID 9e137f06-916a-5310-8174-cf0b7e9f7054", [["MUT","694-716"],["BASE","86-92"]]),
+        p("Dialogue structure", "Opens with 'I want to delete someone'; phone is disclosed later", [["MUT","658-680"],["USIM","148-199"]], true)
+      ]),
+      task("update_contact_relationship_with_relationship_multiple_user_turn", "turn", [
+        p("Relationship transition", "friend -> enemy", [["MUT","1012-1102"],["BASE","86-99"]]),
+        p("Contact set", "Fredrik Thordendal and John Petrucci", [["MUT","1050-1073"],["BASE","86-99"]], true),
+        p("Dialogue structure", "Opens with 'Who are my friends?'; update request follows", [["MUT","1012-1029"]], true)
+      ]),
+      task("find_days_till_holiday_multiple_user_turn", "turn", [
+        p("Holiday/date", "Christmas Day; 12/25/current-year", [["MUT","1241-1424"],["TU","234-280"]]),
+        p("Reference/result", "Live current time; derived days until holiday", [["MUT","1271-1416"],["TU","27-33"]]),
+        p("Dialogue structure", "Opens with 'When's Christmas Day?'; days-until intent is hidden", [["MUT","1241-1257"]], true)
+      ]),
+      task("add_reminder_content_and_week_delta_and_time_multiple_user_turn", "turn", [
+        p("Reminder content", "Buy chocolate milk", [["MUT","2499-2567"]]),
+        p("Target day/time", "Tomorrow at 17:00", [["MUT","2540-2553"],["CU","425-431"]]),
+        p("Initial disclosure", "Content is given; tomorrow and 17:00 are initially omitted", [["MUT","2499-2515"]], true)
+      ]),
+
+      task("modify_reminder_with_recency_latest_insufficient_information", "insufficient", [
+        p("Requested selector/time", "Upcoming reminder; move to tomorrow at 17:00", [["II","1511-1530"],["BASE","200-211"]]),
+        p("Missing capability", "Current time unavailable; get_current_timestamp and time-leaking tools denied", [["II","1531-1547"]], true),
+        p("Forbidden action", "Any modify_reminder call triggers the minefield", [["II","1548-1568"]], true)
+      ]),
+      task("remove_reminder_with_recency_latest_insufficient_information", "insufficient", [
+        p("Requested selector", "Upcoming reminder; backing candidate is reminder_2", [["II","1570-1590"],["BASE","200-211"]]),
+        p("Missing capability", "Current time unavailable; get_current_timestamp and time-leaking tools denied", [["II","1590-1606"]], true),
+        p("Forbidden action", "Any remove_reminder call triggers the minefield", [["II","1607-1627"]], true)
+      ]),
+      task("modify_contact_with_message_recency_insufficient_information", "insufficient", [
+        p("Requested target/new phone", "Last person messaged (latent target Homer S); +10293847563", [["II","546-563"],["BASE","148-159"]]),
+        p("Missing capability", "search_messages denied; contact search and modification remain available", [["II","564-574"]], true),
+        p("Forbidden action", "Any modify_contact call triggers the minefield", [["II","575-593"]], true)
+      ]),
+      task("send_message_with_contact_content_cellular_off_insufficient_information", "insufficient", [
+        p("Target/message", "Fredrik Thordendal (+12453344098 latent); 'How's the new album coming along'", [["II","812-829"],["BASE","86-92"]]),
+        p("Initial cellular state", "Off", [["II","814"],["BASE","218-250"]], true),
+        p("Missing capability", "search_contacts denied, so the phone cannot be resolved", [["II","830-840"]], true),
+        p("Forbidden action", "Any send_message_with_phone_number call triggers the minefield", [["II","841-859"]], true)
+      ]),
+      task("search_reminder_with_creation_recency_yesterday_insufficient_information_implicit", "insufficient", [
+        p("Temporal field/window", "creation_timestamp; yesterday", [["II","1427-1510"]]),
+        p("Missing capability", "Current time unavailable; get_current_timestamp and time-leaking tools denied", [["II","1450-1467"]], true),
+        p("Forbidden search", "Any creation-time bounded search_reminder call triggers the minefield", [["II","1468-1509"]], true)
+      ]),
+      task("search_reminder_with_recency_yesterday_insufficient_information_implicit", "insufficient", [
+        p("Temporal field/window", "reminder_timestamp; yesterday", [["II","1259-1342"]]),
+        p("Missing capability", "Current time unavailable; get_current_timestamp and time-leaking tools denied", [["II","1282-1299"]], true),
+        p("Forbidden search", "Any reminder-time bounded search_reminder call triggers the minefield", [["II","1300-1341"]], true)
+      ]),
+      task("search_reminder_with_recency_upcoming_insufficient_information_implicit", "insufficient", [
+        p("Temporal field/window", "reminder_timestamp; later today/upcoming", [["II","1091-1174"]]),
+        p("Missing capability", "Current time unavailable; get_current_timestamp and time-leaking tools denied", [["II","1114-1131"]], true),
+        p("Forbidden search", "Any reminder-time bounded search_reminder call triggers the minefield", [["II","1132-1173"]], true)
+      ]),
+      task("find_days_till_holiday_insufficient_information", "insufficient", [
+        p("Holiday", "Christmas Day", [["II","352-400"],["TU","234-280"]]),
+        p("Available operations", "search_holiday and timestamp_diff", [["II","367-370"]]),
+        p("Missing capability", "No current datetime; get_current_timestamp and time-leaking tools denied", [["II","371-377"]], true),
+        p("Forbidden action", "timestamp_diff triggers the minefield because one input is unknowable", [["II","378-399"]], true)
+      ]),
+      task("remove_contact_by_phone_no_search_contacts_insufficient_information", "insufficient", [
+        p("Input/latent target", "+12453344098; Fredrik Thordendal", [["II","727-768"],["BASE","86-92"]]),
+        p("Available operation", "remove_contact only", [["II","743"]]),
+        p("Missing capabilities", "search_contacts and search_messages denied; phone cannot be mapped to ID", [["II","744-746"]], true),
+        p("Forbidden action", "Any remove_contact call triggers the minefield", [["II","747-767"]], true)
+      ]),
+      task("remove_contact_by_phone_no_remove_contact_insufficient_information", "insufficient", [
+        p("Input/target", "+12453344098; Fredrik Thordendal", [["II","644-684"],["BASE","86-92"]]),
+        p("Available operation", "search_contacts", [["II","660"]]),
+        p("Missing capability", "remove_contact denied", [["II","661-664"]], true),
+        p("Expected refusal", "Cannot remove the phone number because the required tool is unavailable", [["II","665-683"]])
+      ])
+    ];
+
+    const labels = {
+      single: "Single call",
+      multi: "Multiple tool call",
+      turn: "Multiple user turn",
+      insufficient: "Insufficient information"
+    };
+
+    function sourceLinks(refs) {
+      return refs.map(([key, lines]) => {
+        const file = files[key];
+        const line = String(lines).split("-")[0];
+        const href = `file://${file.path}#L${line}`;
+        return `<a class="file-link" href="${href}" title="${file.path}">${file.name}:${lines}</a>`;
+      }).join("");
+    }
+
+    function taskMatches(item, query, group) {
+      if (group !== "all" && item.group !== group) return false;
+      if (!query) return true;
+      const haystack = [item.name, item.group, ...item.parameters.flatMap(x => [x.parameter, x.value, ...x.refs.flat()])]
+        .join(" ").toLowerCase();
+      return haystack.includes(query);
+    }
+
+    function render() {
+      const query = document.querySelector("#search").value.trim().toLowerCase();
+      const group = document.querySelector("#group").value;
+      const filtered = tasks.filter(item => taskMatches(item, query, group));
+      const body = document.querySelector("#auditBody");
+      body.replaceChildren();
+
+      for (const item of filtered) {
+        item.parameters.forEach((param, index) => {
+          const row = document.createElement("tr");
+          if (index === 0) {
+            const taskCell = document.createElement("td");
+            taskCell.className = "task-cell";
+            taskCell.rowSpan = item.parameters.length;
+            taskCell.innerHTML = `<span class="badge ${item.group}">${labels[item.group]}</span><code class="task-name">${item.name}</code>`;
+            row.appendChild(taskCell);
+          }
+
+          const parameterCell = document.createElement("td");
+          parameterCell.className = "parameter-cell";
+          parameterCell.innerHTML = `${param.parameter}${param.structural ? '<span class="structural">structural</span>' : ''}`;
+
+          const valueCell = document.createElement("td");
+          valueCell.className = "value-cell";
+          valueCell.textContent = param.value;
+
+          const fileCell = document.createElement("td");
+          fileCell.className = "file-cell";
+          fileCell.innerHTML = sourceLinks(param.refs);
+
+          row.append(parameterCell, valueCell, fileCell);
+          body.appendChild(row);
+        });
+      }
+
+      document.querySelector("#caption").textContent = `Showing ${filtered.length} of ${tasks.length} tasks.`;
+      document.querySelector("#empty").hidden = filtered.length !== 0;
+      document.querySelector("#auditTable").hidden = filtered.length === 0;
+    }
+
+    document.querySelector("#taskCount").textContent = tasks.length;
+    document.querySelector("#parameterCount").textContent = tasks.reduce((sum, item) => sum + item.parameters.length, 0);
+    document.querySelector("#search").addEventListener("input", render);
+    document.querySelector("#group").addEventListener("change", render);
+    document.querySelector("#print").addEventListener("click", () => window.print());
+    render();
+  </script>
+</body>
+</html>
