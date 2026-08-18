@@ -69,6 +69,8 @@ def write_result_summary(
     *,
     episodes: int = 1,
     memory_mode: MemoryMode = MemoryMode.NONE,
+    episode_parameter_seed: int = 0,
+    parameterize_episodes: bool = True,
     max_steps_per_scenario: Optional[dict[str, int]] = None,
 ) -> None:
     # Try to get the current git SHA so that there is some provenance on with which
@@ -88,6 +90,8 @@ def write_result_summary(
                 "run_config": {
                     "episodes": episodes,
                     "memory": str(memory_mode),
+                    "episode_parameter_seed": episode_parameter_seed,
+                    "parameterize_episodes": parameterize_episodes,
                     "max_steps_per_scenario": max_steps_per_scenario or {},
                 },
                 "git_sha": git_sha,
@@ -107,6 +111,8 @@ def run_sandbox(
     output_base_dir: Path,
     episodes: int = 1,
     memory_mode: MemoryMode = MemoryMode.NONE,
+    episode_parameter_seed: int = 0,
+    parameterize_episodes: bool = True,
 ) -> None:
     """Entry point for Tool Sandbox
 
@@ -118,6 +124,8 @@ def run_sandbox(
         output_base_dir:  Base directory for model outputs.
         episodes:         Number of reset episodes to run per scenario.
         memory_mode:      Whether prior episode conversations are retained.
+        episode_parameter_seed: Seed shared by paired parameterized runs.
+        parameterize_episodes:  Whether registered scenarios vary across episodes.
 
     """
     # Show all rows and all columns when converting polars dataframes to strings.
@@ -193,6 +201,8 @@ def run_sandbox(
                     output_directory=output_directory,
                     episodes=episodes,
                     memory_mode=memory_mode,
+                    episode_parameter_seed=episode_parameter_seed,
+                    parameterize_episodes=parameterize_episodes,
                 ),
                 name_and_scenario_list,
             )
@@ -213,6 +223,8 @@ def run_sandbox(
                     output_directory=output_directory,
                     episodes=episodes,
                     memory_mode=memory_mode,
+                    episode_parameter_seed=episode_parameter_seed,
+                    parameterize_episodes=parameterize_episodes,
                 )
             )
 
@@ -224,6 +236,8 @@ def run_sandbox(
         output_directory=output_directory,
         episodes=episodes,
         memory_mode=memory_mode,
+        episode_parameter_seed=episode_parameter_seed,
+        parameterize_episodes=parameterize_episodes,
         max_steps_per_scenario={
             name: scenario.max_messages * episodes
             for name, scenario in name_to_scenario.items()
@@ -302,6 +316,20 @@ def main() -> None:
         default=MemoryMode.NONE,
         help="Cross-episode memory policy: none (current behavior) or full.",
     )
+    parser.add_argument(
+        "--episode-parameter-seed",
+        type=int,
+        default=0,
+        help=(
+            "Seed for deterministic per-episode task parameters. Use the same seed "
+            "for paired memory conditions."
+        ),
+    )
+    parser.add_argument(
+        "--disable-episode-parameterization",
+        action="store_true",
+        help="Repeat the original fixed task in every episode.",
+    )
     args = parser.parse_args()
 
     # The parser for `--test_mode` and `--scenarios` are in a mutually exclusive group
@@ -325,6 +353,8 @@ def main() -> None:
         output_base_dir=args.output_dir,
         episodes=args.episodes,
         memory_mode=args.memory,
+        episode_parameter_seed=args.episode_parameter_seed,
+        parameterize_episodes=not args.disable_episode_parameterization,
     )
 
 

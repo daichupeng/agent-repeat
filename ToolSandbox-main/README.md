@@ -85,6 +85,17 @@ input for later episodes of the same scenario. Full memory is currently supporte
 for the OpenAI and DeepSeek OpenRouter agents. The 30-step allowance applies to
 each episode, so the maximum sequence budget is `30 * N`, not 30 total.
 
+Registered scenarios receive deterministic episode-specific parameters when
+`N > 1`. Currently this is implemented for
+`update_contact_with_id_and_phone_number`,
+`modify_contact_with_message_recency`, and
+`modify_reminder_with_recency_latest`: their target entity and requested update
+values vary, and the prompt, starting state, and evaluation targets are
+materialized from the same manifest. Use `--episode-parameter-seed SEED` to
+reproduce a sequence; paired memory conditions must use the same seed. Use
+`--disable-episode-parameterization` to retain the fixed-task behavior. Scenarios
+without a registered parameterizer remain unchanged.
+
 For example, run ten reset episodes while retaining full conversation history:
 
 ```
@@ -105,9 +116,12 @@ memory does not cross between scenarios. Sequences may still run in parallel.
 Artifacts are stored under the `data` folder. Per-episode trajectories use
 `trajectories/<scenario_name>/episode_NNNN/`. Each `conversation.json` retains the
 existing turn-list format and adds `episode_number` to every turn plus
-`token_usage` to agent turns. `result_summary.json` contains one scored record per
-episode, average category results across all episodes and scenarios, and the run's
-episode/memory configuration.
+`token_usage` to agent turns. Each `episode_setup.json` records the task messages,
+pre-episode databases, materialized milestone/minefield targets, tool
+configuration, complete parameter manifest, and manifest ID.
+`result_summary.json` contains one scored record per episode, the same manifest
+metadata, average category results across all episodes and scenarios, and the
+run's episode/memory/parameterization configuration.
 
 #### Hosting open source models
 Open source models can be hosted using [vLLM's OpenAI Compatible Server](https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html). At the time of writing this the latest version was [0.5.0.post1](https://github.com/vllm-project/vllm/releases/tag/v0.5.0.post1). Here is an example to serve the `gorilla-llm/gorilla-openfunctions-v2` model:

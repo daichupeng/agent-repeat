@@ -48,6 +48,11 @@ from tool_sandbox.roles.openai_api_user import (
 )
 from tool_sandbox.roles.unhelpful_agent import UnhelpfulAgent
 from tool_sandbox.scenarios import named_scenarios
+from tool_sandbox.scenarios.episode_parameterization import (
+    DEFAULT_EPISODE_RANDOMIZER,
+    EpisodeParameterManifest,
+    episode_setup_record,
+)
 
 
 class RoleImplType(StrEnum):
@@ -200,9 +205,16 @@ def run_scenario_episode(
     episode_number: int,
     memory_mode: MemoryMode,
     cross_episode_memory: list[dict[str, Any]],
+    episode_parameter_manifest: Optional[EpisodeParameterManifest] = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Play one reset episode and return its score plus newly produced memory."""
     name, scenario = name_and_scenario
+    if episode_parameter_manifest is None:
+        episode_parameter_manifest = DEFAULT_EPISODE_RANDOMIZER.identity_manifest(
+            scenario_name=name,
+            episode_number=episode_number,
+            seed=0,
+        )
     roles = {
         RoleType.USER: USER_TYPE_TO_FACTORY[user_type](),
         RoleType.EXECUTION_ENVIRONMENT: ExecutionEnvironment(),
@@ -223,6 +235,21 @@ def run_scenario_episode(
         trajectory_path = Path("trajectories") / name / f"episode_{episode_number:04d}"
         episode_output_directory = output_directory / trajectory_path
         episode_output_directory.mkdir(parents=True, exist_ok=True)
+        episode_setup_path = trajectory_path / "episode_setup.json"
+        with open(
+            output_directory / episode_setup_path,
+            "w",
+            encoding="utf-8",
+        ) as f:
+            json.dump(
+                episode_setup_record(
+                    scenario=scenario,
+                    manifest=episode_parameter_manifest,
+                ),
+                f,
+                indent=2,
+                ensure_ascii=False,
+            )
         with open(
             episode_output_directory / "memory_before_episode.json",
             "w",
@@ -243,6 +270,10 @@ def run_scenario_episode(
                 "memory_mode": str(memory_mode),
                 "memory_message_count": len(cross_episode_memory),
                 "trajectory_path": str(trajectory_path),
+                "episode_setup_path": str(episode_setup_path),
+                "parameter_manifest_id": episode_parameter_manifest.manifest_id,
+                "parameterized": episode_parameter_manifest.is_parameterized,
+                "parameter_manifest": episode_parameter_manifest.to_dict(),
                 "categories": scenario.categories,
                 "traceback": None,
                 "exception_type": None,
@@ -260,6 +291,10 @@ def run_scenario_episode(
                 "memory_mode": str(memory_mode),
                 "memory_message_count": len(cross_episode_memory),
                 "trajectory_path": str(trajectory_path),
+                "episode_setup_path": str(episode_setup_path),
+                "parameter_manifest_id": episode_parameter_manifest.manifest_id,
+                "parameterized": episode_parameter_manifest.is_parameterized,
+                "parameter_manifest": episode_parameter_manifest.to_dict(),
                 "categories": scenario.categories,
                 "traceback": traceback.format_exc(),
                 "exception_type": type(e).__name__,
@@ -290,6 +325,8 @@ def run_scenario_sequence(
     output_directory: Path,
     episodes: int,
     memory_mode: MemoryMode,
+    episode_parameter_seed: int = 0,
+    parameterize_episodes: bool = True,
 ) -> list[dict[str, Any]]:
     """Run one scenario repeatedly with reset state and optional full memory."""
     _, scenario = name_and_scenario
@@ -298,14 +335,24 @@ def run_scenario_sequence(
     max_steps_per_sequence = scenario.max_messages * episodes
     cumulative_turn_count = 0
     for episode_number in range(1, episodes + 1):
+        materialized_episode = DEFAULT_EPISODE_RANDOMIZER.materialize(
+            scenario_name=name_and_scenario[0],
+            scenario=scenario,
+            episode_number=episode_number,
+            seed=episode_parameter_seed,
+            # Preserve the historical single-episode task exactly. Multi-episode
+            # runs parameterize only registered scenarios; all others are identity.
+            enabled=parameterize_episodes and episodes > 1,
+        )
         summary, episode_memory = run_scenario_episode(
-            name_and_scenario,
+            (name_and_scenario[0], materialized_episode.scenario),
             agent_type=agent_type,
             user_type=user_type,
             output_directory=output_directory,
             episode_number=episode_number,
             memory_mode=memory_mode,
             cross_episode_memory=cross_episode_memory,
+            episode_parameter_manifest=materialized_episode.manifest,
         )
         cumulative_turn_count += summary["turn_count"]
         summary["max_steps_per_episode"] = scenario.max_messages

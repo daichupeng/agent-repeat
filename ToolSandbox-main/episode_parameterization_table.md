@@ -19,6 +19,7 @@ Parameters marked **structural** change task difficulty or solvability. They sho
 - [EVAL — `common/evaluation.py`](tool_sandbox/common/evaluation.py)
 - [TRACE — `common/tool_trace_extractors.py`](tool_sandbox/common/tool_trace_extractors.py)
 - [RUN — `cli/utils.py`](tool_sandbox/cli/utils.py)
+- [EP — `scenarios/episode_parameterization.py`](tool_sandbox/scenarios/episode_parameterization.py)
 
 The ST, MT, MUT, and II scenario blocks contain both the task definition and its
 task-specific metric targets: milestones, minefields, target dataframes, expected
@@ -29,15 +30,15 @@ metric engine is implemented in SCEN, EVAL, TRACE, and RUN.
 
 | Task | Parameter | Current value | Python file(s) | Done |
 |---|---|---|---|---|
-| `update_contact_with_id_and_phone_number` | 1. Target contact<br>2. Existing contact state<br>3. New phone | 1. Fredrik Thordendal; ID derived with `deterministic_uuid`<br>2. `+12453344098`, `friend`, `is_self=False`<br>3. `+19876543210` | ST:552–612; BASE:76–108; CU:389–398 | - [ ] |
+| `update_contact_with_id_and_phone_number` | 1. Target contact<br>2. Existing contact state<br>3. New phone | Multi-episode runs: seed-shuffled non-self contacts are cycled without replacement; each selected contact keeps its existing row state; a distinct seed-derived phone is generated per episode.<br>Single-episode or disabled parameterization: Fredrik Thordendal and `+19876543210`. | ST:552–612; BASE:76–108; CU:389–398; EP | - [x] |
 | `search_sender_phone_number_with_content` | 1. Message-content cue<br>2. Sender phone<br>3. Matching message and timestamp | 1. “Asked if you want some GPUs”; stored text is “Hey kid, you want some GPU?”<br>2. `+18307976530`<br>3. `message_0`, created `now − 3d 4h 5m 6s` | ST:613–669; BASE:109–123 | - [ ] |
 | `send_message_with_phone_number_and_content` | 1. Recipient phone<br>2. Message content | 1. `+12453344098`<br>2. “How’s the new album coming along” | ST:670–721 | - [ ] |
 | `add_contact_with_name_and_phone_number` | 1. New contact name<br>2. Phone<br>3. Relationship | 1. Stephen Sondheim<br>2. `+19876543210`<br>3. `None` | ST:437–496 | - [ ] |
 | `search_name_with_relationship` | 1. Relationship query<br>2. Expected contact<br>3. Matching-contact count, **structural** | 1. `boss`<br>2. Homer S<br>3. One unique match | ST:320–376; BASE:76–108 | - [ ] |
 | `find_days_till_holiday_wifi_off` | 1. Holiday<br>2. Year/reference time<br>3. Wi-Fi state, **structural**<br>4. Result | 1. Christmas Day<br>2. Current year and live `datetime.now()`<br>3. `False → True`<br>4. Derived days until holiday | MT:2083–2285; BASE:218–250; TU:27–33,234–280 | - [ ] |
-| `modify_contact_with_message_recency` | 1. Recency selector<br>2. Selected contact<br>3. Message ordering<br>4. New phone | 1. Last person User A sent a message to<br>2. Homer S<br>3. Target outgoing message is `now − 1h 2m 3s`<br>4. `+10293847563` | MT:389–514; BASE:109–171 | - [ ] |
+| `modify_contact_with_message_recency` | 1. Recency selector<br>2. Selected contact<br>3. Message ordering<br>4. New phone | Multi-episode runs: equivalent last/most-recent text selectors, seed-shuffled non-self contacts, deterministic outgoing-message ordering that makes the sampled contact latest, and a distinct seed-derived phone.<br>Single-episode or disabled parameterization: original Homer S and `+10293847563` task. | MT:389–514; BASE:109–171; EP | - [x] |
 | `send_message_with_contact_content_cellular_off` | 1. Target contact<br>2. Resolved phone<br>3. Content<br>4. Cellular state, **structural** | 1. Fredrik Thordendal<br>2. `+12453344098`<br>3. “How’s the new album coming along”<br>4. `False → True` | MT:1355–1451; BASE:76–108,218–250 | - [ ] |
-| `modify_reminder_with_recency_latest` | 1. Selected reminder<br>2. Existing timing<br>3. New relative day<br>4. New time | 1. `reminder_2`<br>2. Created `now − 1h`, due `now + 1h`<br>3. Tomorrow<br>4. 17:00 | MT:5339–5435; BASE:173–213; CU:425–431 | - [ ] |
+| `modify_reminder_with_recency_latest` | 1. Selected reminder<br>2. Existing timing<br>3. New relative day<br>4. New time<br>5. New content | Multi-episode runs: a seed-shuffled reminder is made the most recently created entry; its new content and tomorrow-time are varied from the same manifest.<br>Single-episode or disabled parameterization: original fixed task. | MT:5339–5435; BASE:173–213; CU:425–431; EP | - [x] |
 | `update_contact_relationship_with_relationship` | 1. Source relationship<br>2. Destination relationship<br>3. Matching set, **structural** | 1. `friend`<br>2. `enemy`<br>3. Fredrik Thordendal and John Petrucci | MT:1548–1638; BASE:76–108 | - [ ] |
 | `update_contact_relationship_with_relationship_twice_multiple_user_turn` | 1. Contact set<br>2. First transition<br>3. Second transition<br>4. Dialogue structure, **structural** | 1. Fredrik Thordendal and John Petrucci<br>2. `friend → enemy`<br>3. `enemy → friend`<br>4. Opens with “Who are my friends?” | MUT:1103–1240; BASE:76–108 | - [ ] |
 | `modify_contact_with_message_recency_multiple_user_turn` | 1. Recency target<br>2. New phone<br>3. Initial disclosure, **structural**<br>4. Simulator example | 1. Homer S<br>2. `+10293847563`<br>3. Opens with “Who did I talk to last?”; update goal is initially hidden<br>4. Example uses Bart and `+17568390043` | MUT:402–529; BASE:109–171; USIM:97–147 | - [ ] |

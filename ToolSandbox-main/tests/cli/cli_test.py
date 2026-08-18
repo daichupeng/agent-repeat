@@ -123,6 +123,65 @@ def test_full_memory_accumulates_across_sequence_episodes(
     ]
 
 
+def test_sequence_materializes_distinct_registered_episode_parameters(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    observed_manifests: list[dict[str, Any]] = []
+
+    def fake_run_scenario_episode(
+        name_and_scenario: tuple[str, Scenario],
+        **kwargs: Any,
+    ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+        manifest = kwargs["episode_parameter_manifest"]
+        observed_manifests.append(manifest.to_dict())
+        return {
+            "episode_number": kwargs["episode_number"],
+            "turn_count": 1,
+        }, []
+
+    monkeypatch.setattr(
+        "tool_sandbox.cli.utils.run_scenario_episode", fake_run_scenario_episode
+    )
+    scenario = named_scenarios(ToolBackend.DEFAULT)[
+        "update_contact_with_id_and_phone_number"
+    ]
+
+    run_scenario_sequence(
+        ("update_contact_with_id_and_phone_number", scenario),
+        agent_type=RoleImplType.GPT_4_o_2024_05_13,
+        user_type=RoleImplType.GPT_4_o_2024_05_13,
+        output_directory=tmp_path,
+        episodes=3,
+        memory_mode=MemoryMode.NONE,
+        episode_parameter_seed=23,
+    )
+
+    assert all(manifest["is_parameterized"] for manifest in observed_manifests)
+    assert (
+        len(
+            {
+                manifest["parameters"]["new_phone_number"]
+                for manifest in observed_manifests
+            }
+        )
+        == 3
+    )
+    assert len({manifest["manifest_id"] for manifest in observed_manifests}) == 3
+
+    observed_manifests.clear()
+    run_scenario_sequence(
+        ("update_contact_with_id_and_phone_number", scenario),
+        agent_type=RoleImplType.GPT_4_o_2024_05_13,
+        user_type=RoleImplType.GPT_4_o_2024_05_13,
+        output_directory=tmp_path,
+        episodes=2,
+        memory_mode=MemoryMode.NONE,
+        episode_parameter_seed=23,
+        parameterize_episodes=False,
+    )
+    assert not any(manifest["is_parameterized"] for manifest in observed_manifests)
+
+
 def test_category_summary_averages_all_episodes_and_scenarios() -> None:
     results = [
         {
