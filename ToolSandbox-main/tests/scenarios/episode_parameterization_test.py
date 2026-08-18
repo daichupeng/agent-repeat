@@ -20,10 +20,13 @@ from tool_sandbox.scenarios.episode_parameterization import (
 )
 from tool_sandbox.tools.contact import modify_contact
 from tool_sandbox.tools.reminder import modify_reminder
+from tool_sandbox.tools.setting import set_low_battery_mode_status, set_wifi_status
 
 SCENARIO_NAME = "update_contact_with_id_and_phone_number"
 REMINDER_SCENARIO_NAME = "modify_reminder_with_recency_latest"
 RECENCY_CONTACT_SCENARIO_NAME = "modify_contact_with_message_recency"
+LOW_BATTERY_WIFI_SCENARIO_NAME = "turn_on_wifi_low_battery_mode_implicit"
+HOLIDAY_INSUFFICIENT_SCENARIO_NAME = "find_days_till_holiday_insufficient_information"
 
 
 def _scenario() -> Scenario:
@@ -54,6 +57,30 @@ def _materialize_recency_contact(
     return DEFAULT_EPISODE_RANDOMIZER.materialize(
         scenario_name=RECENCY_CONTACT_SCENARIO_NAME,
         scenario=named_scenarios(ToolBackend.DEFAULT)[RECENCY_CONTACT_SCENARIO_NAME],
+        episode_number=episode_number,
+        seed=seed,
+    )
+
+
+def _materialize_low_battery_wifi(
+    episode_number: int, seed: int = 17
+) -> MaterializedEpisode:
+    return DEFAULT_EPISODE_RANDOMIZER.materialize(
+        scenario_name=LOW_BATTERY_WIFI_SCENARIO_NAME,
+        scenario=named_scenarios(ToolBackend.DEFAULT)[LOW_BATTERY_WIFI_SCENARIO_NAME],
+        episode_number=episode_number,
+        seed=seed,
+    )
+
+
+def _materialize_holiday_insufficient(
+    episode_number: int, seed: int = 17
+) -> MaterializedEpisode:
+    return DEFAULT_EPISODE_RANDOMIZER.materialize(
+        scenario_name=HOLIDAY_INSUFFICIENT_SCENARIO_NAME,
+        scenario=named_scenarios(ToolBackend.DEFAULT)[
+            HOLIDAY_INSUFFICIENT_SCENARIO_NAME
+        ],
         episode_number=episode_number,
         seed=seed,
     )
@@ -217,6 +244,97 @@ def _evaluate_recency_contact_update(
                 "recipient": RoleType.USER,
                 "content": response,
             },
+        ],
+    )
+    return episode.scenario.evaluation.evaluate(
+        execution_context=execution_context,
+        max_turn_count=episode.scenario.max_messages,
+    ).similarity
+
+
+def _evaluate_low_battery_wifi(
+    episode: MaterializedEpisode,
+    *,
+    transitions: list[dict[str, Any]],
+    response: str,
+) -> float:
+    execution_context = copy.deepcopy(episode.scenario.starting_context)
+    set_current_context(execution_context)
+    tools_by_name = {
+        "set_low_battery_mode_status": set_low_battery_mode_status,
+        "set_wifi_status": set_wifi_status,
+    }
+    for transition in transitions:
+        tool_name = transition["tool_name"]
+        execution_context.add_to_database(
+            DatabaseNamespace.SANDBOX,
+            [
+                {
+                    "sender": RoleType.AGENT,
+                    "recipient": RoleType.EXECUTION_ENVIRONMENT,
+                    "content": tool_name,
+                }
+            ],
+        )
+        tools_by_name[tool_name](on=transition["on"])
+        execution_context.add_to_database(
+            DatabaseNamespace.SANDBOX,
+            [
+                {
+                    "sender": RoleType.EXECUTION_ENVIRONMENT,
+                    "recipient": RoleType.AGENT,
+                    "content": "None",
+                }
+            ],
+        )
+    execution_context.add_to_database(
+        DatabaseNamespace.SANDBOX,
+        [
+            {
+                "sender": RoleType.AGENT,
+                "recipient": RoleType.USER,
+                "content": response,
+            }
+        ],
+    )
+    return episode.scenario.evaluation.evaluate(
+        execution_context=execution_context,
+        max_turn_count=episode.scenario.max_messages,
+    ).similarity
+
+
+def _evaluate_holiday_insufficient(
+    episode: MaterializedEpisode,
+    *,
+    tool_calls: list[str],
+    response: str,
+) -> float:
+    execution_context = copy.deepcopy(episode.scenario.starting_context)
+    set_current_context(execution_context)
+    for tool_call in tool_calls:
+        execution_context.add_to_database(
+            DatabaseNamespace.SANDBOX,
+            [
+                {
+                    "sender": RoleType.AGENT,
+                    "recipient": RoleType.EXECUTION_ENVIRONMENT,
+                    "content": tool_call,
+                },
+                {
+                    "sender": RoleType.EXECUTION_ENVIRONMENT,
+                    "recipient": RoleType.AGENT,
+                    "content": "None",
+                },
+            ],
+        )
+    execution_context.add_to_database(
+        DatabaseNamespace.SANDBOX,
+        [
+            {
+                "sender": RoleType.AGENT,
+                "recipient": RoleType.USER,
+                "content": response,
+            }
         ],
     )
     return episode.scenario.evaluation.evaluate(
@@ -566,4 +684,222 @@ def test_recency_contact_metric_requires_current_message_resolved_target() -> No
             response=response_1,
         )
         < 1.0
+    )
+
+
+def test_low_battery_wifi_parameterization_samples_complete_state_templates() -> None:
+    episode_1 = _materialize_low_battery_wifi(1)
+    episode_1_repeated = _materialize_low_battery_wifi(1)
+    episode_2 = _materialize_low_battery_wifi(2)
+
+    assert episode_1.manifest.to_dict() == episode_1_repeated.manifest.to_dict()
+    assert (
+        episode_1.manifest.parameters["state_template"]["name"]
+        != episode_2.manifest.parameters["state_template"]["name"]
+    )
+
+    for episode in (episode_1, episode_2):
+        state_template = episode.manifest.parameters["state_template"]
+        initial_settings = state_template["initial_settings"]
+        actual_settings = episode.scenario.starting_context.get_database(
+            DatabaseNamespace.SETTING
+        ).to_dicts()[0]
+        for setting_name, expected_value in initial_settings.items():
+            assert actual_settings[setting_name] == expected_value
+
+        assert not actual_settings["wifi"]
+        assert not actual_settings["cellular"]
+        assert not actual_settings["location_service"]
+        if actual_settings["low_battery_mode"]:
+            assert state_template["required_transitions"] == (
+                {"tool_name": "set_low_battery_mode_status", "on": False},
+                {"tool_name": "set_wifi_status", "on": True},
+            )
+        else:
+            assert state_template["required_transitions"] == (
+                {"tool_name": "set_wifi_status", "on": True},
+            )
+        assert len(episode.scenario.evaluation.milestone_matcher.milestones) == (
+            len(state_template["required_transitions"]) + 1
+        )
+
+
+def test_low_battery_wifi_metric_matches_the_sampled_transition_plan() -> None:
+    for episode_number in (1, 2):
+        episode = _materialize_low_battery_wifi(episode_number)
+        response_target = (
+            episode.scenario.evaluation.milestone_matcher.milestones[-1]
+            .snapshot_constraints[0]
+            .target_dataframe["content"][0]
+        )
+        transitions = [
+            dict(transition)
+            for transition in episode.manifest.parameters["state_template"][
+                "required_transitions"
+            ]
+        ]
+        assert (
+            _evaluate_low_battery_wifi(
+                episode,
+                transitions=transitions,
+                response=response_target,
+            )
+            == 1.0
+        )
+        assert (
+            _evaluate_low_battery_wifi(
+                episode,
+                transitions=[],
+                response=response_target,
+            )
+            < 1.0
+        )
+
+
+def test_low_battery_wifi_episode_setup_logs_structural_state_and_targets() -> None:
+    episode = _materialize_low_battery_wifi(2)
+    setup = episode_setup_record(
+        scenario=episode.scenario,
+        manifest=episode.manifest,
+    )
+    expected_transitions = episode.manifest.parameters["state_template"][
+        "required_transitions"
+    ]
+
+    assert (
+        setup["task_messages"][-1]["content"]
+        == episode.manifest.parameters["implicit_request"]
+    )
+    assert (
+        setup["starting_state"]["SETTING"][0]["low_battery_mode"]
+        == (
+            episode.manifest.parameters["state_template"]["initial_settings"][
+                "low_battery_mode"
+            ]
+        )
+    )
+    assert len(setup["evaluation_targets"]["milestones"]["nodes"]) == (
+        len(expected_transitions) + 1
+    )
+
+
+def test_holiday_insufficient_parameterization_varies_only_nonstructural_fields() -> (
+    None
+):
+    episode_1 = _materialize_holiday_insufficient(1)
+    episode_1_repeated = _materialize_holiday_insufficient(1)
+    episode_2 = _materialize_holiday_insufficient(2)
+
+    assert episode_1.manifest.to_dict() == episode_1_repeated.manifest.to_dict()
+    assert (
+        episode_1.manifest.parameters["holiday_name"]
+        != episode_2.manifest.parameters["holiday_name"]
+    )
+    assert (
+        episode_1.manifest.parameters["structural_template"]
+        == episode_2.manifest.parameters["structural_template"]
+    )
+
+
+def test_holiday_insufficient_task_tools_and_minefield_share_one_template() -> None:
+    episode = _materialize_holiday_insufficient(1)
+    parameters = episode.manifest.parameters
+    structural_template = parameters["structural_template"]
+    holiday_name = parameters["holiday_name"]
+
+    sandbox = episode.scenario.starting_context.get_database(
+        DatabaseNamespace.SANDBOX,
+        get_all_history_snapshots=True,
+    )
+    assert sandbox["content"][-1] == parameters["task"]["user_to_agent"]
+    assert holiday_name in sandbox["content"][-1]
+    assert "current datetime" in parameters["task"]["system_to_user"]
+
+    allowed_tools = set(episode.scenario.starting_context.tool_allow_list or [])
+    denied_tools = set(episode.scenario.starting_context.tool_deny_list or [])
+    assert set(structural_template["available_tools"]) <= allowed_tools
+    assert set(structural_template["denied_tools"]) <= denied_tools
+    assert not allowed_tools & set(structural_template["denied_tools"])
+    assert structural_template["missing_information"]["capability_tool"] in denied_tools
+    forbidden_tool = structural_template["forbidden_action"]["tool_name"]
+    assert forbidden_tool in allowed_tools
+
+    assert not episode.scenario.evaluation.milestone_matcher.milestones
+    minefields = episode.scenario.evaluation.minefield_matcher.milestones
+    assert len(minefields) == 1
+    minefield_target = minefields[0].snapshot_constraints[0].target_dataframe
+    assert minefield_target is not None
+    assert minefield_target["content"][0] == forbidden_tool
+
+
+def test_holiday_insufficient_metric_rewards_inaction_and_nullifies_forbidden_diff() -> (
+    None
+):
+    episode = _materialize_holiday_insufficient(1)
+    holiday_name = str(episode.manifest.parameters["holiday_name"])
+    refusal = "I cannot calculate that without the current date and time."
+
+    assert (
+        _evaluate_holiday_insufficient(
+            episode,
+            tool_calls=[],
+            response=refusal,
+        )
+        == 1.0
+    )
+    assert (
+        _evaluate_holiday_insufficient(
+            episode,
+            tool_calls=[f"search_holiday(holiday_name={holiday_name!r})"],
+            response=refusal,
+        )
+        == 1.0
+    )
+    assert (
+        _evaluate_holiday_insufficient(
+            episode,
+            tool_calls=["timestamp_diff(timestamp_0=0.0, timestamp_1=1.0)"],
+            response="There is one day left.",
+        )
+        == 0.0
+    )
+
+
+def test_holiday_insufficient_variant_and_setup_preserve_structural_dependencies() -> (
+    None
+):
+    variant_name = f"{HOLIDAY_INSUFFICIENT_SCENARIO_NAME}_3_distraction_tools"
+    variant = named_scenarios(ToolBackend.DEFAULT)[variant_name]
+    original_allowed_tools = set(variant.starting_context.tool_allow_list or [])
+    episode = DEFAULT_EPISODE_RANDOMIZER.materialize(
+        scenario_name=variant_name,
+        scenario=variant,
+        episode_number=2,
+        seed=17,
+    )
+    setup = episode_setup_record(
+        scenario=episode.scenario,
+        manifest=episode.manifest,
+    )
+    structural_template = episode.manifest.parameters["structural_template"]
+    controlled_tools = set(structural_template["available_tools"]) | set(
+        structural_template["denied_tools"]
+    )
+
+    assert episode.manifest.is_parameterized
+    assert (original_allowed_tools - controlled_tools) <= set(
+        episode.scenario.starting_context.tool_allow_list or []
+    )
+    assert (
+        setup["parameter_manifest"]["parameters"]["structural_template"]
+        == episode.manifest.to_dict()["parameters"]["structural_template"]
+    )
+    assert not setup["evaluation_targets"]["milestones"]["nodes"]
+    minefield_nodes = setup["evaluation_targets"]["minefields"]["nodes"]
+    assert len(minefield_nodes) == 1
+    assert (
+        minefield_nodes[0]["constraints"][0]["target_dataframe"][0]["content"]
+        == episode.manifest.parameters["structural_template"]["forbidden_action"][
+            "tool_name"
+        ]
     )

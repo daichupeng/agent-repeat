@@ -51,6 +51,7 @@ from tool_sandbox.scenarios import named_scenarios
 from tool_sandbox.scenarios.episode_parameterization import (
     DEFAULT_EPISODE_RANDOMIZER,
     EpisodeParameterManifest,
+    base_scenario_name,
     episode_setup_record,
 )
 
@@ -125,6 +126,57 @@ TEST_SCENARIO_NAMES = [
     # "remove_contact_by_phone_multiple_user_turn",
     # "find_temperature_f_with_location_and_time_diff_multiple_user_turn",
 ]
+
+
+def generate_hierarchical_output_path(
+    base_output_dir: Path,
+    agent_name: str,
+    scenario_name: str,
+    episodes: int,
+    model_name: str,
+    memory_mode: MemoryMode,
+    timestamp_str: str,
+) -> Path:
+    """Generate hierarchical output path for experiment logs.
+
+    Structure:
+    base_output_dir/agent_name/base_scenario_name/modification/episode_N/model_memory_timestamp/
+
+    Args:
+        base_output_dir:  Base output directory (typically 'data')
+        agent_name:       Agent type name (e.g., 'deepseek')
+        scenario_name:    Full scenario name (e.g., 'modify_contact_with_message_recency_3_distraction_tools')
+        episodes:         Number of episodes
+        model_name:       Model name (e.g., 'deepseek-v4-flash-0731')
+        memory_mode:      Memory mode (FULL or NONE)
+        timestamp_str:    Timestamp in format YYMMDDHHMMSS
+
+    Returns:
+        Path object for the hierarchical output directory
+    """
+    base_name = base_scenario_name(scenario_name)
+    modification = scenario_name.replace(base_name, "").lstrip("_")
+    if not modification:
+        modification = "base"
+
+    # Format: model_memory_timestamp
+    memory_mode_str = memory_mode.value if hasattr(memory_mode, 'value') else str(memory_mode)
+    model_memory_timestamp = f"{model_name}_memory_{memory_mode_str}_{timestamp_str}"
+
+    # Build path components explicitly to avoid any Path construction issues
+    path_components = [
+        str(base_output_dir),
+        f"agent_{agent_name}",
+        base_name,
+        modification,
+        f"episode_{episodes}",
+        model_memory_timestamp,
+    ]
+    
+    # Construct path by joining all components
+    output_path = Path(*path_components)
+
+    return output_path
 
 
 def resolve_scenarios(
@@ -327,13 +379,56 @@ def run_scenario_sequence(
     memory_mode: MemoryMode,
     episode_parameter_seed: int = 0,
     parameterize_episodes: bool = True,
+    agent_name: Optional[str] = None,
+    model_name: Optional[str] = None,
+    timestamp_str: Optional[str] = None,
+    base_output_dir: Optional[Path] = None,
 ) -> list[dict[str, Any]]:
-    """Run one scenario repeatedly with reset state and optional full memory."""
+    """Run one scenario repeatedly with reset state and optional full memory.
+
+    Args:
+        name_and_scenario: Scenario name and Scenario object
+        agent_type: Agent type
+        user_type: User type
+        output_directory: Directory to write output into (legacy parameter, used if hierarchical params not provided)
+        episodes: Number of episodes
+        memory_mode: Memory mode
+        episode_parameter_seed: Seed for episode parameterization
+        parameterize_episodes: Whether to parameterize episodes
+        agent_name: Agent name for hierarchical path (e.g., 'deepseek')
+        model_name: Model name for hierarchical path (e.g., 'deepseek-v4-flash-0731')
+        timestamp_str: Timestamp for hierarchical path (format: YYMMDDHHMMSS)
+        base_output_dir: Base output directory for hierarchical structure
+    """
     _, scenario = name_and_scenario
     cross_episode_memory: list[dict[str, Any]] = []
     sequence_results: list[dict[str, Any]] = []
     max_steps_per_sequence = scenario.max_messages * episodes
     cumulative_turn_count = 0
+
+    # Generate hierarchical output directory if metadata is provided
+    scenario_output_directory = output_directory
+    if all([agent_name, model_name, timestamp_str, base_output_dir]):
+        scenario_output_directory = generate_hierarchical_output_path(
+            base_output_dir=base_output_dir,
+            agent_name=agent_name,
+            scenario_name=name_and_scenario[0],
+            episodes=episodes,
+            model_name=model_name,
+            memory_mode=memory_mode,
+            timestamp_str=timestamp_str,
+        )
+        # Log the generated path for debugging
+        print(f"[DEBUG] Using hierarchical path: {scenario_output_directory}", flush=True)
+    else:
+        # Log when hierarchical path is NOT used
+        print(
+            f"[WARNING] Hierarchical path parameters incomplete. Using legacy path instead.\n"
+            f"  agent_name={agent_name}, model_name={model_name}, "
+            f"timestamp_str={timestamp_str}, base_output_dir={base_output_dir}",
+            flush=True
+        )
+
     for episode_number in range(1, episodes + 1):
         materialized_episode = DEFAULT_EPISODE_RANDOMIZER.materialize(
             scenario_name=name_and_scenario[0],
@@ -348,7 +443,7 @@ def run_scenario_sequence(
             (name_and_scenario[0], materialized_episode.scenario),
             agent_type=agent_type,
             user_type=user_type,
-            output_directory=output_directory,
+            output_directory=scenario_output_directory,
             episode_number=episode_number,
             memory_mode=memory_mode,
             cross_episode_memory=cross_episode_memory,

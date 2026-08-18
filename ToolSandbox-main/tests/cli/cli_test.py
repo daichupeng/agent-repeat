@@ -6,7 +6,7 @@ from typing import Any
 
 import pytest
 
-from tool_sandbox.cli import positive_int
+from tool_sandbox.cli import positive_int, write_result_summary
 from tool_sandbox.cli.utils import (
     USER_TYPE_TO_FACTORY,
     RoleImplType,
@@ -69,6 +69,14 @@ def test_positive_int() -> None:
     assert positive_int("3") == 3
     with pytest.raises(argparse.ArgumentTypeError, match="at least 1"):
         positive_int("0")
+
+
+def test_result_summary_creates_legacy_flat_output_directory(tmp_path: Path) -> None:
+    output_directory = tmp_path / "flat" / "summary"
+
+    write_result_summary([], {}, output_directory)
+
+    assert (output_directory / "result_summary.json").is_file()
 
 
 def test_end_user_is_available_from_cli_role_mapping() -> None:

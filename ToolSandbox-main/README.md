@@ -88,13 +88,20 @@ each episode, so the maximum sequence budget is `30 * N`, not 30 total.
 Registered scenarios receive deterministic episode-specific parameters when
 `N > 1`. Currently this is implemented for
 `update_contact_with_id_and_phone_number`,
-`modify_contact_with_message_recency`, and
-`modify_reminder_with_recency_latest`: their target entity and requested update
-values vary, and the prompt, starting state, and evaluation targets are
-materialized from the same manifest. Use `--episode-parameter-seed SEED` to
-reproduce a sequence; paired memory conditions must use the same seed. Use
-`--disable-episode-parameterization` to retain the fixed-task behavior. Scenarios
-without a registered parameterizer remain unchanged.
+`modify_contact_with_message_recency`,
+`modify_reminder_with_recency_latest`,
+`turn_on_wifi_low_battery_mode_implicit`, and
+`find_days_till_holiday_insufficient_information`: their target entity,
+requested update, or complete structural solvability template varies, and the
+prompt, starting state, and evaluation targets are materialized from the same
+manifest. The low-battery task uses counterbalanced valid state/action templates
+rather than independently toggling dependent settings. The insufficient-holiday
+task varies the holiday but keeps its missing-current-time capability policy and
+`timestamp_diff` minefield together as one controlled template. Use
+`--episode-parameter-seed SEED` to reproduce a sequence; paired memory conditions
+must use the same seed. Use `--disable-episode-parameterization` to retain the
+fixed-task behavior. Scenarios without a registered parameterizer remain
+unchanged.
 
 For example, run ten reset episodes while retaining full conversation history:
 

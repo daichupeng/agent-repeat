@@ -24,6 +24,15 @@ from typing import Any, Callable
 
 import polars as pl
 
+from tool_sandbox.common.evaluation import (
+    Evaluation,
+    Milestone,
+    MilestoneMatcher,
+    Minefield,
+    SnapshotConstraint,
+    column_contains_similarity,
+    snapshot_similarity,
+)
 from tool_sandbox.common.execution_context import DatabaseNamespace, RoleType
 from tool_sandbox.common.scenario import Scenario
 from tool_sandbox.scenarios.user_simulator_few_shot_examples import USER_INSTRUCTION
@@ -746,6 +755,343 @@ def _materialize_modify_reminder_with_recency_latest(
     return materialized
 
 
+_LOW_BATTERY_WIFI_TEMPLATES = (
+    {
+        "name": "exit_low_battery_mode_then_enable_wifi",
+        "initial_settings": {
+            "low_battery_mode": True,
+            "wifi": False,
+            "cellular": False,
+            "location_service": False,
+        },
+        "required_transitions": (
+            {"tool_name": "set_low_battery_mode_status", "on": False},
+            {"tool_name": "set_wifi_status", "on": True},
+        ),
+        "milestone_settings": (
+            {"low_battery_mode": False},
+            {"wifi": True},
+        ),
+    },
+    {
+        "name": "enable_wifi_with_low_battery_already_off",
+        "initial_settings": {
+            "low_battery_mode": False,
+            "wifi": False,
+            "cellular": False,
+            "location_service": False,
+        },
+        "required_transitions": ({"tool_name": "set_wifi_status", "on": True},),
+        "milestone_settings": ({"wifi": True},),
+    },
+)
+
+
+def _sample_turn_on_wifi_low_battery_mode_implicit(
+    scenario: Scenario,
+    rng: random.Random,
+    episode_number: int,
+    seed: int,
+) -> ParameterValues:
+    """Sample a complete, counterbalanced connectivity solvability template."""
+    del scenario, seed
+    templates = list(_LOW_BATTERY_WIFI_TEMPLATES)
+    rng.shuffle(templates)
+    state_template = templates[(episode_number - 1) % len(templates)]
+
+    implicit_requests = [
+        "Get me connected to the internet.",
+        "I need to get online.",
+        "Can you get me internet access?",
+        "Please connect me.",
+    ]
+    rng.shuffle(implicit_requests)
+    implicit_request = implicit_requests[(episode_number - 1) % len(implicit_requests)]
+    return {
+        "state_template": state_template,
+        "implicit_request": implicit_request,
+        "task": {
+            "system_to_user": (
+                USER_INSTRUCTION
+                + "Ask User B to make an implicit request for internet access. "
+                "The intended action is to turn on wifi, but the request must not "
+                "name a setting. You do not have any more information."
+            ),
+            "user_to_agent": implicit_request,
+        },
+    }
+
+
+def _replace_initial_setting_state(
+    scenario: Scenario, initial_settings: Mapping[str, Any]
+) -> None:
+    """Set the latest pre-episode device snapshot without changing its history."""
+    setting_database = scenario.starting_context._dbs[DatabaseNamespace.SETTING]
+    device_rows = setting_database.filter(pl.col("device_id").is_not_null())
+    if device_rows.is_empty():
+        raise ValueError("The connectivity parameterizer requires a device setting row")
+    latest_setting_snapshot = device_rows["sandbox_message_index"].max()
+    selected_snapshot = (pl.col("sandbox_message_index") == latest_setting_snapshot) & (
+        pl.col("device_id").is_not_null()
+    )
+    scenario.starting_context._dbs[DatabaseNamespace.SETTING] = (
+        setting_database.with_columns(
+            [
+                pl.when(selected_snapshot)
+                .then(pl.lit(value))
+                .otherwise(pl.col(setting_name))
+                .alias(setting_name)
+                for setting_name, value in initial_settings.items()
+            ]
+        )
+    )
+
+
+def _materialize_turn_on_wifi_low_battery_mode_implicit(
+    scenario: Scenario, parameters: ParameterValues
+) -> Scenario:
+    materialized = copy.deepcopy(scenario)
+    state_template = parameters["state_template"]
+    task = parameters["task"]
+    initial_settings = dict(state_template["initial_settings"])
+    milestone_settings = [
+        dict(setting) for setting in state_template["milestone_settings"]
+    ]
+
+    _replace_initial_setting_state(materialized, initial_settings)
+    _replace_message_content(
+        materialized,
+        sender=RoleType.SYSTEM,
+        recipient=RoleType.USER,
+        content=str(task["system_to_user"]),
+    )
+    _replace_message_content(
+        materialized,
+        sender=RoleType.USER,
+        recipient=RoleType.AGENT,
+        content=str(task["user_to_agent"]),
+    )
+
+    # The direct-Wi-Fi template must not retain an already-satisfied low-battery
+    # milestone. Rebuild the DAG from the sampled transition plan so every scored
+    # node represents a required action for this particular episode.
+    milestones = [
+        Milestone(
+            snapshot_constraints=[
+                SnapshotConstraint(
+                    database_namespace=DatabaseNamespace.SETTING,
+                    snapshot_constraint=snapshot_similarity,
+                    target_dataframe=pl.DataFrame(setting),
+                )
+            ]
+        )
+        for setting in milestone_settings
+    ]
+    milestones.append(
+        Milestone(
+            snapshot_constraints=[
+                SnapshotConstraint(
+                    database_namespace=DatabaseNamespace.SANDBOX,
+                    snapshot_constraint=snapshot_similarity,
+                    target_dataframe=pl.DataFrame(
+                        {
+                            "sender": RoleType.AGENT,
+                            "recipient": RoleType.USER,
+                            "content": "Wifi has been turned on.",
+                        }
+                    ),
+                )
+            ]
+        )
+    )
+    materialized.evaluation = Evaluation(
+        milestone_matcher=MilestoneMatcher(milestones=milestones),
+        minefield_matcher=MilestoneMatcher(),
+    )
+    return materialized
+
+
+_HOLIDAY_INSUFFICIENT_INFORMATION_STRUCTURAL_TEMPLATES = (
+    {
+        "name": "missing_current_datetime",
+        "available_tools": ("search_holiday", "timestamp_diff"),
+        "denied_tools": (
+            "search_weather_around_lat_lon",
+            "search_stock",
+            "get_current_timestamp",
+        ),
+        "missing_information": {
+            "name": "current_datetime",
+            "description": (
+                "The current date and timestamp are unavailable, so elapsed days "
+                "cannot be computed."
+            ),
+            "capability_tool": "get_current_timestamp",
+        },
+        "forbidden_action": {
+            "tool_name": "timestamp_diff",
+            "reason": (
+                "Calling timestamp_diff would require inventing the unavailable "
+                "current timestamp."
+            ),
+        },
+        "scoring_contract": {
+            "milestones": "none",
+            "success": "No forbidden action is taken.",
+            "minefield_effect": "Any minefield match sets combined similarity to 0.",
+        },
+    },
+)
+
+_HOLIDAY_INSUFFICIENT_INFORMATION_CONTROLLED_TOOLS = {
+    "search_holiday",
+    "timestamp_diff",
+    "search_weather_around_lat_lon",
+    "search_stock",
+    "get_current_timestamp",
+}
+
+
+def _sample_find_days_till_holiday_insufficient_information(
+    scenario: Scenario,
+    rng: random.Random,
+    episode_number: int,
+    seed: int,
+) -> ParameterValues:
+    """Sample a task while keeping its missing-information structure intact."""
+    del scenario, seed
+    structural_templates = list(_HOLIDAY_INSUFFICIENT_INFORMATION_STRUCTURAL_TEMPLATES)
+    rng.shuffle(structural_templates)
+    structural_template = structural_templates[
+        (episode_number - 1) % len(structural_templates)
+    ]
+
+    holidays = [
+        "Christmas Day",
+        "Thanksgiving",
+        "Independence Day",
+        "New Year's Day",
+        "Memorial Day",
+        "Labor Day",
+    ]
+    rng.shuffle(holidays)
+    holiday_name = holidays[(episode_number - 1) % len(holidays)]
+
+    request_templates = [
+        "How many days is it till {holiday}?",
+        "How many days are left until {holiday}?",
+        "How far away is {holiday} in days?",
+    ]
+    rng.shuffle(request_templates)
+    user_request = request_templates[
+        (episode_number - 1) % len(request_templates)
+    ].format(holiday=holiday_name)
+    return {
+        "holiday_name": holiday_name,
+        "structural_template": structural_template,
+        "task": {
+            "system_to_user": (
+                USER_INSTRUCTION + f"Search how many days it is till {holiday_name}. "
+                "You don't have the current datetime information."
+            ),
+            "user_to_agent": user_request,
+        },
+    }
+
+
+def _replace_structural_tool_policy(
+    scenario: Scenario,
+    *,
+    available_tools: Sequence[str],
+    denied_tools: Sequence[str],
+    controlled_tools: set[str],
+) -> None:
+    """Replace task-structural tools while retaining unrelated distractions."""
+    if set(available_tools) & set(denied_tools):
+        raise ValueError("A structural tool cannot be both available and denied")
+    if scenario.starting_context.tool_allow_list is None:
+        raise ValueError("Structural parameterization requires an explicit allow list")
+
+    preserved_allowed_tools = [
+        tool_name
+        for tool_name in scenario.starting_context.tool_allow_list
+        if tool_name not in controlled_tools
+    ]
+    scenario.starting_context.tool_allow_list = list(
+        dict.fromkeys([*preserved_allowed_tools, *available_tools])
+    )
+
+    preserved_denied_tools = [
+        tool_name
+        for tool_name in (scenario.starting_context.tool_deny_list or [])
+        if tool_name not in controlled_tools
+    ]
+    scenario.starting_context.tool_deny_list = list(
+        dict.fromkeys([*preserved_denied_tools, *denied_tools])
+    )
+
+
+def _materialize_find_days_till_holiday_insufficient_information(
+    scenario: Scenario, parameters: ParameterValues
+) -> Scenario:
+    materialized = copy.deepcopy(scenario)
+    structural_template = parameters["structural_template"]
+    task = parameters["task"]
+    available_tools = tuple(structural_template["available_tools"])
+    denied_tools = tuple(structural_template["denied_tools"])
+    forbidden_tool_name = str(structural_template["forbidden_action"]["tool_name"])
+
+    _replace_message_content(
+        materialized,
+        sender=RoleType.SYSTEM,
+        recipient=RoleType.USER,
+        content=str(task["system_to_user"]),
+    )
+    _replace_message_content(
+        materialized,
+        sender=RoleType.USER,
+        recipient=RoleType.AGENT,
+        content=str(task["user_to_agent"]),
+    )
+    _replace_structural_tool_policy(
+        materialized,
+        available_tools=available_tools,
+        denied_tools=denied_tools,
+        controlled_tools=_HOLIDAY_INSUFFICIENT_INFORMATION_CONTROLLED_TOOLS,
+    )
+
+    # No positive milestone is intentional. Evaluation defaults milestone
+    # similarity to 1 when no forbidden action occurs. The matching minefield
+    # nullifies the combined score if the agent fabricates the missing timestamp
+    # and calls timestamp_diff.
+    materialized.evaluation = Evaluation(
+        milestone_matcher=MilestoneMatcher(),
+        minefield_matcher=MilestoneMatcher(
+            milestones=[
+                Minefield(
+                    snapshot_constraints=[
+                        SnapshotConstraint(
+                            database_namespace=DatabaseNamespace.SANDBOX,
+                            snapshot_constraint=snapshot_similarity,
+                            target_dataframe=pl.DataFrame(
+                                {
+                                    "sender": RoleType.AGENT,
+                                    "recipient": RoleType.EXECUTION_ENVIRONMENT,
+                                    "content": forbidden_tool_name,
+                                }
+                            ),
+                            column_similarity_measure={
+                                "content": column_contains_similarity
+                            },
+                        )
+                    ]
+                )
+            ]
+        ),
+    )
+    return materialized
+
+
 DEFAULT_EPISODE_RANDOMIZER = EpisodeScenarioRandomizer(
     [
         ScenarioParameterizer(
@@ -765,6 +1111,18 @@ DEFAULT_EPISODE_RANDOMIZER = EpisodeScenarioRandomizer(
             scenario_names=("modify_reminder_with_recency_latest",),
             sample=_sample_modify_reminder_with_recency_latest,
             materialize=_materialize_modify_reminder_with_recency_latest,
+        ),
+        ScenarioParameterizer(
+            name="turn_on_wifi_low_battery_mode_implicit.v1",
+            scenario_names=("turn_on_wifi_low_battery_mode_implicit",),
+            sample=_sample_turn_on_wifi_low_battery_mode_implicit,
+            materialize=_materialize_turn_on_wifi_low_battery_mode_implicit,
+        ),
+        ScenarioParameterizer(
+            name="find_days_till_holiday_insufficient_information.v1",
+            scenario_names=("find_days_till_holiday_insufficient_information",),
+            sample=_sample_find_days_till_holiday_insufficient_information,
+            materialize=_materialize_find_days_till_holiday_insufficient_information,
         ),
     ]
 )

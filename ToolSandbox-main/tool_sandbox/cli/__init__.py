@@ -79,6 +79,9 @@ def write_result_summary(
     if git_sha is not None and has_local_changes():
         git_sha += " + local changes"
 
+    # Hierarchical trajectory output may live outside this legacy flat summary
+    # directory, so ensure the summary directory exists independently.
+    output_directory.mkdir(parents=True, exist_ok=True)
     with open(output_directory / "result_summary.json", "w") as f:
         json.dump(
             {
@@ -142,11 +145,44 @@ def run_sandbox(
             f"Agent {agent_type} does not support --memory full. "
             "Use an OpenAI or OpenRouter agent."
         )
+
+    # Extract agent and model names
+    agent_model_name = getattr(agent, 'model_name', str(agent_type))
+    user_model_name = getattr(user, 'model_name', str(user_type))
+
+    # Model identifiers for OpenRouter/HuggingFace-backed agents (DeepSeek, Hermes,
+    # Gorilla, Mistral, Cohere, ...) are "provider/model" strings. Strip the
+    # provider prefix before using them to build filesystem paths, since a bare
+    # "/" would otherwise be split into extra directory levels by pathlib.
+    agent_model_name = agent_model_name.rsplit('/', 1)[-1] if agent_model_name else agent_model_name
+    user_model_name = user_model_name.rsplit('/', 1)[-1] if user_model_name else user_model_name
+
+    # Extract agent type (e.g., 'deepseek' from 'deepseek-v4-flash-0731')
+    agent_name = agent_model_name.split('-')[0] if agent_model_name else str(agent_type).lower()
+
+    # Generate timestamp in both formats:
+    # - Long format for display: MM_DD_YYYY_HH_MM_SS
+    # - Short format for hierarchical paths: YYMMDDHHMMSS
+    now = datetime.datetime.now()
+    timestamp_long = now.strftime('%m_%d_%Y_%H_%M_%S')
+    timestamp_short = now.strftime('%y%m%d%H%M%S')
+    
+    print(
+        f"[DEBUG] Path generation parameters:\n"
+        f"  agent_name={agent_name}\n"
+        f"  agent_model_name={agent_model_name}\n"
+        f"  timestamp_short={timestamp_short}\n"
+        f"  output_base_dir={output_base_dir}",
+        flush=True
+    )
+
+
+    # Keep the original flat output directory for backward compatibility and result_summary.json
     output_directory = (
-        Path(output_base_dir) / f"agent_{getattr(agent, 'model_name', agent_type)}_"
-        f"user_{getattr(user, 'model_name', user_type)}_"
+        Path(output_base_dir) / f"agent_{agent_model_name}_"
+        f"user_{user_model_name}_"
         f"episodes_{episodes}_memory_{memory_mode.value}_"
-        f"{datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}"
+        f"{timestamp_long}"
     )
     agent.teardown()
     user.teardown()
@@ -203,6 +239,10 @@ def run_sandbox(
                     memory_mode=memory_mode,
                     episode_parameter_seed=episode_parameter_seed,
                     parameterize_episodes=parameterize_episodes,
+                    agent_name=agent_name,
+                    model_name=agent_model_name,
+                    timestamp_str=timestamp_short,
+                    base_output_dir=Path(output_base_dir),
                 ),
                 name_and_scenario_list,
             )
@@ -225,6 +265,10 @@ def run_sandbox(
                     memory_mode=memory_mode,
                     episode_parameter_seed=episode_parameter_seed,
                     parameterize_episodes=parameterize_episodes,
+                    agent_name=agent_name,
+                    model_name=agent_model_name,
+                    timestamp_str=timestamp_short,
+                    base_output_dir=Path(output_base_dir),
                 )
             )
 
