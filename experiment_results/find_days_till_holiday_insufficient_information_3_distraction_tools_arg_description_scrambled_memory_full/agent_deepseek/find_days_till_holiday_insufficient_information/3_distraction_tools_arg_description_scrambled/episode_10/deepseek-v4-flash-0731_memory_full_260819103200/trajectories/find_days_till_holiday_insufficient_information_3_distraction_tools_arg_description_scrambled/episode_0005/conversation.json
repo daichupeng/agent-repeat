@@ -1,0 +1,120 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 5
+  },
+  {
+    "role": "user",
+    "content": "How many days is it till Christmas Day?",
+    "episode_number": 5,
+    "user_details": {
+      "minefield_matches": [
+        {
+          "minefield_index": 0,
+          "minefield": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "EXECUTION_ENVIRONMENT",
+                    "content": "timestamp_diff"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_contains_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "minefield_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_fc6a71cdd23641b3a5c6bb7f",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Christmas Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 5,
+    "token_usage": {
+      "prompt_tokens": 3383,
+      "completion_tokens": 617,
+      "total_tokens": 4000
+    }
+  },
+  {
+    "tool_call_id": "call_fc6a71cdd23641b3a5c6bb7f",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1798128000.0",
+    "episode_number": 5
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_43a3b22c19324dd3ae016fc9",
+        "function": {
+          "arguments": "{\"timestamp\": 1798128000}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 5,
+    "token_usage": {
+      "prompt_tokens": 4017,
+      "completion_tokens": 65,
+      "total_tokens": 4082
+    }
+  },
+  {
+    "tool_call_id": "call_43a3b22c19324dd3ae016fc9",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 12, 'day': 25, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 5}",
+    "episode_number": 5
+  },
+  {
+    "role": "assistant",
+    "content": "I found that the next Christmas Day is **Friday, December 25, 2026**. 🎄\n\nHowever, I still need one key piece of information to give you the exact number of days: **today's date**. The calculation \"days until\" is simply:\n\n**Christmas Day (Dec 25, 2026) − today**\n\nSince none of my available tools can determine the current date on their own, and no date has been provided yet, I can't compute the difference precisely — I don't want to guess and give you a wrong number.\n\nPlease tell me **today's date** (e.g., March 15, 2026), and I'll immediately calculate the exact number of days until Christmas (or any of the other holidays you've asked about). 😊",
+    "episode_number": 5,
+    "token_usage": {
+      "prompt_tokens": 4139,
+      "completion_tokens": 2078,
+      "total_tokens": 6217
+    }
+  }
+]

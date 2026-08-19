@@ -1,0 +1,792 @@
+[
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "I'll help you send that message to Fredrik Thordendal. Let me first find their contact information.\n\n",
+    "refusal": null,
+    "reasoning": "The user wants to send a message to Fredrik Thordendal. I need to search for the contact to get their phone number. I don't have a phone number for them, so I need to search contacts.\n\nLet me search for the contact.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b12f1c25f9a4565c",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"name\": \"Fredrik Thordendal\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to send a message to Fredrik Thordendal. I need to search for the contact to get their phone number. I don't have a phone number for them, so I need to search contacts.\n\nLet me search for the contact.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b12f1c25f9a4565c",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "I found Fredrik Thordendal's contact information. Now let me send the message.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-883a5de9edb89aa6",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"phone_number\": \"+12453344098\", \"content\": \"How's the new album coming along.\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-883a5de9edb89aa6",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "The message failed because cellular service is disabled. Let me enable it and then resend the message.\n\n",
+    "refusal": null,
+    "reasoning": "The message failed because cellular service is not enabled. I need to enable cellular service and then send the message. Let me first check the cellular service status, and enable it.\n\nActually let me just enable it.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-95ce2cd8464bf74a",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The message failed because cellular service is not enabled. I need to enable cellular service and then send the message. Let me first check the cellular service status, and enable it.\n\nActually let me just enable it.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-95ce2cd8464bf74a",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Cellular service is now enabled. Let me resend the message.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-8da97ed0a08cedf7",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-8da97ed0a08cedf7",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'42e3d16d-fea4-4c9a-b33a-7169ccce69b6'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I found Fredrik Thordendal's contact information (phone number: +12453344098).\n2. My first attempt to send the message failed because cellular service was disabled.\n3. I resolved the issue by enabling cellular service, then successfully sent the message: *\"How's the new album coming along.\"*\n\nThe message was delivered successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "I'll send that message to Fredrik Thordendal. I already have his contact information from before, so let me send it directly.\n\n",
+    "refusal": null,
+    "reasoning": "The user wants me to send another message to Fredrik Thordendal. I already have the contact info and enabled cellular service. Let me send the message.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-83bef99443de1386",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants me to send another message to Fredrik Thordendal. I already have the contact info and enabled cellular service. Let me send the message.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-83bef99443de1386",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "It seems the cellular service was disabled again. Let me check the status and re-enable it to resolve the issue.\n\n",
+    "refusal": null,
+    "reasoning": "Cellular service is not enabled again. It seems it may have been disabled again, or the previous enable didn't persist. Let me check the status and enable it. Let me get the cellular service status.\n\nActually, I should just enable it again. Let me check status first to be safe, then enable.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-aba5b033363451f7",
+        "function": {
+          "name": "get_cellular_service_status",
+          "arguments": "{}"
+        }
+      },
+      {
+        "type": "function",
+        "index": 1,
+        "id": "chatcmpl-tool-90dd4240dc751337",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Cellular service is not enabled again. It seems it may have been disabled again, or the previous enable didn't persist. Let me check the status and enable it. Let me get the cellular service status.\n\nActually, I should just enable it again. Let me check status first to be safe, then enable.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-aba5b033363451f7",
+    "role": "tool",
+    "name": "get_cellular_service_status",
+    "content": "False"
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-90dd4240dc751337",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Cellular service was confirmed disabled, and I've re-enabled it. Now let me resend the message.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b6b0f463a87ac920",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b6b0f463a87ac920",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'69402d9c-7134-421d-9efb-21ed48b82a38'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I attempted to send the message to Fredrik Thordendal (+12453344098), but it failed because cellular service was disabled.\n2. I checked the cellular service status (confirmed disabled), then re-enabled it.\n3. I resent the message: *\"How's the new album coming along.\"* — and it was delivered successfully.\n\nThe message was sent successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "Sending your message to Fredrik Thordendal now.\n\n",
+    "refusal": null,
+    "reasoning": "The user wants to send another message. Cellular service was enabled last time. Let me just send it directly. If it fails, I'll fix it.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b2c37624eacb01e3",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to send another message. Cellular service was enabled last time. Let me just send it directly. If it fails, I'll fix it.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b2c37624eacb01e3",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "The cellular service was disabled again. Let me re-enable it and resend the message.\n\n",
+    "refusal": null,
+    "reasoning": "Cellular service is disabled again. Let me enable it and resend. I'll enable it and then send.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-8fa6ad19a0b328f1",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Cellular service is disabled again. Let me enable it and resend. I'll enable it and then send.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-8fa6ad19a0b328f1",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Cellular service is now enabled. Resending the message.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-afa61ac93548c118",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-afa61ac93548c118",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'62670c06-85eb-4afe-addc-bd12bb7bcb67'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I attempted to send the message to Fredrik Thordendal (+12453344098), but it failed because cellular service was disabled.\n2. I re-enabled cellular service.\n3. I resent the message: *\"How's the new album coming along.\"* — and it was delivered successfully.\n\nThe message was sent successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "I'll send the message to Fredrik Thordendal now.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_1c9261b605714bb6ac7e0c2d",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_1c9261b605714bb6ac7e0c2d",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "The cellular service is disabled again. Let me re-enable it and resend the message.",
+    "refusal": null,
+    "reasoning": "Cellular service disabled again. Let me enable it and resend.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_Dj5DRBcfNcNEj4r8lkzG4420",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Cellular service disabled again. Let me enable it and resend.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_Dj5DRBcfNcNEj4r8lkzG4420",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Cellular service re-enabled. Now resending the message.",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_hDtzvWFCvTI0JLhnIY565848",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_hDtzvWFCvTI0JLhnIY565848",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'cbd40135-c149-4f9e-8cd5-687579486a1e'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I attempted to send the message to Fredrik Thordendal (+12453344098), but it failed because cellular service was disabled.\n2. I re-enabled cellular service.\n3. I resent the message: *\"How's the new album coming along.\"* — and it was delivered successfully.\n\nThe message was sent successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "Sending the message to Fredrik Thordendal.",
+    "refusal": null,
+    "reasoning": "The user wants to send the same message again. Let me send it directly and handle any issues.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_Il9py35VzBehaZhx29Rq6580",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to send the same message again. Let me send it directly and handle any issues.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_Il9py35VzBehaZhx29Rq6580",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "The cellular service is disabled again. Re-enabling it now.",
+    "refusal": null,
+    "reasoning": "Cellular service is disabled again. Enable and resend.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_omoYdl2fByfZkdzRsdPg8186",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Cellular service is disabled again. Enable and resend.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_omoYdl2fByfZkdzRsdPg8186",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Enabled. Now resending the message",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_65179b69d7ad4b0bb4e856c2",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_65179b69d7ad4b0bb4e856c2",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'be2815ec-6004-48be-b4a9-d4ee6904a94d'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I attempted to send the message to Fredrik Thordendal (+12453344098), but it failed because cellular service was disabled.\n2. I re-enabled cellular service.\n3. I resent the message: *\"How's the new album coming along.\"* — and it was delivered successfully.\n\nThe message was sent successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "Sending the message to Fredrik Thordendal.",
+    "refusal": null,
+    "reasoning": "The user wants to send the same message again. Let me send it directly and resolve any issues.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_jfCrcCuUddpXAKz9HJAC8759",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to send the same message again. Let me send it directly and resolve any issues.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_jfCrcCuUddpXAKz9HJAC8759",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "The cellular service is disabled again. Re-enabling it.",
+    "refusal": null,
+    "reasoning": "Cellular service is disabled again. I'll enable it and resend.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ZKDdImyIXj4frb5kI3Wa3626",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Cellular service is disabled again. I'll enable it and resend.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ZKDdImyIXj4frb5kI3Wa3626",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Enabled. Now resending the message.",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_upD5dnOJzcYRMjNYKc4h1799",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_upD5dnOJzcYRMjNYKc4h1799",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'310fc3fe-453e-49c7-8c3f-71c304354b18'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I attempted to send the message to Fredrik Thordendal (+12453344098), but it failed because cellular service was disabled.\n2. I re-enabled cellular service.\n3. I resent the message: *\"How's the new album coming along.\"* — and it was delivered successfully.\n\nThe message was sent successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "Sending the message to Fredrik Thordendal.",
+    "refusal": null,
+    "reasoning": "The user keeps asking to send the same message repeatedly. Let me send it again. It seems the cellular service gets disabled each time, so I'll need to enable it again. Let me try sending directly first.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_zlpJ9sm9djwirrkkHjxB9331",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user keeps asking to send the same message repeatedly. Let me send it again. It seems the cellular service gets disabled each time, so I'll need to enable it again. Let me try sending directly first.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_zlpJ9sm9djwirrkkHjxB9331",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "The cellular service is disabled again. Re-enabling it.",
+    "refusal": null,
+    "reasoning": "Cellular service is disabled again. Enable it and resend.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_4L2lx66tyC7tr7CA97PV3590",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Cellular service is disabled again. Enable it and resend.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_4L2lx66tyC7tr7CA97PV3590",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Enabled. Now resending the message.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b3e8d009a8b3b298",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b3e8d009a8b3b298",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'4cfe65fa-79ce-463b-b034-0d23aade39e2'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I attempted to send the message to Fredrik Thordendal (+12453344098), but it failed because cellular service was disabled.\n2. I re-enabled cellular service.\n3. I resent the message: *\"How's the new album coming along.\"* — and it was delivered successfully.\n\nThe message was sent successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "Sending the message to Fredrik Thordendal.\n\n",
+    "refusal": null,
+    "reasoning": "The user keeps asking to send the same message. I notice the cellular service seems to keep getting disabled between messages. Let me try to send it directly.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-af8ef7a827a17f3d",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user keeps asking to send the same message. I notice the cellular service seems to keep getting disabled between messages. Let me try to send it directly.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-af8ef7a827a17f3d",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "The cellular service is disabled again. Re-enabling it before resending.\n\n",
+    "refusal": null,
+    "reasoning": "The cellular service is disabled again. This is odd that it keeps getting disabled between calls. I'll enable it and resend. Let me do both - enable and resend.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-a35442a36ef94470",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The cellular service is disabled again. This is odd that it keeps getting disabled between calls. I'll enable it and resend. Let me do both - enable and resend.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-a35442a36ef94470",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Enabled. Now resending the message.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-87e022b1aa66e793",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-87e022b1aa66e793",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'a7baeba1-eb04-4084-a97a-ef8a20099816'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I attempted to send the message to Fredrik Thordendal (+12453344098), but it failed because cellular service was disabled.\n2. I re-enabled cellular service.\n3. I resent the message: *\"How's the new album coming along.\"* — and it was delivered successfully.\n\nThe message was sent successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  }
+]

@@ -1,0 +1,136 @@
+[
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user wants to send a message to Fredrik Thordendal. I need to find the contact's phone number first. Let me search contacts.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-bd574d4bef4854ad",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"name\": \"Fredrik Thordendal\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to send a message to Fredrik Thordendal. I need to find the contact's phone number first. Let me search contacts.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-bd574d4bef4854ad",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "Found the contact with phone number +12453344098. Now send the message. But I should first check cellular service status? The user said \"Resolve any issue alone.\" Perhaps sending a message may fail if cellular is off. Let me check cellular service status first.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-83d06e300b0c2a08",
+        "function": {
+          "name": "get_cellular_service_status",
+          "arguments": "{}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Found the contact with phone number +12453344098. Now send the message. But I should first check cellular service status? The user said \"Resolve any issue alone.\" Perhaps sending a message may fail if cellular is off. Let me check cellular service status first.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-83d06e300b0c2a08",
+    "role": "tool",
+    "name": "get_cellular_service_status",
+    "content": "False"
+  },
+  {
+    "role": "assistant",
+    "content": "Cellular service is currently disabled, which would prevent the message from sending. I'll enable it and then send the message.\n\n",
+    "refusal": null,
+    "reasoning": "Cellular service is off. The message would fail. I need to enable cellular service first, then send the message. The user said resolve issues alone. Let me enable cellular and send message. These are dependent (must enable first). Let me enable then send.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-af6f6b39e0085223",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Cellular service is off. The message would fail. I need to enable cellular service first, then send the message. The user said resolve issues alone. Let me enable cellular and send message. These are dependent (must enable first). Let me enable then send.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-af6f6b39e0085223",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_eNQpKceWBVJSu9MLs1UX7311",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"phone_number\": \"+12453344098\", \"content\": \"How's the new album coming along.\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_eNQpKceWBVJSu9MLs1UX7311",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'a22cce3a-1da7-4a85-92a7-cad45e3ed32e'"
+  },
+  {
+    "role": "assistant",
+    "content": "Done. I found Fredrik Thordendal's contact and sent him: \"How's the new album coming along.\"\n\nOne issue came up: cellular service was disabled, which would have blocked the message. I enabled it and then sent the message successfully.",
+    "refusal": null,
+    "reasoning": "Message sent successfully. Let me summarize for the user.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Message sent successfully. Let me summarize for the user.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  }
+]

@@ -1092,8 +1092,14 @@ def _materialize_find_days_till_holiday_insufficient_information(
     return materialized
 
 
-DEFAULT_EPISODE_RANDOMIZER = EpisodeScenarioRandomizer(
-    [
+def _default_parameterizers() -> list[ScenarioParameterizer]:
+    # Import after the reusable types/helpers above are initialized. The catalogue
+    # imports those helpers and would otherwise form an eager circular import.
+    from tool_sandbox.scenarios.episode_parameterization_catalog import (
+        remaining_parameterizers,
+    )
+
+    return [
         ScenarioParameterizer(
             name="update_contact_with_id_and_phone_number.v1",
             scenario_names=("update_contact_with_id_and_phone_number",),
@@ -1124,8 +1130,11 @@ DEFAULT_EPISODE_RANDOMIZER = EpisodeScenarioRandomizer(
             sample=_sample_find_days_till_holiday_insufficient_information,
             materialize=_materialize_find_days_till_holiday_insufficient_information,
         ),
+        *remaining_parameterizers(),
     ]
-)
+
+
+DEFAULT_EPISODE_RANDOMIZER = EpisodeScenarioRandomizer(_default_parameterizers())
 
 
 def episode_setup_record(

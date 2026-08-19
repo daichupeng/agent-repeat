@@ -1,0 +1,833 @@
+Episode number: 10
+Note that User Simulator few shot messages have been omitted
+shape: (27, 8)
++------------+------------+------------+-----------+-----------+-----------+-----------+-----------+
+| sandbox_me | sender     | recipient  | content   | openai_fu | tool_call | tool_trac | visible_t |
+| ssage_inde | ---        | ---        | ---       | nction_na | _exceptio | e         | o         |
+| x          | enum       | enum       | str       | me        | n         | ---       | ---       |
+| ---        |            |            |           | ---       | ---       | list[str] | list[enum |
+| i32        |            |            |           | str       | str       |           | ]         |
++==================================================================================================+
+| 0          | SYSTEM     | EXECUTION_ | import    | null      | null      | null      | null      |
+|            |            | ENVIRONMEN | json      |           |           |           |           |
+|            |            | T          | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.con |           |           |           |           |
+|            |            |            | tact      |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | add_conta |           |           |           |           |
+|            |            |            | ct, modif |           |           |           |           |
+|            |            |            | y_contact |           |           |           |           |
+|            |            |            | , remove_ |           |           |           |           |
+|            |            |            | contact,  |           |           |           |           |
+|            |            |            | search_co |           |           |           |           |
+|            |            |            | ntacts    |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.set |           |           |           |           |
+|            |            |            | ting      |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | get_cellu |           |           |           |           |
+|            |            |            | lar_servi |           |           |           |           |
+|            |            |            | ce_status |           |           |           |           |
+|            |            |            | , get_cur |           |           |           |           |
+|            |            |            | rent_loca |           |           |           |           |
+|            |            |            | tion, get |           |           |           |           |
+|            |            |            | _location |           |           |           |           |
+|            |            |            | _service_ |           |           |           |           |
+|            |            |            | status,   |           |           |           |           |
+|            |            |            | get_wifi_ |           |           |           |           |
+|            |            |            | status,   |           |           |           |           |
+|            |            |            | get_low_b |           |           |           |           |
+|            |            |            | attery_mo |           |           |           |           |
+|            |            |            | de_status |           |           |           |           |
+|            |            |            | , set_cel |           |           |           |           |
+|            |            |            | lular_ser |           |           |           |           |
+|            |            |            | vice_stat |           |           |           |           |
+|            |            |            | us, set_l |           |           |           |           |
+|            |            |            | ocation_s |           |           |           |           |
+|            |            |            | ervice_st |           |           |           |           |
+|            |            |            | atus, set |           |           |           |           |
+|            |            |            | _low_batt |           |           |           |           |
+|            |            |            | ery_mode_ |           |           |           |           |
+|            |            |            | status,   |           |           |           |           |
+|            |            |            | set_wifi_ |           |           |           |           |
+|            |            |            | status    |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.mes |           |           |           |           |
+|            |            |            | saging    |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | search_me |           |           |           |           |
+|            |            |            | ssages,   |           |           |           |           |
+|            |            |            | send_mess |           |           |           |           |
+|            |            |            | age_with_ |           |           |           |           |
+|            |            |            | phone_num |           |           |           |           |
+|            |            |            | ber       |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.rap |           |           |           |           |
+|            |            |            | id_api_se |           |           |           |           |
+|            |            |            | arch_tool |           |           |           |           |
+|            |            |            | s import  |           |           |           |           |
+|            |            |            | convert_c |           |           |           |           |
+|            |            |            | urrency,  |           |           |           |           |
+|            |            |            | search_la |           |           |           |           |
+|            |            |            | t_lon,    |           |           |           |           |
+|            |            |            | search_lo |           |           |           |           |
+|            |            |            | cation_ar |           |           |           |           |
+|            |            |            | ound_lat_ |           |           |           |           |
+|            |            |            | lon, sear |           |           |           |           |
+|            |            |            | ch_stock, |           |           |           |           |
+|            |            |            | search_we |           |           |           |           |
+|            |            |            | ather_aro |           |           |           |           |
+|            |            |            | und_lat_l |           |           |           |           |
+|            |            |            | on        |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.rem |           |           |           |           |
+|            |            |            | inder     |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | add_remin |           |           |           |           |
+|            |            |            | der, modi |           |           |           |           |
+|            |            |            | fy_remind |           |           |           |           |
+|            |            |            | er, remov |           |           |           |           |
+|            |            |            | e_reminde |           |           |           |           |
+|            |            |            | r, search |           |           |           |           |
+|            |            |            | _reminder |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.use |           |           |           |           |
+|            |            |            | r_tools   |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | end_conve |           |           |           |           |
+|            |            |            | rsation   |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.uti |           |           |           |           |
+|            |            |            | lities    |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | calculate |           |           |           |           |
+|            |            |            | _lat_lon_ |           |           |           |           |
+|            |            |            | distance, |           |           |           |           |
+|            |            |            | datetime_ |           |           |           |           |
+|            |            |            | info_to_t |           |           |           |           |
+|            |            |            | imestamp, |           |           |           |           |
+|            |            |            | get_curre |           |           |           |           |
+|            |            |            | nt_timest |           |           |           |           |
+|            |            |            | amp, sear |           |           |           |           |
+|            |            |            | ch_holida |           |           |           |           |
+|            |            |            | y, second |           |           |           |           |
+|            |            |            | s_to_hour |           |           |           |           |
+|            |            |            | s_minutes |           |           |           |           |
+|            |            |            | _seconds, |           |           |           |           |
+|            |            |            | shift_tim |           |           |           |           |
+|            |            |            | estamp,   |           |           |           |           |
+|            |            |            | timestamp |           |           |           |           |
+|            |            |            | _diff,    |           |           |           |           |
+|            |            |            | timestamp |           |           |           |           |
+|            |            |            | _to_datet |           |           |           |           |
+|            |            |            | ime_info, |           |           |           |           |
+|            |            |            | unit_conv |           |           |           |           |
+|            |            |            | ersion    |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 1          | SYSTEM     | AGENT      | Don't     | null      | null      | null      | null      |
+|            |            |            | make assu |           |           |           |           |
+|            |            |            | mptions   |           |           |           |           |
+|            |            |            | about     |           |           |           |           |
+|            |            |            | what      |           |           |           |           |
+|            |            |            | values to |           |           |           |           |
+|            |            |            | plug into |           |           |           |           |
+|            |            |            | functions |           |           |           |           |
+|            |            |            | . Ask for |           |           |           |           |
+|            |            |            | clarifica |           |           |           |           |
+|            |            |            | tion if a |           |           |           |           |
+|            |            |            | user      |           |           |           |           |
+|            |            |            | request   |           |           |           |           |
+|            |            |            | is ambigu |           |           |           |           |
+|            |            |            | ous.      |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 26         | SYSTEM     | USER       | You are   | null      | null      | null      | null      |
+|            |            |            | no longer |           |           |           |           |
+|            |            |            | an assist |           |           |           |           |
+|            |            |            | ant. From |           |           |           |           |
+|            |            |            | now on    |           |           |           |           |
+|            |            |            | role play |           |           |           |           |
+|            |            |            | as a user |           |           |           |           |
+|            |            |            | (User A)  |           |           |           |           |
+|            |            |            | talking   |           |           |           |           |
+|            |            |            | to        |           |           |           |           |
+|            |            |            | another   |           |           |           |           |
+|            |            |            | user      |           |           |           |           |
+|            |            |            | (User B). |           |           |           |           |
+|            |            |            | Make sure |           |           |           |           |
+|            |            |            | you       |           |           |           |           |
+|            |            |            | follow    |           |           |           |           |
+|            |            |            | these ins |           |           |           |           |
+|            |            |            | tructions |           |           |           |           |
+|            |            |            | :         |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|            |            |            | 0. DO NOT |           |           |           |           |
+|            |            |            | act as if |           |           |           |           |
+|            |            |            | you (User |           |           |           |           |
+|            |            |            | A) are an |           |           |           |           |
+|            |            |            | assistant |           |           |           |           |
+|            |            |            | . ALWAYS  |           |           |           |           |
+|            |            |            | treat     |           |           |           |           |
+|            |            |            | yourself  |           |           |           |           |
+|            |            |            | as a user |           |           |           |           |
+|            |            |            | (User A). |           |           |           |           |
+|            |            |            | Do not    |           |           |           |           |
+|            |            |            | ask       |           |           |           |           |
+|            |            |            | questions |           |           |           |           |
+|            |            |            | to the    |           |           |           |           |
+|            |            |            | other     |           |           |           |           |
+|            |            |            | user      |           |           |           |           |
+|            |            |            | (User B). |           |           |           |           |
+|            |            |            | 1. Answer |           |           |           |           |
+|            |            |            | any       |           |           |           |           |
+|            |            |            | question  |           |           |           |           |
+|            |            |            | User B    |           |           |           |           |
+|            |            |            | asks you  |           |           |           |           |
+|            |            |            | (User A)  |           |           |           |           |
+|            |            |            | accuratel |           |           |           |           |
+|            |            |            | y. Use    |           |           |           |           |
+|            |            |            | only the  |           |           |           |           |
+|            |            |            | informati |           |           |           |           |
+|            |            |            | on        |           |           |           |           |
+|            |            |            | provided. |           |           |           |           |
+|            |            |            | Do not    |           |           |           |           |
+|            |            |            | make up   |           |           |           |           |
+|            |            |            | false inf |           |           |           |           |
+|            |            |            | ormation. |           |           |           |           |
+|            |            |            | 2.  Use   |           |           |           |           |
+|            |            |            | natural,  |           |           |           |           |
+|            |            |            | short,    |           |           |           |           |
+|            |            |            | casual    |           |           |           |           |
+|            |            |            | language. |           |           |           |           |
+|            |            |            | 3.  If    |           |           |           |           |
+|            |            |            | User B    |           |           |           |           |
+|            |            |            | says it   |           |           |           |           |
+|            |            |            | could not |           |           |           |           |
+|            |            |            | complete  |           |           |           |           |
+|            |            |            | the task, |           |           |           |           |
+|            |            |            | either    |           |           |           |           |
+|            |            |            | provide   |           |           |           |           |
+|            |            |            | more info |           |           |           |           |
+|            |            |            | rmation   |           |           |           |           |
+|            |            |            | you (User |           |           |           |           |
+|            |            |            | A)        |           |           |           |           |
+|            |            |            | posses,   |           |           |           |           |
+|            |            |            | or ask it |           |           |           |           |
+|            |            |            | to use    |           |           |           |           |
+|            |            |            | the tools |           |           |           |           |
+|            |            |            | it figure |           |           |           |           |
+|            |            |            | it out    |           |           |           |           |
+|            |            |            | itself if |           |           |           |           |
+|            |            |            | you (User |           |           |           |           |
+|            |            |            | A)        |           |           |           |           |
+|            |            |            | do not    |           |           |           |           |
+|            |            |            | posses    |           |           |           |           |
+|            |            |            | informati |           |           |           |           |
+|            |            |            | on that   |           |           |           |           |
+|            |            |            | could     |           |           |           |           |
+|            |            |            | help.     |           |           |           |           |
+|            |            |            | 4.  Allow |           |           |           |           |
+|            |            |            | User B to |           |           |           |           |
+|            |            |            | turn off  |           |           |           |           |
+|            |            |            | low       |           |           |           |           |
+|            |            |            | battery   |           |           |           |           |
+|            |            |            | mode,     |           |           |           |           |
+|            |            |            | turn on   |           |           |           |           |
+|            |            |            | cellular  |           |           |           |           |
+|            |            |            | service,  |           |           |           |           |
+|            |            |            | wifi or   |           |           |           |           |
+|            |            |            | location  |           |           |           |           |
+|            |            |            | service   |           |           |           |           |
+|            |            |            | in order  |           |           |           |           |
+|            |            |            | to        |           |           |           |           |
+|            |            |            | complete  |           |           |           |           |
+|            |            |            | the task. |           |           |           |           |
+|            |            |            | 5.  When  |           |           |           |           |
+|            |            |            | User B    |           |           |           |           |
+|            |            |            | completed |           |           |           |           |
+|            |            |            | the task, |           |           |           |           |
+|            |            |            | even if   |           |           |           |           |
+|            |            |            | you (User |           |           |           |           |
+|            |            |            | A) don't  |           |           |           |           |
+|            |            |            | have      |           |           |           |           |
+|            |            |            | enough    |           |           |           |           |
+|            |            |            | informati |           |           |           |           |
+|            |            |            | on to     |           |           |           |           |
+|            |            |            | validate  |           |           |           |           |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | correctne |           |           |           |           |
+|            |            |            | ss, break |           |           |           |           |
+|            |            |            | out of    |           |           |           |           |
+|            |            |            | role      |           |           |           |           |
+|            |            |            | playing   |           |           |           |           |
+|            |            |            | and use   |           |           |           |           |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | provided  |           |           |           |           |
+|            |            |            | tool      |           |           |           |           |
+|            |            |            | named `en |           |           |           |           |
+|            |            |            | d_convers |           |           |           |           |
+|            |            |            | ation` to |           |           |           |           |
+|            |            |            | stop      |           |           |           |           |
+|            |            |            | the conve |           |           |           |           |
+|            |            |            | rsation.  |           |           |           |           |
+|            |            |            | 6.  When  |           |           |           |           |
+|            |            |            | User B    |           |           |           |           |
+|            |            |            | cannot    |           |           |           |           |
+|            |            |            | complete  |           |           |           |           |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | request   |           |           |           |           |
+|            |            |            | after 5   |           |           |           |           |
+|            |            |            | tries,    |           |           |           |           |
+|            |            |            | break out |           |           |           |           |
+|            |            |            | of role   |           |           |           |           |
+|            |            |            | playing   |           |           |           |           |
+|            |            |            | and       |           |           |           |           |
+|            |            |            | use the   |           |           |           |           |
+|            |            |            | provided  |           |           |           |           |
+|            |            |            | tool      |           |           |           |           |
+|            |            |            | named `en |           |           |           |           |
+|            |            |            | d_convers |           |           |           |           |
+|            |            |            | ation` to |           |           |           |           |
+|            |            |            | stop the  |           |           |           |           |
+|            |            |            | conversat |           |           |           |           |
+|            |            |            | ion.      |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|            |            |            | Answer    |           |           |           |           |
+|            |            |            | User B's  |           |           |           |           |
+|            |            |            | questions |           |           |           |           |
+|            |            |            | given the |           |           |           |           |
+|            |            |            | following |           |           |           |           |
+|            |            |            | task you  |           |           |           |           |
+|            |            |            | (User A)  |           |           |           |           |
+|            |            |            | want User |           |           |           |           |
+|            |            |            | B to      |           |           |           |           |
+|            |            |            | complete: |           |           |           |           |
+|            |            |            | Search    |           |           |           |           |
+|            |            |            | for       |           |           |           |           |
+|            |            |            | current   |           |           |           |           |
+|            |            |            | temperatu |           |           |           |           |
+|            |            |            | re. You   |           |           |           |           |
+|            |            |            | do not    |           |           |           |           |
+|            |            |            | have any  |           |           |           |           |
+|            |            |            | more info |           |           |           |           |
+|            |            |            | rmation.  |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 27         | USER       | AGENT      | What's    | null      | null      | null      | null      |
+|            |            |            | the tempe |           |           |           |           |
+|            |            |            | rature    |           |           |           |           |
+|            |            |            | right     |           |           |           |           |
+|            |            |            | now?      |           |           |           |           |
+|            |            |            | Resolve   |           |           |           |           |
+|            |            |            | any issue |           |           |           |           |
+|            |            |            | alone     |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 28         | AGENT      | EXECUTION_ | chatcmpl_ | get_locat | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_b75b | ion_servi |           |           | "EXECUTIO |
+|            |            | T          | f00a6a1e3 | ce_status |           |           | N_ENVIRON |
+|            |            |            | 0c1_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_b75b |           |           |           |           |
+|            |            |            | f00a6a1e3 |           |           |           |           |
+|            |            |            | 0c1_respo |           |           |           |           |
+|            |            |            | nse = get |           |           |           |           |
+|            |            |            | _location |           |           |           |           |
+|            |            |            | _service_ |           |           |           |           |
+|            |            |            | status(** |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_b75b |           |           |           |           |
+|            |            |            | f00a6a1e3 |           |           |           |           |
+|            |            |            | 0c1_param |           |           |           |           |
+|            |            |            | eters)    |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_b7 |           |           |           |           |
+|            |            |            | 5bf00a6a1 |           |           |           |           |
+|            |            |            | e30c1_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 29         | AGENT      | EXECUTION_ | chatcmpl_ | search_we | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_b9da | ather_aro |           |           | "EXECUTIO |
+|            |            | T          | 18cf9d6a3 | und_lat_l |           |           | N_ENVIRON |
+|            |            |            | e80_param | on        |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_b9da |           |           |           |           |
+|            |            |            | 18cf9d6a3 |           |           |           |           |
+|            |            |            | e80_respo |           |           |           |           |
+|            |            |            | nse = sea |           |           |           |           |
+|            |            |            | rch_weath |           |           |           |           |
+|            |            |            | er_around |           |           |           |           |
+|            |            |            | _lat_lon( |           |           |           |           |
+|            |            |            | **chatcmp |           |           |           |           |
+|            |            |            | l_tool_b9 |           |           |           |           |
+|            |            |            | da18cf9d6 |           |           |           |           |
+|            |            |            | a3e80_par |           |           |           |           |
+|            |            |            | ameters)  |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_b9 |           |           |           |           |
+|            |            |            | da18cf9d6 |           |           |           |           |
+|            |            |            | a3e80_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 30         | EXECUTION_ | AGENT      | False     | get_locat | null      | ["{"tool_ | ["EXECUTI |
+|            | ENVIRONMEN |            |           | ion_servi |           | name":    | ON_ENVIRO |
+|            | T          |            |           | ce_status |           | "get_loca | NMENT",   |
+|            |            |            |           |           |           | tion_serv | "AGENT"]  |
+|            |            |            |           |           |           | ice_statu |           |
+|            |            |            |           |           |           | s", "argu |           |
+|            |            |            |           |           |           | ments":   |           |
+|            |            |            |           |           |           | {},       |           |
+|            |            |            |           |           |           | "result": |           |
+|            |            |            |           |           |           | false}"]  |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 31         | EXECUTION_ | AGENT      | Permissio | search_we | Permissio | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | nError:   | ather_aro | nError:   |           | ON_ENVIRO |
+|            | T          |            | Location  | und_lat_l | Location  |           | NMENT",   |
+|            |            |            | service   | on        | service   |           | "AGENT"]  |
+|            |            |            | is not    |           | is not    |           |           |
+|            |            |            | enabled.  |           | enabled.  |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 32         | AGENT      | EXECUTION_ | chatcmpl_ | set_locat | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_ade9 | ion_servi |           |           | "EXECUTIO |
+|            |            | T          | 31ea59e8f | ce_status |           |           | N_ENVIRON |
+|            |            |            | 02c_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'on':    |           |           |           |           |
+|            |            |            | True}     |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_ade9 |           |           |           |           |
+|            |            |            | 31ea59e8f |           |           |           |           |
+|            |            |            | 02c_respo |           |           |           |           |
+|            |            |            | nse = set |           |           |           |           |
+|            |            |            | _location |           |           |           |           |
+|            |            |            | _service_ |           |           |           |           |
+|            |            |            | status(** |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_ade9 |           |           |           |           |
+|            |            |            | 31ea59e8f |           |           |           |           |
+|            |            |            | 02c_param |           |           |           |           |
+|            |            |            | eters)    |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_ad |           |           |           |           |
+|            |            |            | e931ea59e |           |           |           |           |
+|            |            |            | 8f02c_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 33         | EXECUTION_ | AGENT      | Permissio | set_locat | Permissio | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | nError:   | ion_servi | nError:   |           | ON_ENVIRO |
+|            | T          |            | Location  | ce_status | Location  |           | NMENT",   |
+|            |            |            | service   |           | service   |           | "AGENT"]  |
+|            |            |            | cannot be |           | cannot be |           |           |
+|            |            |            | turned on |           | turned on |           |           |
+|            |            |            | in low    |           | in low    |           |           |
+|            |            |            | battery   |           | battery   |           |           |
+|            |            |            | mode      |           | mode      |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 34         | AGENT      | EXECUTION_ | chatcmpl_ | get_low_b | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_a7fa | attery_mo |           |           | "EXECUTIO |
+|            |            | T          | 553aeadaa | de_status |           |           | N_ENVIRON |
+|            |            |            | 65f_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_a7fa |           |           |           |           |
+|            |            |            | 553aeadaa |           |           |           |           |
+|            |            |            | 65f_respo |           |           |           |           |
+|            |            |            | nse = get |           |           |           |           |
+|            |            |            | _low_batt |           |           |           |           |
+|            |            |            | ery_mode_ |           |           |           |           |
+|            |            |            | status(** |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_a7fa |           |           |           |           |
+|            |            |            | 553aeadaa |           |           |           |           |
+|            |            |            | 65f_param |           |           |           |           |
+|            |            |            | eters)    |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_a7 |           |           |           |           |
+|            |            |            | fa553aead |           |           |           |           |
+|            |            |            | aa65f_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 35         | EXECUTION_ | AGENT      | True      | get_low_b | null      | ["{"tool_ | ["EXECUTI |
+|            | ENVIRONMEN |            |           | attery_mo |           | name":    | ON_ENVIRO |
+|            | T          |            |           | de_status |           | "get_low_ | NMENT",   |
+|            |            |            |           |           |           | battery_m | "AGENT"]  |
+|            |            |            |           |           |           | ode_statu |           |
+|            |            |            |           |           |           | s", "argu |           |
+|            |            |            |           |           |           | ments":   |           |
+|            |            |            |           |           |           | {},       |           |
+|            |            |            |           |           |           | "result": |           |
+|            |            |            |           |           |           | true}"]   |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 36         | AGENT      | EXECUTION_ | chatcmpl_ | set_low_b | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_a160 | attery_mo |           |           | "EXECUTIO |
+|            |            | T          | 5f33d7c74 | de_status |           |           | N_ENVIRON |
+|            |            |            | 8ab_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'on':    |           |           |           |           |
+|            |            |            | False}    |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_a160 |           |           |           |           |
+|            |            |            | 5f33d7c74 |           |           |           |           |
+|            |            |            | 8ab_respo |           |           |           |           |
+|            |            |            | nse = set |           |           |           |           |
+|            |            |            | _low_batt |           |           |           |           |
+|            |            |            | ery_mode_ |           |           |           |           |
+|            |            |            | status(** |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_a160 |           |           |           |           |
+|            |            |            | 5f33d7c74 |           |           |           |           |
+|            |            |            | 8ab_param |           |           |           |           |
+|            |            |            | eters)    |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_a1 |           |           |           |           |
+|            |            |            | 605f33d7c |           |           |           |           |
+|            |            |            | 748ab_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 37         | EXECUTION_ | AGENT      | None      | set_low_b | null      | ["{"tool_ | ["EXECUTI |
+|            | ENVIRONMEN |            |           | attery_mo |           | name":    | ON_ENVIRO |
+|            | T          |            |           | de_status |           | "set_low_ | NMENT",   |
+|            |            |            |           |           |           | battery_m | "AGENT"]  |
+|            |            |            |           |           |           | ode_statu |           |
+|            |            |            |           |           |           | s", "argu |           |
+|            |            |            |           |           |           | ments":   |           |
+|            |            |            |           |           |           | {"on":    |           |
+|            |            |            |           |           |           | false},   |           |
+|            |            |            |           |           |           | "result": |           |
+|            |            |            |           |           |           | null}"]   |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 38         | AGENT      | EXECUTION_ | chatcmpl_ | set_locat | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_8d46 | ion_servi |           |           | "EXECUTIO |
+|            |            | T          | 4ef8aad19 | ce_status |           |           | N_ENVIRON |
+|            |            |            | 20f_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'on':    |           |           |           |           |
+|            |            |            | True}     |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_8d46 |           |           |           |           |
+|            |            |            | 4ef8aad19 |           |           |           |           |
+|            |            |            | 20f_respo |           |           |           |           |
+|            |            |            | nse = set |           |           |           |           |
+|            |            |            | _location |           |           |           |           |
+|            |            |            | _service_ |           |           |           |           |
+|            |            |            | status(** |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_8d46 |           |           |           |           |
+|            |            |            | 4ef8aad19 |           |           |           |           |
+|            |            |            | 20f_param |           |           |           |           |
+|            |            |            | eters)    |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_8d |           |           |           |           |
+|            |            |            | 464ef8aad |           |           |           |           |
+|            |            |            | 1920f_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 39         | EXECUTION_ | AGENT      | None      | set_locat | null      | ["{"tool_ | ["EXECUTI |
+|            | ENVIRONMEN |            |           | ion_servi |           | name":    | ON_ENVIRO |
+|            | T          |            |           | ce_status |           | "set_loca | NMENT",   |
+|            |            |            |           |           |           | tion_serv | "AGENT"]  |
+|            |            |            |           |           |           | ice_statu |           |
+|            |            |            |           |           |           | s", "argu |           |
+|            |            |            |           |           |           | ments":   |           |
+|            |            |            |           |           |           | {"on":    |           |
+|            |            |            |           |           |           | true},    |           |
+|            |            |            |           |           |           | "result": |           |
+|            |            |            |           |           |           | null}"]   |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 40         | AGENT      | EXECUTION_ | chatcmpl_ | search_we | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_9aeb | ather_aro |           |           | "EXECUTIO |
+|            |            | T          | d815629e1 | und_lat_l |           |           | N_ENVIRON |
+|            |            |            | 1ba_param | on        |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_9aeb |           |           |           |           |
+|            |            |            | d815629e1 |           |           |           |           |
+|            |            |            | 1ba_respo |           |           |           |           |
+|            |            |            | nse = sea |           |           |           |           |
+|            |            |            | rch_weath |           |           |           |           |
+|            |            |            | er_around |           |           |           |           |
+|            |            |            | _lat_lon( |           |           |           |           |
+|            |            |            | **chatcmp |           |           |           |           |
+|            |            |            | l_tool_9a |           |           |           |           |
+|            |            |            | ebd815629 |           |           |           |           |
+|            |            |            | e11ba_par |           |           |           |           |
+|            |            |            | ameters)  |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_9a |           |           |           |           |
+|            |            |            | ebd815629 |           |           |           |           |
+|            |            |            | e11ba_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 41         | EXECUTION_ | AGENT      | Connectio | search_we | Connectio | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | nError:   | ather_aro | nError:   |           | ON_ENVIRO |
+|            | T          |            | Wifi is   | und_lat_l | Wifi is   |           | NMENT",   |
+|            |            |            | not       | on        | not       |           | "AGENT"]  |
+|            |            |            | enabled   |           | enabled   |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 42         | AGENT      | EXECUTION_ | chatcmpl_ | get_wifi_ | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_99ee | status    |           |           | "EXECUTIO |
+|            |            | T          | 6365427fa |           |           |           | N_ENVIRON |
+|            |            |            | 411_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_99ee |           |           |           |           |
+|            |            |            | 6365427fa |           |           |           |           |
+|            |            |            | 411_respo |           |           |           |           |
+|            |            |            | nse = get |           |           |           |           |
+|            |            |            | _wifi_sta |           |           |           |           |
+|            |            |            | tus(**cha |           |           |           |           |
+|            |            |            | tcmpl_too |           |           |           |           |
+|            |            |            | l_99ee636 |           |           |           |           |
+|            |            |            | 5427fa411 |           |           |           |           |
+|            |            |            | _paramete |           |           |           |           |
+|            |            |            | rs)       |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_99 |           |           |           |           |
+|            |            |            | ee6365427 |           |           |           |           |
+|            |            |            | fa411_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 43         | EXECUTION_ | AGENT      | False     | get_wifi_ | null      | ["{"tool_ | ["EXECUTI |
+|            | ENVIRONMEN |            |           | status    |           | name":    | ON_ENVIRO |
+|            | T          |            |           |           |           | "get_wifi | NMENT",   |
+|            |            |            |           |           |           | _status", | "AGENT"]  |
+|            |            |            |           |           |           | "argument |           |
+|            |            |            |           |           |           | s": {},   |           |
+|            |            |            |           |           |           | "result": |           |
+|            |            |            |           |           |           | false}"]  |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 44         | AGENT      | EXECUTION_ | call_00_E | set_wifi_ | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | T_x7wQtwj | status    |           |           | "EXECUTIO |
+|            |            | T          | DZzKtKVRu |           |           |           | N_ENVIRON |
+|            |            |            | qnIf0462_ |           |           |           | MENT"]    |
+|            |            |            | parameter |           |           |           |           |
+|            |            |            | s =       |           |           |           |           |
+|            |            |            | {'on':    |           |           |           |           |
+|            |            |            | True}     |           |           |           |           |
+|            |            |            | call_00_E |           |           |           |           |
+|            |            |            | T_x7wQtwj |           |           |           |           |
+|            |            |            | DZzKtKVRu |           |           |           |           |
+|            |            |            | qnIf0462_ |           |           |           |           |
+|            |            |            | response  |           |           |           |           |
+|            |            |            | = set_wif |           |           |           |           |
+|            |            |            | i_status( |           |           |           |           |
+|            |            |            | **call_00 |           |           |           |           |
+|            |            |            | _ET_x7wQt |           |           |           |           |
+|            |            |            | wjDZzKtKV |           |           |           |           |
+|            |            |            | RuqnIf046 |           |           |           |           |
+|            |            |            | 2_paramet |           |           |           |           |
+|            |            |            | ers)      |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(call_00 |           |           |           |           |
+|            |            |            | _ET_x7wQt |           |           |           |           |
+|            |            |            | wjDZzKtKV |           |           |           |           |
+|            |            |            | RuqnIf046 |           |           |           |           |
+|            |            |            | 2_respons |           |           |           |           |
+|            |            |            | e))       |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 45         | EXECUTION_ | AGENT      | None      | set_wifi_ | null      | ["{"tool_ | ["EXECUTI |
+|            | ENVIRONMEN |            |           | status    |           | name":    | ON_ENVIRO |
+|            | T          |            |           |           |           | "set_wifi | NMENT",   |
+|            |            |            |           |           |           | _status", | "AGENT"]  |
+|            |            |            |           |           |           | "argument |           |
+|            |            |            |           |           |           | s":       |           |
+|            |            |            |           |           |           | {"on":    |           |
+|            |            |            |           |           |           | true},    |           |
+|            |            |            |           |           |           | "result": |           |
+|            |            |            |           |           |           | null}"]   |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 46         | AGENT      | EXECUTION_ | call_00_E | search_we | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | T_6e8P9en | ather_aro |           |           | "EXECUTIO |
+|            |            | T          | ZNmW4nmpJ | und_lat_l |           |           | N_ENVIRON |
+|            |            |            | 3NhQ3198_ | on        |           |           | MENT"]    |
+|            |            |            | parameter |           |           |           |           |
+|            |            |            | s = {}    |           |           |           |           |
+|            |            |            | call_00_E |           |           |           |           |
+|            |            |            | T_6e8P9en |           |           |           |           |
+|            |            |            | ZNmW4nmpJ |           |           |           |           |
+|            |            |            | 3NhQ3198_ |           |           |           |           |
+|            |            |            | response  |           |           |           |           |
+|            |            |            | = search_ |           |           |           |           |
+|            |            |            | weather_a |           |           |           |           |
+|            |            |            | round_lat |           |           |           |           |
+|            |            |            | _lon(**ca |           |           |           |           |
+|            |            |            | ll_00_ET_ |           |           |           |           |
+|            |            |            | 6e8P9enZN |           |           |           |           |
+|            |            |            | mW4nmpJ3N |           |           |           |           |
+|            |            |            | hQ3198_pa |           |           |           |           |
+|            |            |            | rameters) |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(call_00 |           |           |           |           |
+|            |            |            | _ET_6e8P9 |           |           |           |           |
+|            |            |            | enZNmW4nm |           |           |           |           |
+|            |            |            | pJ3NhQ319 |           |           |           |           |
+|            |            |            | 8_respons |           |           |           |           |
+|            |            |            | e))       |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 47         | EXECUTION_ | AGENT      | Permissio | search_we | Permissio | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | nError:   | ather_aro | nError:   |           | ON_ENVIRO |
+|            | T          |            | Please    | und_lat_l | Please    |           | NMENT",   |
+|            |            |            | provide   | on        | provide   |           | "AGENT"]  |
+|            |            |            | 'RAPID_AP |           | 'RAPID_AP |           |           |
+|            |            |            | I_KEY' in |           | I_KEY' in |           |           |
+|            |            |            | environme |           | environme |           |           |
+|            |            |            | nt        |           | nt        |           |           |
+|            |            |            | variable. |           | variable. |           |           |
+|            |            |            | You can   |           | You can   |           |           |
+|            |            |            | find your |           | find your |           |           |
+|            |            |            | API key   |           | API key   |           |           |
+|            |            |            | by        |           | by        |           |           |
+|            |            |            | following |           | following |           |           |
+|            |            |            | https://d |           | https://d |           |           |
+|            |            |            | ocs.rapid |           | ocs.rapid |           |           |
+|            |            |            | api.com/v |           | api.com/v |           |           |
+|            |            |            | 1.0/docs/ |           | 1.0/docs/ |           |           |
+|            |            |            | keys      |           | keys      |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 48         | AGENT      | USER       | I tried   | null      | null      | null      | ["AGENT", |
+|            |            |            | to get    |           |           |           | "USER"]   |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | current   |           |           |           |           |
+|            |            |            | temperatu |           |           |           |           |
+|            |            |            | re and    |           |           |           |           |
+|            |            |            | resolved  |           |           |           |           |
+|            |            |            | several   |           |           |           |           |
+|            |            |            | issues    |           |           |           |           |
+|            |            |            | along the |           |           |           |           |
+|            |            |            | way, but  |           |           |           |           |
+|            |            |            | hit one   |           |           |           |           |
+|            |            |            | blocker I |           |           |           |           |
+|            |            |            | can't fix |           |           |           |           |
+|            |            |            | on my     |           |           |           |           |
+|            |            |            | own.      |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|            |            |            | Here's    |           |           |           |           |
+|            |            |            | what I    |           |           |           |           |
+|            |            |            | did:      |           |           |           |           |
+|            |            |            | 1. **Loca |           |           |           |           |
+|            |            |            | tion      |           |           |           |           |
+|            |            |            | service** |           |           |           |           |
+|            |            |            | was off — |           |           |           |           |
+|            |            |            | I enabled |           |           |           |           |
+|            |            |            | it.       |           |           |           |           |
+|            |            |            | 2. **Low  |           |           |           |           |
+|            |            |            | battery   |           |           |           |           |
+|            |            |            | mode**    |           |           |           |           |
+|            |            |            | was       |           |           |           |           |
+|            |            |            | blocking  |           |           |           |           |
+|            |            |            | location  |           |           |           |           |
+|            |            |            | — I       |           |           |           |           |
+|            |            |            | turned it |           |           |           |           |
+|            |            |            | off.      |           |           |           |           |
+|            |            |            | 3.        |           |           |           |           |
+|            |            |            | **Wi-Fi** |           |           |           |           |
+|            |            |            | was off — |           |           |           |           |
+|            |            |            | I enabled |           |           |           |           |
+|            |            |            | it so     |           |           |           |           |
+|            |            |            | weather   |           |           |           |           |
+|            |            |            | data      |           |           |           |           |
+|            |            |            | could be  |           |           |           |           |
+|            |            |            | fetched.  |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|            |            |            | However,  |           |           |           |           |
+|            |            |            | when      |           |           |           |           |
+|            |            |            | querying  |           |           |           |           |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | weather   |           |           |           |           |
+|            |            |            | service,  |           |           |           |           |
+|            |            |            | it        |           |           |           |           |
+|            |            |            | returned  |           |           |           |           |
+|            |            |            | a         |           |           |           |           |
+|            |            |            | **missing |           |           |           |           |
+|            |            |            | API key** |           |           |           |           |
+|            |            |            | error (`R |           |           |           |           |
+|            |            |            | APID_API_ |           |           |           |           |
+|            |            |            | KEY` envi |           |           |           |           |
+|            |            |            | ronment   |           |           |           |           |
+|            |            |            | variable  |           |           |           |           |
+|            |            |            | is not    |           |           |           |           |
+|            |            |            | set). I   |           |           |           |           |
+|            |            |            | have no   |           |           |           |           |
+|            |            |            | way to    |           |           |           |           |
+|            |            |            | set envir |           |           |           |           |
+|            |            |            | onment    |           |           |           |           |
+|            |            |            | variables |           |           |           |           |
+|            |            |            | or        |           |           |           |           |
+|            |            |            | generate  |           |           |           |           |
+|            |            |            | an API    |           |           |           |           |
+|            |            |            | key with  |           |           |           |           |
+|            |            |            | the tools |           |           |           |           |
+|            |            |            | available |           |           |           |           |
+|            |            |            | to me.    |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|            |            |            | To        |           |           |           |           |
+|            |            |            | complete  |           |           |           |           |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | request,  |           |           |           |           |
+|            |            |            | you'd     |           |           |           |           |
+|            |            |            | need to:  |           |           |           |           |
+|            |            |            | - Set the |           |           |           |           |
+|            |            |            | `RAPID_AP |           |           |           |           |
+|            |            |            | I_KEY`    |           |           |           |           |
+|            |            |            | environme |           |           |           |           |
+|            |            |            | nt        |           |           |           |           |
+|            |            |            | variable  |           |           |           |           |
+|            |            |            | (you can  |           |           |           |           |
+|            |            |            | get a key |           |           |           |           |
+|            |            |            | from Rapi |           |           |           |           |
+|            |            |            | dAPI), or |           |           |           |           |
+|            |            |            | - Let me  |           |           |           |           |
+|            |            |            | know if   |           |           |           |           |
+|            |            |            | there's   |           |           |           |           |
+|            |            |            | another   |           |           |           |           |
+|            |            |            | weather   |           |           |           |           |
+|            |            |            | source/ke |           |           |           |           |
+|            |            |            | y I       |           |           |           |           |
+|            |            |            | should    |           |           |           |           |
+|            |            |            | use.      |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|            |            |            | Everythin |           |           |           |           |
+|            |            |            | g else is |           |           |           |           |
+|            |            |            | now confi |           |           |           |           |
+|            |            |            | gured     |           |           |           |           |
+|            |            |            | correctly |           |           |           |           |
+|            |            |            | and ready |           |           |           |           |
+|            |            |            | once the  |           |           |           |           |
+|            |            |            | key is    |           |           |           |           |
+|            |            |            | available |           |           |           |           |
+|            |            |            | .         |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 49         | USER       | EXECUTION_ | print(rep | null      | null      | null      | ["USER",  |
+|            |            | ENVIRONMEN | r(end_con |           |           |           | "EXECUTIO |
+|            |            | T          | versation |           |           |           | N_ENVIRON |
+|            |            |            | ()))      |           |           |           | MENT"]    |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 50         | EXECUTION_ | USER       | None      | null      | null      | ["{"tool_ | ["EXECUTI |
+|            | ENVIRONMEN |            |           |           |           | name":    | ON_ENVIRO |
+|            | T          |            |           |           |           | "end_conv | NMENT",   |
+|            |            |            |           |           |           | ersation" | "USER"]   |
+|            |            |            |           |           |           | , "argume |           |
+|            |            |            |           |           |           | nts": {}, |           |
+|            |            |            |           |           |           | "result": |           |
+|            |            |            |           |           |           | null}"]   |           |
++------------+------------+------------+-----------+-----------+-----------+-----------+-----------+

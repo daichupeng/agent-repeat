@@ -1,0 +1,396 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 7
+  },
+  {
+    "role": "user",
+    "content": "Make all of my coworkers my favorites",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_2154a5b0c67a4ee5a7a37586",
+        "function": {
+          "arguments": "{\"relationship\": \"coworker\"}",
+          "name": "search_contacts"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_74630ddb2a81495d8d482976",
+        "function": {
+          "arguments": "{}",
+          "name": "search_contacts"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 2515,
+      "completion_tokens": 278,
+      "total_tokens": 2793
+    }
+  },
+  {
+    "tool_call_id": "call_2154a5b0c67a4ee5a7a37586",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'coworker', 'is_self': False}, {'person_id': 'e3570ab6-0819-5032-be1e-2b366390c8ef', 'name': 'Homer S', 'phone_number': '+10000000000', 'relationship': 'coworker', 'is_self': False}]",
+    "episode_number": 7,
+    "tool_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 0,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "EXECUTION_ENVIRONMENT",
+                    "recipient": "AGENT",
+                    "tool_trace": "{\"tool_name\": \"search_contacts\", \"arguments\": {\"relationship\": \"coworker\"}}"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "tool_call_id": "call_74630ddb2a81495d8d482976",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "ValueError: No search criteria are given. At least one search criteria should be provided among ('person_id', 'name', 'phone_number', 'relationship', 'is_self')",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_ae90ccb3c866460589e46d5a",
+        "function": {
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\", \"relationship\": \"favorite\"}",
+          "name": "modify_contact"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_a7ec34605e7e43f8b3807fe4",
+        "function": {
+          "arguments": "{\"person_id\": \"e3570ab6-0819-5032-be1e-2b366390c8ef\", \"relationship\": \"favorite\"}",
+          "name": "modify_contact"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 2853,
+      "completion_tokens": 707,
+      "total_tokens": 3560
+    }
+  },
+  {
+    "tool_call_id": "call_ae90ccb3c866460589e46d5a",
+    "role": "tool",
+    "name": "modify_contact",
+    "content": "None",
+    "episode_number": 7,
+    "tool_details": {
+      "database_update": {
+        "CONTACT": [
+          {
+            "person_id": "3815cac9-3cab-5d75-89e2-fe12fe19779e",
+            "name": "Tomas Haake",
+            "phone_number": "+11233344455",
+            "relationship": "self",
+            "is_self": true
+          },
+          {
+            "person_id": "a22e1984-6c6c-530c-8831-c3ea3b5138e7",
+            "name": "John Petrucci",
+            "phone_number": "+1234560987",
+            "relationship": "acquaintance",
+            "is_self": false
+          },
+          {
+            "person_id": "9e137f06-916a-5310-8174-cf0b7e9f7054",
+            "name": "Fredrik Thordendal",
+            "phone_number": "+12453344098",
+            "relationship": "favorite",
+            "is_self": false
+          },
+          {
+            "person_id": "e3570ab6-0819-5032-be1e-2b366390c8ef",
+            "name": "Homer S",
+            "phone_number": "+10000000000",
+            "relationship": "favorite",
+            "is_self": false
+          }
+        ]
+      },
+      "milestone_matches": [
+        {
+          "milestone_index": 1,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "update_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": [
+                  {
+                    "person_id": "9e137f06-916a-5310-8174-cf0b7e9f7054",
+                    "name": "Fredrik Thordendal",
+                    "phone_number": "+12453344098",
+                    "relationship": "favorite",
+                    "is_self": false
+                  },
+                  {
+                    "person_id": "e3570ab6-0819-5032-be1e-2b366390c8ef",
+                    "name": "Homer S",
+                    "phone_number": "+10000000000",
+                    "relationship": "favorite",
+                    "is_self": false
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "tool_call_id": "call_a7ec34605e7e43f8b3807fe4",
+    "role": "tool",
+    "name": "modify_contact",
+    "content": "None",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_007acf6258c046b89a3d825a",
+        "function": {
+          "arguments": "{\"relationship\": \"favorite\"}",
+          "name": "search_contacts"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 3581,
+      "completion_tokens": 53,
+      "total_tokens": 3634
+    }
+  },
+  {
+    "tool_call_id": "call_007acf6258c046b89a3d825a",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'favorite', 'is_self': False}, {'person_id': 'e3570ab6-0819-5032-be1e-2b366390c8ef', 'name': 'Homer S', 'phone_number': '+10000000000', 'relationship': 'favorite', 'is_self': False}]",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "Done! I've marked both of your coworkers as favorites:\n\n- **Fredrik Thordendal** (+12453344098)\n- **Homer S** (+10000000000)\n\nBoth now have their relationship set to **favorite**.",
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 3895,
+      "completion_tokens": 52,
+      "total_tokens": 3947
+    },
+    "assistant_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 2,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "USER",
+                    "content": "All your coworkers are now your favorites"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 0.6366626998527439
+        }
+      ]
+    }
+  }
+]

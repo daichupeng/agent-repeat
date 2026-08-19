@@ -1,0 +1,205 @@
+[
+  {
+    "role": "user",
+    "content": "Postpone my most recent reminder to tomorrow 5PM."
+  },
+  {
+    "role": "assistant",
+    "content": "I'll help you postpone your most recent reminder. Let me first find your reminders and current time.\n\n",
+    "refusal": null,
+    "reasoning": "The user wants to postpone their most recent reminder to tomorrow 5PM. First I need to find their most recent reminder. Let me search for reminders. I need to know current time and the most recent reminder.\n\nLet me get current timestamp and search reminders.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-87dfa2a434550914",
+        "function": {
+          "name": "get_current_timestamp",
+          "arguments": "{}"
+        }
+      },
+      {
+        "type": "function",
+        "index": 1,
+        "id": "chatcmpl-tool-bb72c491b0d47dc5",
+        "function": {
+          "name": "search_reminder",
+          "arguments": "{}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to postpone their most recent reminder to tomorrow 5PM. First I need to find their most recent reminder. Let me search for reminders. I need to know current time and the most recent reminder.\n\nLet me get current timestamp and search reminders.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-87dfa2a434550914",
+    "role": "tool",
+    "name": "get_current_timestamp",
+    "content": "1787044732.294033"
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-bb72c491b0d47dc5",
+    "role": "tool",
+    "name": "search_reminder",
+    "content": "ValueError: No search criteria are given. At least one search criteria should be provided among ('reminder_id', 'content', 'creation_timestamp', 'creation_timestamp', 'reminder_timestamp', 'reminder_timestamp', 'latitude', 'longitude')"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "I need to search for reminders. The most recent one would have the highest creation timestamp. Let me search with a range. But I don't know the creation timestamps. Let me search broadly. I could search with creation_timestamp_lowerbound of 0 or something.\n\nLet me search for reminders with a creation timestamp lower bound.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-a7fb3a274455bf98",
+        "function": {
+          "name": "search_reminder",
+          "arguments": "{\"creation_timestamp_lowerbound\": 0}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "I need to search for reminders. The most recent one would have the highest creation timestamp. Let me search with a range. But I don't know the creation timestamps. Let me search broadly. I could search with creation_timestamp_lowerbound of 0 or something.\n\nLet me search for reminders with a creation timestamp lower bound.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-a7fb3a274455bf98",
+    "role": "tool",
+    "name": "search_reminder",
+    "content": "ValueError: Parameter 'creation_timestamp_lowerbound' is smaller than its valid range minimum of 315529200.0."
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b63d1c360d2ae4df",
+        "function": {
+          "name": "search_reminder",
+          "arguments": "{\"creation_timestamp_lowerbound\": 315529200}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b63d1c360d2ae4df",
+    "role": "tool",
+    "name": "search_reminder",
+    "content": "[{'reminder_id': '8f5b6fc6-1c25-5467-91ba-d4d1e17c7129', 'content': 'Look for Company SF tickets', 'creation_timestamp': 1786785522.469831, 'reminder_timestamp': 1786958322.469836, 'latitude': None, 'longitude': None}, {'reminder_id': 'da2b856e-9390-511f-bcbe-7005f72cbf5e', 'content': 'Buy tickets for Merrily next week', 'creation_timestamp': 1786958322.469843, 'reminder_timestamp': 1787044662.469844, 'latitude': None, 'longitude': None}, {'reminder_id': '54f20be9-eac3-5e76-8e57-724e48d3d477', 'content': 'Buy a nice rich navy bathing dress', 'creation_timestamp': 1787041122.469848, 'reminder_timestamp': 1787048322.46985, 'latitude': 37.3237926356735, 'longitude': -122.03961770355414}]"
+  },
+  {
+    "role": "assistant",
+    "content": "The most recent reminder is \"Buy a nice rich navy bathing dress\". Let me determine tomorrow's 5PM timestamp.\n\n",
+    "refusal": null,
+    "reasoning": "The most recent reminder by creation timestamp is the one with content \"Buy a nice rich navy bathing dress\" with creation_timestamp 1787041122.469848. That's the most recent.\n\nCurrent time is 1787044732. The user wants to postpone to tomorrow 5PM.\n\nLet me convert \"tomorrow 5PM\" to timestamp. Current time is 1787044732. Let me figure out today's date.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-bd545768e5db20fc",
+        "function": {
+          "name": "timestamp_to_datetime_info",
+          "arguments": "{\"timestamp\": 1787044732.294033}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The most recent reminder by creation timestamp is the one with content \"Buy a nice rich navy bathing dress\" with creation_timestamp 1787041122.469848. That's the most recent.\n\nCurrent time is 1787044732. The user wants to postpone to tomorrow 5PM.\n\nLet me convert \"tomorrow 5PM\" to timestamp. Current time is 1787044732. Let me figure out today's date.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-bd545768e5db20fc",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 8, 'day': 18, 'hour': 17, 'minute': 18, 'second': 52, 'isoweekday': 2}"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "Current date is August 18, 2026 (Tuesday). Tomorrow is August 19, 2026 at 5PM (17:00).\n\nLet me convert that to timestamp.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b97fc150785d57e0",
+        "function": {
+          "name": "datetime_info_to_timestamp",
+          "arguments": "{\"year\": 2026, \"month\": 8, \"day\": 19, \"hour\": 17, \"minute\": 0, \"second\": 0}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Current date is August 18, 2026 (Tuesday). Tomorrow is August 19, 2026 at 5PM (17:00).\n\nLet me convert that to timestamp.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b97fc150785d57e0",
+    "role": "tool",
+    "name": "datetime_info_to_timestamp",
+    "content": "1787130000.0"
+  },
+  {
+    "role": "assistant",
+    "content": "I found your most recent reminder and will postpone it. Let me update it to tomorrow (August 19) at 5PM.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-976894adc22ba095",
+        "function": {
+          "name": "modify_reminder",
+          "arguments": "{\"reminder_id\": \"54f20be9-eac3-5e76-8e57-724e48d3d477\", \"reminder_timestamp\": 1787130000}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-976894adc22ba095",
+    "role": "tool",
+    "name": "modify_reminder",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Your most recent reminder has been postponed. Here's the updated details:\n\n- **Reminder:** \"Buy a nice rich navy bathing dress\"\n- **New time:** Tomorrow, August 19, 2026 at 5:00 PM\n- **Location:** 37.3238, -122.0396 (Cupertino area)\n\nThe reminder was updated successfully. Is there anything else you'd like to adjust?",
+    "refusal": null,
+    "reasoning": "The modification was successful. Let me verify by searching for the reminder to confirm.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The modification was successful. Let me verify by searching for the reminder to confirm.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  }
+]

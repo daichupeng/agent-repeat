@@ -1,0 +1,51 @@
+[
+  {
+    "role": "user",
+    "content": "What's the temperature here right now"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user asks \"What's the temperature here right now\". I don't have location info. The tool has defaults for current latitude/longitude. I should call without parameters to use current location.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b99e67caff518892",
+        "function": {
+          "name": "search_weather_around_lat_lon",
+          "arguments": "{}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user asks \"What's the temperature here right now\". I don't have location info. The tool has defaults for current latitude/longitude. I should call without parameters to use current location.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b99e67caff518892",
+    "role": "tool",
+    "name": "search_weather_around_lat_lon",
+    "content": "PermissionError: Please provide 'RAPID_API_KEY' in environment variable. You can find your API key by following https://docs.rapidapi.com/v1.0/docs/keys"
+  },
+  {
+    "role": "assistant",
+    "content": "I'm sorry, but I'm currently unable to fetch the weather information due to a configuration issue on my end (the weather API key isn't set up). \n\nCould you let me know your location (city, or latitude/longitude)? Once the service is working, I can look up the current temperature for you. Alternatively, you may want to try again later.",
+    "refusal": null,
+    "reasoning": "The tool returned an error about missing API key. I should inform the user.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The tool returned an error about missing API key. I should inform the user.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  }
+]

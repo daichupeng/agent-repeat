@@ -1,0 +1,120 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 4
+  },
+  {
+    "role": "user",
+    "content": "How many days are left until Memorial Day?",
+    "episode_number": 4,
+    "user_details": {
+      "minefield_matches": [
+        {
+          "minefield_index": 0,
+          "minefield": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "EXECUTION_ENVIRONMENT",
+                    "content": "timestamp_diff"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_contains_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "minefield_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_132fdf0c78e245e9bde4d472",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Memorial Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 954,
+      "completion_tokens": 600,
+      "total_tokens": 1554
+    }
+  },
+  {
+    "tool_call_id": "call_132fdf0c78e245e9bde4d472",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1779638400.0",
+    "episode_number": 4
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_861c75db055c4559b97e9986",
+        "function": {
+          "arguments": "{\"timestamp\": 1779638400.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 1569,
+      "completion_tokens": 105,
+      "total_tokens": 1674
+    }
+  },
+  {
+    "tool_call_id": "call_861c75db055c4559b97e9986",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 5, 'day': 25, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 1}",
+    "episode_number": 4
+  },
+  {
+    "role": "assistant",
+    "content": "Memorial Day is on **Monday, May 25, 2026** this year (timestamp `1779638400`).\n\nTo calculate how many days are left, I need today's date. There's no clock/today tool available in this environment — could you tell me today's date (or confirm you'd like me to compute it as of a specific date)?",
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 1729,
+      "completion_tokens": 181,
+      "total_tokens": 1910
+    }
+  }
+]

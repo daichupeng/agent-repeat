@@ -1,0 +1,166 @@
+[
+  {
+    "role": "user",
+    "content": "Remind me to buy chocolate milk tomorrow 5PM at Whole Foods on Stevens Creek."
+  },
+  {
+    "role": "assistant",
+    "content": "I'll help you set up that reminder. Let me first get the current time and find the Whole Foods location.\n\n",
+    "refusal": null,
+    "reasoning": "The user wants a reminder to buy chocolate milk tomorrow at 5PM at Whole Foods on Stevens Creek. I need the current timestamp to compute tomorrow 5PM. Let me get current timestamp.\n\nAlso I should search for the location to get lat/lon for Whole Foods on Stevens Creek.\n\nLet me get current timestamp and search location in parallel.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-a4db40da8231abdc",
+        "function": {
+          "name": "get_current_timestamp",
+          "arguments": "{}"
+        }
+      },
+      {
+        "type": "function",
+        "index": 1,
+        "id": "chatcmpl-tool-b65c5ad401948b3c",
+        "function": {
+          "name": "search_location_around_lat_lon",
+          "arguments": "{\"location\": \"Whole Foods on Stevens Creek\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants a reminder to buy chocolate milk tomorrow at 5PM at Whole Foods on Stevens Creek. I need the current timestamp to compute tomorrow 5PM. Let me get current timestamp.\n\nAlso I should search for the location to get lat/lon for Whole Foods on Stevens Creek.\n\nLet me get current timestamp and search location in parallel.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-a4db40da8231abdc",
+    "role": "tool",
+    "name": "get_current_timestamp",
+    "content": "1787042227.667407"
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b65c5ad401948b3c",
+    "role": "tool",
+    "name": "search_location_around_lat_lon",
+    "content": "PermissionError: Please provide 'RAPID_API_KEY' in environment variable. You can find your API key by following https://docs.rapidapi.com/v1.0/docs/keys"
+  },
+  {
+    "role": "assistant",
+    "content": "Let me convert the current time so I can calculate tomorrow 5 PM correctly.\n\n",
+    "refusal": null,
+    "reasoning": "The location search failed due to an API key issue. I need to still find the location. Let me try again maybe. But the permission error suggests no API key. I can still add the reminder, perhaps without lat/lon, or try searching again. Let me convert current timestamp to datetime info to compute tomorrow 5PM.\n\nCurrent timestamp: 1787042227. Let me convert to datetime info.\n\nActually, let me compute tomorrow 5PM. First convert current timestamp.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_b4f2ccb0eac94959be90a8fb",
+        "function": {
+          "name": "timestamp_to_datetime_info",
+          "arguments": "{\"timestamp\": 1787042227.667407}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The location search failed due to an API key issue. I need to still find the location. Let me try again maybe. But the permission error suggests no API key. I can still add the reminder, perhaps without lat/lon, or try searching again. Let me convert current timestamp to datetime info to compute tomorrow 5PM.\n\nCurrent timestamp: 1787042227. Let me convert to datetime info.\n\nActually, let me compute tomorrow 5PM. First convert current timestamp.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_b4f2ccb0eac94959be90a8fb",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 8, 'day': 18, 'hour': 16, 'minute': 37, 'second': 7, 'isoweekday': 2}"
+  },
+  {
+    "role": "assistant",
+    "content": "The current time is Tuesday, August 18, 2026, 4:37 PM. So tomorrow 5 PM would be Wednesday, August 19, 2026 at 5:00 PM. Let me convert that to a timestamp.",
+    "refusal": null,
+    "reasoning": "Current time is Tuesday, August 18, 2026, 4:37 PM. Tomorrow is Wednesday, August 19, 2026 at 5 PM.\n\nLet me compute the timestamp for tomorrow 5 PM. I'll use datetime_info_to_timestamp with year 2026, month 8, day 19, hour 17, minute 0, second 0.\n\nLet me also try the location search again for Whole Foods on Stevens Creek to get coordinates. But it failed due to permission error. Maybe it will fail again. I'll try once more, but it likely will fail. Actually, the location search failed with a permission error unrelated to the query. Let me try searching again, maybe with just \"Whole Foods\" - but the issue is the API key, not the query. It will fail again.\n\nI'll just add the reminder without location coordinates, since the search tool isn't working. Let me compute the timestamp first.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_unOK1Lg1eOs6Lotw9eMo7073",
+        "function": {
+          "name": "datetime_info_to_timestamp",
+          "arguments": "{\"year\": 2026, \"month\": 8, \"day\": 19, \"hour\": 17, \"minute\": 0, \"second\": 0}"
+        }
+      },
+      {
+        "type": "function",
+        "index": 1,
+        "id": "call_01_ckBC4PUuDkkqFuNpPi8b1399",
+        "function": {
+          "name": "search_location_around_lat_lon",
+          "arguments": "{\"location\": \"Whole Foods Market Stevens Creek\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Current time is Tuesday, August 18, 2026, 4:37 PM. Tomorrow is Wednesday, August 19, 2026 at 5 PM.\n\nLet me compute the timestamp for tomorrow 5 PM. I'll use datetime_info_to_timestamp with year 2026, month 8, day 19, hour 17, minute 0, second 0.\n\nLet me also try the location search again for Whole Foods on Stevens Creek to get coordinates. But it failed due to permission error. Maybe it will fail again. I'll try once more, but it likely will fail. Actually, the location search failed with a permission error unrelated to the query. Let me try searching again, maybe with just \"Whole Foods\" - but the issue is the API key, not the query. It will fail again.\n\nI'll just add the reminder without location coordinates, since the search tool isn't working. Let me compute the timestamp first.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_unOK1Lg1eOs6Lotw9eMo7073",
+    "role": "tool",
+    "name": "datetime_info_to_timestamp",
+    "content": "1787130000.0"
+  },
+  {
+    "tool_call_id": "call_01_ckBC4PUuDkkqFuNpPi8b1399",
+    "role": "tool",
+    "name": "search_location_around_lat_lon",
+    "content": "PermissionError: Please provide 'RAPID_API_KEY' in environment variable. You can find your API key by following https://docs.rapidapi.com/v1.0/docs/keys"
+  },
+  {
+    "role": "assistant",
+    "content": "The location search service isn't available right now (API key issue), so I'll create the reminder with the location noted in the reminder content. Let me add it now.",
+    "refusal": null,
+    "reasoning": "The location search is failing due to a missing API key. I cannot get the lat/lon for the Whole Foods location. I'll still create the reminder with the location mentioned in content but without lat/lon coordinates.\n\nLet me add the reminder with timestamp 1787130000.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_Ftt9T1EwwRh1cIFeojRB3630",
+        "function": {
+          "name": "add_reminder",
+          "arguments": "{\"content\": \"Buy chocolate milk at Whole Foods on Stevens Creek\", \"reminder_timestamp\": 1787130000}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The location search is failing due to a missing API key. I cannot get the lat/lon for the Whole Foods location. I'll still create the reminder with the location mentioned in content but without lat/lon coordinates.\n\nLet me add the reminder with timestamp 1787130000.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_Ftt9T1EwwRh1cIFeojRB3630",
+    "role": "tool",
+    "name": "add_reminder",
+    "content": "'2921b55f-e1b4-425a-a287-6568e11d48c6'"
+  },
+  {
+    "role": "assistant",
+    "content": "I've set your reminder! ✅\n\n**Reminder:** Buy chocolate milk at Whole Foods on Stevens Creek\n**When:** Tomorrow, Wednesday August 19, 2026 at 5:00 PM\n\nI attempted to attach the exact location to the reminder, but the location lookup service is currently unavailable, so I noted the Whole Foods on Stevens Creek in the reminder text itself. You'll get notified tomorrow at 5 PM. Let me know if you'd like to adjust the time or add anything else!",
+    "refusal": null,
+    "reasoning": null
+  }
+]

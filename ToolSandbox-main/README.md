@@ -86,18 +86,16 @@ for the OpenAI and DeepSeek OpenRouter agents. The 30-step allowance applies to
 each episode, so the maximum sequence budget is `30 * N`, not 30 total.
 
 Registered scenarios receive deterministic episode-specific parameters when
-`N > 1`. Currently this is implemented for
-`update_contact_with_id_and_phone_number`,
-`modify_contact_with_message_recency`,
-`modify_reminder_with_recency_latest`,
-`turn_on_wifi_low_battery_mode_implicit`, and
-`find_days_till_holiday_insufficient_information`: their target entity,
-requested update, or complete structural solvability template varies, and the
-prompt, starting state, and evaluation targets are materialized from the same
-manifest. The low-battery task uses counterbalanced valid state/action templates
-rather than independently toggling dependent settings. The insufficient-holiday
-task varies the holiday but keeps its missing-current-time capability policy and
-`timestamp_diff` minefield together as one controlled template. Use
+`N > 1`. All 40 scenarios in
+[`episode_parameterization_table.md`](episode_parameterization_table.md) are
+registered. Their target entities, requested values, temporal ordering, or
+complete structural templates vary, while task text, starting state, expected
+tool arguments, milestones, minefields, and final-response targets are
+materialized from one immutable manifest. Structural conditions such as device
+dependencies, multi-contact transitions, and insufficient-information tool
+boundaries are sampled only as complete valid templates. Holiday day-difference
+tasks select the next occurrence and bind the prompt and expected
+`search_holiday` year to the same date. Use
 `--episode-parameter-seed SEED` to reproduce a sequence; paired memory conditions
 must use the same seed. Use `--disable-episode-parameterization` to retain the
 fixed-task behavior. Scenarios without a registered parameterizer remain

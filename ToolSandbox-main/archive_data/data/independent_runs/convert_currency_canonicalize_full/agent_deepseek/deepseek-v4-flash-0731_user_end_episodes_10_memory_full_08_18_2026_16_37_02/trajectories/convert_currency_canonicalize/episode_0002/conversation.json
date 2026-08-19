@@ -1,0 +1,93 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 2
+  },
+  {
+    "role": "user",
+    "content": "How much is $2.048k in CNY",
+    "episode_number": 2,
+    "user_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 0,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "EXECUTION_ENVIRONMENT",
+                    "recipient": "AGENT",
+                    "tool_trace": "{\"tool_name\": \"convert_currency\", \"arguments\": {\"amount\": 2048, \"from_currency_code\": \"USD\", \"to_currency_code\": \"CNY\"}}"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-9b1f7e86aa1e92c5",
+        "function": {
+          "arguments": "{\"amount\": 2048, \"from_currency_code\": \"USD\", \"to_currency_code\": \"CNY\"}",
+          "name": "convert_currency"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 781,
+      "completion_tokens": 114,
+      "total_tokens": 895
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-9b1f7e86aa1e92c5",
+    "role": "tool",
+    "name": "convert_currency",
+    "content": "PermissionError: Please provide 'RAPID_API_KEY' in environment variable. You can find your API key by following https://docs.rapidapi.com/v1.0/docs/keys",
+    "episode_number": 2
+  },
+  {
+    "role": "assistant",
+    "content": "I'm sorry, but I'm still unable to perform this currency conversion. The conversion service requires an API key that isn't set up on my end, so the tool returns an error every time I try.\n\nHere's what I can confirm:\n- **$2.048k** = **$2,048** USD\n\nTo get the exact CNY amount, you'd need the current live USD/CNY exchange rate. Since I can't fetch the live rate right now, I recommend using a real-time currency converter or checking with your bank for the most accurate figure.\n\nIf you can provide a specific exchange rate, I'd be happy to calculate the conversion for you manually. Is there anything else I can help with?",
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 945,
+      "completion_tokens": 148,
+      "total_tokens": 1093
+    }
+  }
+]

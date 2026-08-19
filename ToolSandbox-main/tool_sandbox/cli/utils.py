@@ -284,7 +284,7 @@ def run_scenario_episode(
                 )
             agent.set_cross_episode_memory(cross_episode_memory)
 
-        trajectory_path = Path("trajectories") / name / f"episode_{episode_number:04d}"
+        trajectory_path = Path("trajectories") / f"episode_{episode_number:04d}"
         episode_output_directory = output_directory / trajectory_path
         episode_output_directory.mkdir(parents=True, exist_ok=True)
         episode_setup_path = trajectory_path / "episode_setup.json"

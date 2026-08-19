@@ -1,0 +1,120 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 2
+  },
+  {
+    "role": "user",
+    "content": "How many days is it till Independence Day?",
+    "episode_number": 2,
+    "user_details": {
+      "minefield_matches": [
+        {
+          "minefield_index": 0,
+          "minefield": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "EXECUTION_ENVIRONMENT",
+                    "content": "timestamp_diff"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_contains_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "minefield_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_5c0e3cff341a4dcbabc0f357",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Independence Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 3171,
+      "completion_tokens": 619,
+      "total_tokens": 3790
+    }
+  },
+  {
+    "tool_call_id": "call_5c0e3cff341a4dcbabc0f357",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1783094400.0",
+    "episode_number": 2
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_1c9bce6143de43f69976e3e5",
+        "function": {
+          "arguments": "{\"timestamp\": 1783094400.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 3807,
+      "completion_tokens": 66,
+      "total_tokens": 3873
+    }
+  },
+  {
+    "tool_call_id": "call_1c9bce6143de43f69976e3e5",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 7, 'day': 4, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 6}",
+    "episode_number": 2
+  },
+  {
+    "role": "assistant",
+    "content": "I found that Independence Day is on **July 4, 2026** (based on the holiday search, which defaults to the current year).\n\nTo tell you how many days remain until then, I still need to know **today's date** — I don't have access to a current clock. Could you share today's date? Then I can calculate the exact number of days.",
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 3928,
+      "completion_tokens": 200,
+      "total_tokens": 4128
+    }
+  }
+]

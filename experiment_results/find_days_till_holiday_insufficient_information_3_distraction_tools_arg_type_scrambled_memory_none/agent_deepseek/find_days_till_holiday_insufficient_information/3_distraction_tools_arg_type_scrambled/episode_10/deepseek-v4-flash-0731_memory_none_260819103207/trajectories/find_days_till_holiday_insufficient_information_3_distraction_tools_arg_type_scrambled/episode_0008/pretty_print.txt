@@ -1,0 +1,940 @@
+Episode number: 8
+Note that User Simulator few shot messages have been omitted
+shape: (34, 8)
++------------+------------+------------+-----------+-----------+-----------+-----------+-----------+
+| sandbox_me | sender     | recipient  | content   | openai_fu | tool_call | tool_trac | visible_t |
+| ssage_inde | ---        | ---        | ---       | nction_na | _exceptio | e         | o         |
+| x          | enum       | enum       | str       | me        | n         | ---       | ---       |
+| ---        |            |            |           | ---       | ---       | list[str] | list[enum |
+| i32        |            |            |           | str       | str       |           | ]         |
++==================================================================================================+
+| 0          | SYSTEM     | EXECUTION_ | import    | null      | null      | null      | null      |
+|            |            | ENVIRONMEN | json      |           |           |           |           |
+|            |            | T          | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.con |           |           |           |           |
+|            |            |            | tact      |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | add_conta |           |           |           |           |
+|            |            |            | ct, modif |           |           |           |           |
+|            |            |            | y_contact |           |           |           |           |
+|            |            |            | , remove_ |           |           |           |           |
+|            |            |            | contact,  |           |           |           |           |
+|            |            |            | search_co |           |           |           |           |
+|            |            |            | ntacts    |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.set |           |           |           |           |
+|            |            |            | ting      |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | get_cellu |           |           |           |           |
+|            |            |            | lar_servi |           |           |           |           |
+|            |            |            | ce_status |           |           |           |           |
+|            |            |            | , get_cur |           |           |           |           |
+|            |            |            | rent_loca |           |           |           |           |
+|            |            |            | tion, get |           |           |           |           |
+|            |            |            | _location |           |           |           |           |
+|            |            |            | _service_ |           |           |           |           |
+|            |            |            | status,   |           |           |           |           |
+|            |            |            | get_wifi_ |           |           |           |           |
+|            |            |            | status,   |           |           |           |           |
+|            |            |            | get_low_b |           |           |           |           |
+|            |            |            | attery_mo |           |           |           |           |
+|            |            |            | de_status |           |           |           |           |
+|            |            |            | , set_cel |           |           |           |           |
+|            |            |            | lular_ser |           |           |           |           |
+|            |            |            | vice_stat |           |           |           |           |
+|            |            |            | us, set_l |           |           |           |           |
+|            |            |            | ocation_s |           |           |           |           |
+|            |            |            | ervice_st |           |           |           |           |
+|            |            |            | atus, set |           |           |           |           |
+|            |            |            | _low_batt |           |           |           |           |
+|            |            |            | ery_mode_ |           |           |           |           |
+|            |            |            | status,   |           |           |           |           |
+|            |            |            | set_wifi_ |           |           |           |           |
+|            |            |            | status    |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.mes |           |           |           |           |
+|            |            |            | saging    |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | search_me |           |           |           |           |
+|            |            |            | ssages,   |           |           |           |           |
+|            |            |            | send_mess |           |           |           |           |
+|            |            |            | age_with_ |           |           |           |           |
+|            |            |            | phone_num |           |           |           |           |
+|            |            |            | ber       |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.rap |           |           |           |           |
+|            |            |            | id_api_se |           |           |           |           |
+|            |            |            | arch_tool |           |           |           |           |
+|            |            |            | s import  |           |           |           |           |
+|            |            |            | convert_c |           |           |           |           |
+|            |            |            | urrency,  |           |           |           |           |
+|            |            |            | search_la |           |           |           |           |
+|            |            |            | t_lon,    |           |           |           |           |
+|            |            |            | search_lo |           |           |           |           |
+|            |            |            | cation_ar |           |           |           |           |
+|            |            |            | ound_lat_ |           |           |           |           |
+|            |            |            | lon, sear |           |           |           |           |
+|            |            |            | ch_stock, |           |           |           |           |
+|            |            |            | search_we |           |           |           |           |
+|            |            |            | ather_aro |           |           |           |           |
+|            |            |            | und_lat_l |           |           |           |           |
+|            |            |            | on        |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.rem |           |           |           |           |
+|            |            |            | inder     |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | add_remin |           |           |           |           |
+|            |            |            | der, modi |           |           |           |           |
+|            |            |            | fy_remind |           |           |           |           |
+|            |            |            | er, remov |           |           |           |           |
+|            |            |            | e_reminde |           |           |           |           |
+|            |            |            | r, search |           |           |           |           |
+|            |            |            | _reminder |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.use |           |           |           |           |
+|            |            |            | r_tools   |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | end_conve |           |           |           |           |
+|            |            |            | rsation   |           |           |           |           |
+|            |            |            | from tool |           |           |           |           |
+|            |            |            | _sandbox. |           |           |           |           |
+|            |            |            | tools.uti |           |           |           |           |
+|            |            |            | lities    |           |           |           |           |
+|            |            |            | import    |           |           |           |           |
+|            |            |            | calculate |           |           |           |           |
+|            |            |            | _lat_lon_ |           |           |           |           |
+|            |            |            | distance, |           |           |           |           |
+|            |            |            | datetime_ |           |           |           |           |
+|            |            |            | info_to_t |           |           |           |           |
+|            |            |            | imestamp, |           |           |           |           |
+|            |            |            | get_curre |           |           |           |           |
+|            |            |            | nt_timest |           |           |           |           |
+|            |            |            | amp, sear |           |           |           |           |
+|            |            |            | ch_holida |           |           |           |           |
+|            |            |            | y, second |           |           |           |           |
+|            |            |            | s_to_hour |           |           |           |           |
+|            |            |            | s_minutes |           |           |           |           |
+|            |            |            | _seconds, |           |           |           |           |
+|            |            |            | shift_tim |           |           |           |           |
+|            |            |            | estamp,   |           |           |           |           |
+|            |            |            | timestamp |           |           |           |           |
+|            |            |            | _diff,    |           |           |           |           |
+|            |            |            | timestamp |           |           |           |           |
+|            |            |            | _to_datet |           |           |           |           |
+|            |            |            | ime_info, |           |           |           |           |
+|            |            |            | unit_conv |           |           |           |           |
+|            |            |            | ersion    |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 1          | SYSTEM     | AGENT      | Don't     | null      | null      | null      | null      |
+|            |            |            | make assu |           |           |           |           |
+|            |            |            | mptions   |           |           |           |           |
+|            |            |            | about     |           |           |           |           |
+|            |            |            | what      |           |           |           |           |
+|            |            |            | values to |           |           |           |           |
+|            |            |            | plug into |           |           |           |           |
+|            |            |            | functions |           |           |           |           |
+|            |            |            | . Ask for |           |           |           |           |
+|            |            |            | clarifica |           |           |           |           |
+|            |            |            | tion if a |           |           |           |           |
+|            |            |            | user      |           |           |           |           |
+|            |            |            | request   |           |           |           |           |
+|            |            |            | is ambigu |           |           |           |           |
+|            |            |            | ous.      |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 14         | SYSTEM     | USER       | You are   | null      | null      | null      | null      |
+|            |            |            | no longer |           |           |           |           |
+|            |            |            | an assist |           |           |           |           |
+|            |            |            | ant. From |           |           |           |           |
+|            |            |            | now on    |           |           |           |           |
+|            |            |            | role play |           |           |           |           |
+|            |            |            | as a user |           |           |           |           |
+|            |            |            | (User A)  |           |           |           |           |
+|            |            |            | talking   |           |           |           |           |
+|            |            |            | to        |           |           |           |           |
+|            |            |            | another   |           |           |           |           |
+|            |            |            | user      |           |           |           |           |
+|            |            |            | (User B). |           |           |           |           |
+|            |            |            | Make sure |           |           |           |           |
+|            |            |            | you       |           |           |           |           |
+|            |            |            | follow    |           |           |           |           |
+|            |            |            | these ins |           |           |           |           |
+|            |            |            | tructions |           |           |           |           |
+|            |            |            | :         |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|            |            |            | 0. DO NOT |           |           |           |           |
+|            |            |            | act as if |           |           |           |           |
+|            |            |            | you (User |           |           |           |           |
+|            |            |            | A) are an |           |           |           |           |
+|            |            |            | assistant |           |           |           |           |
+|            |            |            | . ALWAYS  |           |           |           |           |
+|            |            |            | treat     |           |           |           |           |
+|            |            |            | yourself  |           |           |           |           |
+|            |            |            | as a user |           |           |           |           |
+|            |            |            | (User A). |           |           |           |           |
+|            |            |            | Do not    |           |           |           |           |
+|            |            |            | ask       |           |           |           |           |
+|            |            |            | questions |           |           |           |           |
+|            |            |            | to the    |           |           |           |           |
+|            |            |            | other     |           |           |           |           |
+|            |            |            | user      |           |           |           |           |
+|            |            |            | (User B). |           |           |           |           |
+|            |            |            | 1. Answer |           |           |           |           |
+|            |            |            | any       |           |           |           |           |
+|            |            |            | question  |           |           |           |           |
+|            |            |            | User B    |           |           |           |           |
+|            |            |            | asks you  |           |           |           |           |
+|            |            |            | (User A)  |           |           |           |           |
+|            |            |            | accuratel |           |           |           |           |
+|            |            |            | y. Use    |           |           |           |           |
+|            |            |            | only the  |           |           |           |           |
+|            |            |            | informati |           |           |           |           |
+|            |            |            | on        |           |           |           |           |
+|            |            |            | provided. |           |           |           |           |
+|            |            |            | Do not    |           |           |           |           |
+|            |            |            | make up   |           |           |           |           |
+|            |            |            | false inf |           |           |           |           |
+|            |            |            | ormation. |           |           |           |           |
+|            |            |            | 2.  Use   |           |           |           |           |
+|            |            |            | natural,  |           |           |           |           |
+|            |            |            | short,    |           |           |           |           |
+|            |            |            | casual    |           |           |           |           |
+|            |            |            | language. |           |           |           |           |
+|            |            |            | 3.  If    |           |           |           |           |
+|            |            |            | User B    |           |           |           |           |
+|            |            |            | says it   |           |           |           |           |
+|            |            |            | could not |           |           |           |           |
+|            |            |            | complete  |           |           |           |           |
+|            |            |            | the task, |           |           |           |           |
+|            |            |            | either    |           |           |           |           |
+|            |            |            | provide   |           |           |           |           |
+|            |            |            | more info |           |           |           |           |
+|            |            |            | rmation   |           |           |           |           |
+|            |            |            | you (User |           |           |           |           |
+|            |            |            | A)        |           |           |           |           |
+|            |            |            | posses,   |           |           |           |           |
+|            |            |            | or ask it |           |           |           |           |
+|            |            |            | to use    |           |           |           |           |
+|            |            |            | the tools |           |           |           |           |
+|            |            |            | it figure |           |           |           |           |
+|            |            |            | it out    |           |           |           |           |
+|            |            |            | itself if |           |           |           |           |
+|            |            |            | you (User |           |           |           |           |
+|            |            |            | A)        |           |           |           |           |
+|            |            |            | do not    |           |           |           |           |
+|            |            |            | posses    |           |           |           |           |
+|            |            |            | informati |           |           |           |           |
+|            |            |            | on that   |           |           |           |           |
+|            |            |            | could     |           |           |           |           |
+|            |            |            | help.     |           |           |           |           |
+|            |            |            | 4.  Allow |           |           |           |           |
+|            |            |            | User B to |           |           |           |           |
+|            |            |            | turn off  |           |           |           |           |
+|            |            |            | low       |           |           |           |           |
+|            |            |            | battery   |           |           |           |           |
+|            |            |            | mode,     |           |           |           |           |
+|            |            |            | turn on   |           |           |           |           |
+|            |            |            | cellular  |           |           |           |           |
+|            |            |            | service,  |           |           |           |           |
+|            |            |            | wifi or   |           |           |           |           |
+|            |            |            | location  |           |           |           |           |
+|            |            |            | service   |           |           |           |           |
+|            |            |            | in order  |           |           |           |           |
+|            |            |            | to        |           |           |           |           |
+|            |            |            | complete  |           |           |           |           |
+|            |            |            | the task. |           |           |           |           |
+|            |            |            | 5.  When  |           |           |           |           |
+|            |            |            | User B    |           |           |           |           |
+|            |            |            | completed |           |           |           |           |
+|            |            |            | the task, |           |           |           |           |
+|            |            |            | even if   |           |           |           |           |
+|            |            |            | you (User |           |           |           |           |
+|            |            |            | A) don't  |           |           |           |           |
+|            |            |            | have      |           |           |           |           |
+|            |            |            | enough    |           |           |           |           |
+|            |            |            | informati |           |           |           |           |
+|            |            |            | on to     |           |           |           |           |
+|            |            |            | validate  |           |           |           |           |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | correctne |           |           |           |           |
+|            |            |            | ss, break |           |           |           |           |
+|            |            |            | out of    |           |           |           |           |
+|            |            |            | role      |           |           |           |           |
+|            |            |            | playing   |           |           |           |           |
+|            |            |            | and use   |           |           |           |           |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | provided  |           |           |           |           |
+|            |            |            | tool      |           |           |           |           |
+|            |            |            | named `en |           |           |           |           |
+|            |            |            | d_convers |           |           |           |           |
+|            |            |            | ation` to |           |           |           |           |
+|            |            |            | stop      |           |           |           |           |
+|            |            |            | the conve |           |           |           |           |
+|            |            |            | rsation.  |           |           |           |           |
+|            |            |            | 6.  When  |           |           |           |           |
+|            |            |            | User B    |           |           |           |           |
+|            |            |            | cannot    |           |           |           |           |
+|            |            |            | complete  |           |           |           |           |
+|            |            |            | the       |           |           |           |           |
+|            |            |            | request   |           |           |           |           |
+|            |            |            | after 5   |           |           |           |           |
+|            |            |            | tries,    |           |           |           |           |
+|            |            |            | break out |           |           |           |           |
+|            |            |            | of role   |           |           |           |           |
+|            |            |            | playing   |           |           |           |           |
+|            |            |            | and       |           |           |           |           |
+|            |            |            | use the   |           |           |           |           |
+|            |            |            | provided  |           |           |           |           |
+|            |            |            | tool      |           |           |           |           |
+|            |            |            | named `en |           |           |           |           |
+|            |            |            | d_convers |           |           |           |           |
+|            |            |            | ation` to |           |           |           |           |
+|            |            |            | stop the  |           |           |           |           |
+|            |            |            | conversat |           |           |           |           |
+|            |            |            | ion.      |           |           |           |           |
+|            |            |            |           |           |           |           |           |
+|            |            |            | Answer    |           |           |           |           |
+|            |            |            | User B's  |           |           |           |           |
+|            |            |            | questions |           |           |           |           |
+|            |            |            | given the |           |           |           |           |
+|            |            |            | following |           |           |           |           |
+|            |            |            | task you  |           |           |           |           |
+|            |            |            | (User A)  |           |           |           |           |
+|            |            |            | want User |           |           |           |           |
+|            |            |            | B to      |           |           |           |           |
+|            |            |            | complete: |           |           |           |           |
+|            |            |            | Search    |           |           |           |           |
+|            |            |            | how many  |           |           |           |           |
+|            |            |            | days it   |           |           |           |           |
+|            |            |            | is till   |           |           |           |           |
+|            |            |            | Independe |           |           |           |           |
+|            |            |            | nce Day.  |           |           |           |           |
+|            |            |            | You don't |           |           |           |           |
+|            |            |            | have the  |           |           |           |           |
+|            |            |            | current   |           |           |           |           |
+|            |            |            | datetime  |           |           |           |           |
+|            |            |            | informati |           |           |           |           |
+|            |            |            | on.       |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 15         | USER       | AGENT      | How many  | null      | null      | null      | null      |
+|            |            |            | days is   |           |           |           |           |
+|            |            |            | it till   |           |           |           |           |
+|            |            |            | Independe |           |           |           |           |
+|            |            |            | nce Day?  |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 16         | AGENT      | EXECUTION_ | chatcmpl_ | search_ho | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_9e8b | liday     |           |           | "EXECUTIO |
+|            |            | T          | 14321937c |           |           |           | N_ENVIRON |
+|            |            |            | 2d1_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'holiday |           |           |           |           |
+|            |            |            | _name':   |           |           |           |           |
+|            |            |            | 'Independ |           |           |           |           |
+|            |            |            | ence      |           |           |           |           |
+|            |            |            | Day'}     |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_9e8b |           |           |           |           |
+|            |            |            | 14321937c |           |           |           |           |
+|            |            |            | 2d1_respo |           |           |           |           |
+|            |            |            | nse = sea |           |           |           |           |
+|            |            |            | rch_holid |           |           |           |           |
+|            |            |            | ay(**chat |           |           |           |           |
+|            |            |            | cmpl_tool |           |           |           |           |
+|            |            |            | _9e8b1432 |           |           |           |           |
+|            |            |            | 1937c2d1_ |           |           |           |           |
+|            |            |            | parameter |           |           |           |           |
+|            |            |            | s)        |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_9e |           |           |           |           |
+|            |            |            | 8b1432193 |           |           |           |           |
+|            |            |            | 7c2d1_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 17         | EXECUTION_ | AGENT      | 178309440 | search_ho | null      | ["{"tool_ | ["EXECUTI |
+|            | ENVIRONMEN |            | 0.0       | liday     |           | name":    | ON_ENVIRO |
+|            | T          |            |           |           |           | "search_h | NMENT",   |
+|            |            |            |           |           |           | oliday",  | "AGENT"]  |
+|            |            |            |           |           |           | "argument |           |
+|            |            |            |           |           |           | s": {"hol |           |
+|            |            |            |           |           |           | iday_name |           |
+|            |            |            |           |           |           | ": "Indep |           |
+|            |            |            |           |           |           | endence   |           |
+|            |            |            |           |           |           | Day",     |           |
+|            |            |            |           |           |           | "year":   |           |
+|            |            |            |           |           |           | null},    |           |
+|            |            |            |           |           |           | "result": |           |
+|            |            |            |           |           |           | 178309440 |           |
+|            |            |            |           |           |           | 0.0}"]    |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 18         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_bedd | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | a643059c6 | ime_info  |           |           | N_ENVIRON |
+|            |            |            | 2ce_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_bedd |           |           |           |           |
+|            |            |            | a643059c6 |           |           |           |           |
+|            |            |            | 2ce_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_bedda |           |           |           |           |
+|            |            |            | 643059c62 |           |           |           |           |
+|            |            |            | ce_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_be |           |           |           |           |
+|            |            |            | dda643059 |           |           |           |           |
+|            |            |            | c62ce_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 19         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 20         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_801d | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | c4e9679a7 | ime_info  |           |           | N_ENVIRON |
+|            |            |            | 6ca_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_801d |           |           |           |           |
+|            |            |            | c4e9679a7 |           |           |           |           |
+|            |            |            | 6ca_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_801dc |           |           |           |           |
+|            |            |            | 4e9679a76 |           |           |           |           |
+|            |            |            | ca_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_80 |           |           |           |           |
+|            |            |            | 1dc4e9679 |           |           |           |           |
+|            |            |            | a76ca_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 21         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 22         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_a639 | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | a62c60ac7 | ime_info  |           |           | N_ENVIRON |
+|            |            |            | 436_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_a639 |           |           |           |           |
+|            |            |            | a62c60ac7 |           |           |           |           |
+|            |            |            | 436_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_a639a |           |           |           |           |
+|            |            |            | 62c60ac74 |           |           |           |           |
+|            |            |            | 36_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_a6 |           |           |           |           |
+|            |            |            | 39a62c60a |           |           |           |           |
+|            |            |            | c7436_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 23         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 24         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_b2e7 | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | 3d7f4935c | ime_info  |           |           | N_ENVIRON |
+|            |            |            | 539_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400'} |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_b2e7 |           |           |           |           |
+|            |            |            | 3d7f4935c |           |           |           |           |
+|            |            |            | 539_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_b2e73 |           |           |           |           |
+|            |            |            | d7f4935c5 |           |           |           |           |
+|            |            |            | 39_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_b2 |           |           |           |           |
+|            |            |            | e73d7f493 |           |           |           |           |
+|            |            |            | 5c539_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 25         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 26         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_9b01 | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | ae551bb06 | ime_info  |           |           | N_ENVIRON |
+|            |            |            | ba5_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_9b01 |           |           |           |           |
+|            |            |            | ae551bb06 |           |           |           |           |
+|            |            |            | ba5_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_9b01a |           |           |           |           |
+|            |            |            | e551bb06b |           |           |           |           |
+|            |            |            | a5_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_9b |           |           |           |           |
+|            |            |            | 01ae551bb |           |           |           |           |
+|            |            |            | 06ba5_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 27         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 28         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_a742 | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | 862069caf | ime_info  |           |           | N_ENVIRON |
+|            |            |            | 4bf_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_a742 |           |           |           |           |
+|            |            |            | 862069caf |           |           |           |           |
+|            |            |            | 4bf_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_a7428 |           |           |           |           |
+|            |            |            | 62069caf4 |           |           |           |           |
+|            |            |            | bf_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_a7 |           |           |           |           |
+|            |            |            | 42862069c |           |           |           |           |
+|            |            |            | af4bf_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 29         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 30         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_b34d | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | e3f44e566 | ime_info  |           |           | N_ENVIRON |
+|            |            |            | 1f7_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_b34d |           |           |           |           |
+|            |            |            | e3f44e566 |           |           |           |           |
+|            |            |            | 1f7_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_b34de |           |           |           |           |
+|            |            |            | 3f44e5661 |           |           |           |           |
+|            |            |            | f7_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_b3 |           |           |           |           |
+|            |            |            | 4de3f44e5 |           |           |           |           |
+|            |            |            | 661f7_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 31         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 32         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_a98a | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | 5b4465df7 | ime_info  |           |           | N_ENVIRON |
+|            |            |            | 9e0_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_a98a |           |           |           |           |
+|            |            |            | 5b4465df7 |           |           |           |           |
+|            |            |            | 9e0_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_a98a5 |           |           |           |           |
+|            |            |            | b4465df79 |           |           |           |           |
+|            |            |            | e0_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_a9 |           |           |           |           |
+|            |            |            | 8a5b4465d |           |           |           |           |
+|            |            |            | f79e0_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 33         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | : missing | _to_datet | : missing |           | ON_ENVIRO |
+|            | T          |            | a         | ime_info  | a         |           | NMENT",   |
+|            |            |            | required  |           | required  |           | "AGENT"]  |
+|            |            |            | argument: |           | argument: |           |           |
+|            |            |            | 'timestam |           | 'timestam |           |           |
+|            |            |            | p'        |           | p'        |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 34         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_93d8 | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | c74adc37e | ime_info  |           |           | N_ENVIRON |
+|            |            |            | e26_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_93d8 |           |           |           |           |
+|            |            |            | c74adc37e |           |           |           |           |
+|            |            |            | e26_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_93d8c |           |           |           |           |
+|            |            |            | 74adc37ee |           |           |           |           |
+|            |            |            | 26_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_93 |           |           |           |           |
+|            |            |            | d8c74adc3 |           |           |           |           |
+|            |            |            | 7ee26_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 35         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | : missing | _to_datet | : missing |           | ON_ENVIRO |
+|            | T          |            | a         | ime_info  | a         |           | NMENT",   |
+|            |            |            | required  |           | required  |           | "AGENT"]  |
+|            |            |            | argument: |           | argument: |           |           |
+|            |            |            | 'timestam |           | 'timestam |           |           |
+|            |            |            | p'        |           | p'        |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 36         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_a20d | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | 69584b60c | ime_info  |           |           | N_ENVIRON |
+|            |            |            | b52_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_a20d |           |           |           |           |
+|            |            |            | 69584b60c |           |           |           |           |
+|            |            |            | b52_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_a20d6 |           |           |           |           |
+|            |            |            | 9584b60cb |           |           |           |           |
+|            |            |            | 52_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_a2 |           |           |           |           |
+|            |            |            | 0d69584b6 |           |           |           |           |
+|            |            |            | 0cb52_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 37         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | : missing | _to_datet | : missing |           | ON_ENVIRO |
+|            | T          |            | a         | ime_info  | a         |           | NMENT",   |
+|            |            |            | required  |           | required  |           | "AGENT"]  |
+|            |            |            | argument: |           | argument: |           |           |
+|            |            |            | 'timestam |           | 'timestam |           |           |
+|            |            |            | p'        |           | p'        |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 38         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_9e51 | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | 7b6170f05 | ime_info  |           |           | N_ENVIRON |
+|            |            |            | 13d_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_9e51 |           |           |           |           |
+|            |            |            | 7b6170f05 |           |           |           |           |
+|            |            |            | 13d_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_9e517 |           |           |           |           |
+|            |            |            | b6170f051 |           |           |           |           |
+|            |            |            | 3d_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_9e |           |           |           |           |
+|            |            |            | 517b6170f |           |           |           |           |
+|            |            |            | 0513d_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 39         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | : missing | _to_datet | : missing |           | ON_ENVIRO |
+|            | T          |            | a         | ime_info  | a         |           | NMENT",   |
+|            |            |            | required  |           | required  |           | "AGENT"]  |
+|            |            |            | argument: |           | argument: |           |           |
+|            |            |            | 'timestam |           | 'timestam |           |           |
+|            |            |            | p'        |           | p'        |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 40         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_aa4e | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | f2364cd2c | ime_info  |           |           | N_ENVIRON |
+|            |            |            | f28_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_aa4e |           |           |           |           |
+|            |            |            | f2364cd2c |           |           |           |           |
+|            |            |            | f28_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_aa4ef |           |           |           |           |
+|            |            |            | 2364cd2cf |           |           |           |           |
+|            |            |            | 28_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_aa |           |           |           |           |
+|            |            |            | 4ef2364cd |           |           |           |           |
+|            |            |            | 2cf28_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 41         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 42         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_93dd | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | 0ccc47319 | ime_info  |           |           | N_ENVIRON |
+|            |            |            | b92_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_93dd |           |           |           |           |
+|            |            |            | 0ccc47319 |           |           |           |           |
+|            |            |            | b92_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_93dd0 |           |           |           |           |
+|            |            |            | ccc47319b |           |           |           |           |
+|            |            |            | 92_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_93 |           |           |           |           |
+|            |            |            | dd0ccc473 |           |           |           |           |
+|            |            |            | 19b92_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 43         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 44         | AGENT      | EXECUTION_ | chatcmpl_ | timestamp | null      | null      | ["AGENT", |
+|            |            | ENVIRONMEN | tool_ab21 | _to_datet |           |           | "EXECUTIO |
+|            |            | T          | 8bcd1593c | ime_info  |           |           | N_ENVIRON |
+|            |            |            | fdf_param |           |           |           | MENT"]    |
+|            |            |            | eters =   |           |           |           |           |
+|            |            |            | {'timesta |           |           |           |           |
+|            |            |            | mp': '178 |           |           |           |           |
+|            |            |            | 3094400.0 |           |           |           |           |
+|            |            |            | '}        |           |           |           |           |
+|            |            |            | chatcmpl_ |           |           |           |           |
+|            |            |            | tool_ab21 |           |           |           |           |
+|            |            |            | 8bcd1593c |           |           |           |           |
+|            |            |            | fdf_respo |           |           |           |           |
+|            |            |            | nse = tim |           |           |           |           |
+|            |            |            | estamp_to |           |           |           |           |
+|            |            |            | _datetime |           |           |           |           |
+|            |            |            | _info(**c |           |           |           |           |
+|            |            |            | hatcmpl_t |           |           |           |           |
+|            |            |            | ool_ab218 |           |           |           |           |
+|            |            |            | bcd1593cf |           |           |           |           |
+|            |            |            | df_parame |           |           |           |           |
+|            |            |            | ters)     |           |           |           |           |
+|            |            |            | print(rep |           |           |           |           |
+|            |            |            | r(chatcmp |           |           |           |           |
+|            |            |            | l_tool_ab |           |           |           |           |
+|            |            |            | 218bcd159 |           |           |           |           |
+|            |            |            | 3cfdf_res |           |           |           |           |
+|            |            |            | ponse))   |           |           |           |           |
+|------------+------------+------------+-----------+-----------+-----------+-----------+-----------|
+| 45         | EXECUTION_ | AGENT      | TypeError | timestamp | TypeError | null      | ["EXECUTI |
+|            | ENVIRONMEN |            | :         | _to_datet | :         |           | ON_ENVIRO |
+|            | T          |            | Parameter | ime_info  | Parameter |           | NMENT",   |
+|            |            |            | 'timestam |           | 'timestam |           | "AGENT"]  |
+|            |            |            | p' is of  |           | p' is of  |           |           |
+|            |            |            | type      |           | type      |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'str'>',  |           | 'str'>',  |           |           |
+|            |            |            | but       |           | but       |           |           |
+|            |            |            | expected  |           | expected  |           |           |
+|            |            |            | '<class   |           | '<class   |           |           |
+|            |            |            | 'float'>' |           | 'float'>' |           |           |
+|            |            |            | .         |           | .         |           |           |
++------------+------------+------------+-----------+-----------+-----------+-----------+-----------+

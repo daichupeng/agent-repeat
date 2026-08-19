@@ -1,0 +1,367 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 9
+  },
+  {
+    "role": "user",
+    "content": "Change my most recent reminder to 'Call the bank about my card' and postpone it to tomorrow 11AM.",
+    "episode_number": 9
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_924096c2e86049bdae5253b4",
+        "function": {
+          "arguments": "{\"creation_timestamp_lowerbound\": 315529200}",
+          "name": "search_reminder"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_99e8744d322448ff8cfb11c9",
+        "function": {
+          "arguments": "{}",
+          "name": "get_current_timestamp"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 9,
+    "token_usage": {
+      "prompt_tokens": 13868,
+      "completion_tokens": 108,
+      "total_tokens": 13976
+    }
+  },
+  {
+    "tool_call_id": "call_924096c2e86049bdae5253b4",
+    "role": "tool",
+    "name": "search_reminder",
+    "content": "[{'reminder_id': '8f5b6fc6-1c25-5467-91ba-d4d1e17c7129', 'content': 'Look for Company SF tickets', 'creation_timestamp': 1786939200.0, 'reminder_timestamp': 1786976019.154645, 'latitude': None, 'longitude': None}, {'reminder_id': 'da2b856e-9390-511f-bcbe-7005f72cbf5e', 'content': 'Buy tickets for Merrily next week', 'creation_timestamp': 1787022000.0, 'reminder_timestamp': 1787062359.154649, 'latitude': None, 'longitude': None}, {'reminder_id': '54f20be9-eac3-5e76-8e57-724e48d3d477', 'content': 'Buy a nice rich navy bathing dress', 'creation_timestamp': 1786766400.0, 'reminder_timestamp': 1787066019.154654, 'latitude': 37.3237926356735, 'longitude': -122.03961770355414}]",
+    "episode_number": 9,
+    "tool_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 0,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "EXECUTION_ENVIRONMENT",
+                    "recipient": "AGENT",
+                    "tool_trace": "[{\"tool_name\": \"search_reminder\", \"arguments\": {}}]"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "tool_call_id": "call_99e8744d322448ff8cfb11c9",
+    "role": "tool",
+    "name": "get_current_timestamp",
+    "content": "1787062771.690073",
+    "episode_number": 9,
+    "tool_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 1,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "EXECUTION_ENVIRONMENT",
+                    "recipient": "AGENT",
+                    "tool_trace": "[{\"tool_name\": \"get_current_timestamp\", \"arguments\": {}}]"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_2b5f59329e6e48ad907cfbf5",
+        "function": {
+          "arguments": "{\"reminder_id\": \"da2b856e-9390-511f-bcbe-7005f72cbf5e\", \"content\": \"Call the bank about my card\", \"reminder_timestamp\": 1787108400}",
+          "name": "modify_reminder"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 9,
+    "token_usage": {
+      "prompt_tokens": 14261,
+      "completion_tokens": 303,
+      "total_tokens": 14564
+    }
+  },
+  {
+    "tool_call_id": "call_2b5f59329e6e48ad907cfbf5",
+    "role": "tool",
+    "name": "modify_reminder",
+    "content": "None",
+    "episode_number": 9,
+    "tool_details": {
+      "database_update": {
+        "REMINDER": [
+          {
+            "reminder_id": "8f5b6fc6-1c25-5467-91ba-d4d1e17c7129",
+            "content": "Look for Company SF tickets",
+            "creation_timestamp": 1786939200.0,
+            "reminder_timestamp": 1786976019.154645,
+            "latitude": null,
+            "longitude": null
+          },
+          {
+            "reminder_id": "54f20be9-eac3-5e76-8e57-724e48d3d477",
+            "content": "Buy a nice rich navy bathing dress",
+            "creation_timestamp": 1786766400.0,
+            "reminder_timestamp": 1787066019.154654,
+            "latitude": 37.3237926356735,
+            "longitude": -122.03961770355414
+          },
+          {
+            "reminder_id": "da2b856e-9390-511f-bcbe-7005f72cbf5e",
+            "content": "Call the bank about my card",
+            "creation_timestamp": 1787062778.229835,
+            "reminder_timestamp": 1787108400.0,
+            "latitude": null,
+            "longitude": null
+          }
+        ]
+      },
+      "milestone_matches": [
+        {
+          "milestone_index": 2,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "update_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": [
+                  {
+                    "reminder_id": "da2b856e-9390-511f-bcbe-7005f72cbf5e",
+                    "content": "Call the bank about my card",
+                    "reminder_timestamp": 1787108400.0
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-9e7441b663961587",
+        "function": {
+          "arguments": "{\"reminder_id\": \"da2b856e-9390-511f-bcbe-7005f72cbf5e\"}",
+          "name": "search_reminder"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 9,
+    "token_usage": {
+      "prompt_tokens": 14464,
+      "completion_tokens": 76,
+      "total_tokens": 14540
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-9e7441b663961587",
+    "role": "tool",
+    "name": "search_reminder",
+    "content": "[{'reminder_id': 'da2b856e-9390-511f-bcbe-7005f72cbf5e', 'content': 'Call the bank about my card', 'creation_timestamp': 1787062778.229835, 'reminder_timestamp': 1787108400.0, 'latitude': None, 'longitude': None}]",
+    "episode_number": 9
+  },
+  {
+    "role": "assistant",
+    "content": "Done! I've updated your most recent reminder (originally \"Buy tickets for Merrily next week\") to:\n\n- **Content:** Call the bank about my card\n- **Reminder time:** Tomorrow, August 19, 2026 at 11:00 AM\n\nIs there anything else you need?",
+    "episode_number": 9,
+    "token_usage": {
+      "prompt_tokens": 14762,
+      "completion_tokens": 64,
+      "total_tokens": 14826
+    }
+  }
+]

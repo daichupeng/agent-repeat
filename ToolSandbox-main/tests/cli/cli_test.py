@@ -190,6 +190,45 @@ def test_sequence_materializes_distinct_registered_episode_parameters(
     assert not any(manifest["is_parameterized"] for manifest in observed_manifests)
 
 
+def test_memory_conditions_receive_identical_parameter_manifests(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    observed_by_mode: dict[MemoryMode, list[str]] = {
+        MemoryMode.NONE: [],
+        MemoryMode.FULL: [],
+    }
+    active_mode = MemoryMode.NONE
+
+    def fake_run_scenario_episode(
+        name_and_scenario: tuple[str, Scenario],
+        **kwargs: Any,
+    ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+        del name_and_scenario
+        observed_by_mode[active_mode].append(
+            kwargs["episode_parameter_manifest"].manifest_id
+        )
+        return {"episode_number": kwargs["episode_number"], "turn_count": 1}, []
+
+    monkeypatch.setattr(
+        "tool_sandbox.cli.utils.run_scenario_episode", fake_run_scenario_episode
+    )
+    scenario_name = "send_message_with_phone_number_and_content"
+    scenario = named_scenarios(ToolBackend.DEFAULT)[scenario_name]
+    for mode in (MemoryMode.NONE, MemoryMode.FULL):
+        active_mode = mode
+        run_scenario_sequence(
+            (scenario_name, scenario),
+            agent_type=RoleImplType.GPT_4_o_2024_05_13,
+            user_type=RoleImplType.GPT_4_o_2024_05_13,
+            output_directory=tmp_path / str(mode),
+            episodes=3,
+            memory_mode=mode,
+            episode_parameter_seed=53,
+        )
+
+    assert observed_by_mode[MemoryMode.NONE] == observed_by_mode[MemoryMode.FULL]
+
+
 def test_category_summary_averages_all_episodes_and_scenarios() -> None:
     results = [
         {

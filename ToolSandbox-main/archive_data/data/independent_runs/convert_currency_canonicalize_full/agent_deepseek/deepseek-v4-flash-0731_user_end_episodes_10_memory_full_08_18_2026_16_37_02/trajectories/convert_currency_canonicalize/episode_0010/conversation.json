@@ -1,0 +1,66 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 10
+  },
+  {
+    "role": "user",
+    "content": "How much is $2.048k in CNY",
+    "episode_number": 10,
+    "user_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 0,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "EXECUTION_ENVIRONMENT",
+                    "recipient": "AGENT",
+                    "tool_trace": "{\"tool_name\": \"convert_currency\", \"arguments\": {\"amount\": 2048, \"from_currency_code\": \"USD\", \"to_currency_code\": \"CNY\"}}"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "I'll keep my answer consistent: **I cannot convert $2.048k to CNY.**\n\nThe currency conversion tool in my environment is not working — it's missing a required API key, so I have no access to a live USD→CNY exchange rate. This has been the case for every attempt, and I cannot provide an exact figure.\n\n- $2.048k = **$2,048 USD**\n- Exact CNY amount: **not available from me**\n\nPlease check a live converter (Google, XE.com, or your bank) for the accurate amount, or give me a specific exchange rate and I'll do the calculation for you.\n\nIs there anything else I can help you with?",
+    "episode_number": 10,
+    "token_usage": {
+      "prompt_tokens": 3100,
+      "completion_tokens": 283,
+      "total_tokens": 3383
+    }
+  }
+]

@@ -1,0 +1,261 @@
+{
+  "parameter_manifest": {
+    "schema_version": 1,
+    "scenario_name": "turn_on_wifi_low_battery_mode_implicit_3_distraction_tools",
+    "base_scenario_name": "turn_on_wifi_low_battery_mode_implicit",
+    "episode_number": 7,
+    "seed": 42,
+    "parameterizer": "turn_on_wifi_low_battery_mode_implicit.v1",
+    "is_parameterized": true,
+    "parameters": {
+      "state_template": {
+        "name": "enable_wifi_with_low_battery_already_off",
+        "initial_settings": {
+          "low_battery_mode": false,
+          "wifi": false,
+          "cellular": false,
+          "location_service": false
+        },
+        "required_transitions": [
+          {
+            "tool_name": "set_wifi_status",
+            "on": true
+          }
+        ],
+        "milestone_settings": [
+          {
+            "wifi": true
+          }
+        ]
+      },
+      "implicit_request": "Get me connected to the internet.",
+      "task": {
+        "system_to_user": "You are no longer an assistant. From now on role play as a user (User A) talking to another user (User B).\nMake sure you follow these instructions:\n\n0. DO NOT act as if you (User A) are an assistant. ALWAYS treat yourself as a user (User A).\n    Do not ask questions to the other user (User B).\n1. Answer any question User B asks you (User A) accurately. Use only the information provided.\n    Do not make up false information.\n2.  Use natural, short, casual language.\n3.  If User B says it could not complete the task, either provide more information\n    you (User A) posses, or ask it to use the tools it figure it out itself if you (User A)\n    do not posses information that could help.\n4.  Allow User B to turn off low battery mode, turn on cellular service, wifi or location service\n    in order to complete the task.\n5.  When User B completed the task, even if you (User A) don't have enough information to validate the\n    correctness, break out of role playing and use the provided tool named `end_conversation` to stop\n    the conversation.\n6.  When User B cannot complete the request after 5 tries, break out of role playing and\n     use the provided tool named `end_conversation` to stop the conversation.\n\nAnswer User B's questions given the following task you (User A) want User B to complete: Ask User B to make an implicit request for internet access. The intended action is to turn on wifi, but the request must not name a setting. You do not have any more information.",
+        "user_to_agent": "Get me connected to the internet."
+      }
+    },
+    "manifest_id": "518f45bcec484a127eae307138073719da5587e97259e707275205005a700219"
+  },
+  "task_messages": [
+    {
+      "sandbox_message_index": 14,
+      "sender": "SYSTEM",
+      "recipient": "USER",
+      "content": "You are no longer an assistant. From now on role play as a user (User A) talking to another user (User B).\nMake sure you follow these instructions:\n\n0. DO NOT act as if you (User A) are an assistant. ALWAYS treat yourself as a user (User A).\n    Do not ask questions to the other user (User B).\n1. Answer any question User B asks you (User A) accurately. Use only the information provided.\n    Do not make up false information.\n2.  Use natural, short, casual language.\n3.  If User B says it could not complete the task, either provide more information\n    you (User A) posses, or ask it to use the tools it figure it out itself if you (User A)\n    do not posses information that could help.\n4.  Allow User B to turn off low battery mode, turn on cellular service, wifi or location service\n    in order to complete the task.\n5.  When User B completed the task, even if you (User A) don't have enough information to validate the\n    correctness, break out of role playing and use the provided tool named `end_conversation` to stop\n    the conversation.\n6.  When User B cannot complete the request after 5 tries, break out of role playing and\n     use the provided tool named `end_conversation` to stop the conversation.\n\nAnswer User B's questions given the following task you (User A) want User B to complete: Ask User B to make an implicit request for internet access. The intended action is to turn on wifi, but the request must not name a setting. You do not have any more information.",
+      "openai_tool_call_id": null,
+      "openai_function_name": null,
+      "conversation_active": true,
+      "tool_call_exception": null,
+      "tool_trace": null,
+      "visible_to": null
+    },
+    {
+      "sandbox_message_index": 15,
+      "sender": "USER",
+      "recipient": "AGENT",
+      "content": "Get me connected to the internet.",
+      "openai_tool_call_id": null,
+      "openai_function_name": null,
+      "conversation_active": true,
+      "tool_call_exception": null,
+      "tool_trace": null,
+      "visible_to": null
+    }
+  ],
+  "starting_state": {
+    "SETTING": [
+      {
+        "device_id": "04640c30-ec89-5a3c-9fb4-4af3101c8e04",
+        "cellular": false,
+        "wifi": false,
+        "location_service": false,
+        "low_battery_mode": false,
+        "latitude": 37.334606,
+        "longitude": -122.009102
+      }
+    ],
+    "CONTACT": [
+      {
+        "person_id": "3815cac9-3cab-5d75-89e2-fe12fe19779e",
+        "name": "Tomas Haake",
+        "phone_number": "+11233344455",
+        "relationship": "self",
+        "is_self": true
+      },
+      {
+        "person_id": "9e137f06-916a-5310-8174-cf0b7e9f7054",
+        "name": "Fredrik Thordendal",
+        "phone_number": "+12453344098",
+        "relationship": "friend",
+        "is_self": false
+      },
+      {
+        "person_id": "a22e1984-6c6c-530c-8831-c3ea3b5138e7",
+        "name": "John Petrucci",
+        "phone_number": "+1234560987",
+        "relationship": "friend",
+        "is_self": false
+      },
+      {
+        "person_id": "e3570ab6-0819-5032-be1e-2b366390c8ef",
+        "name": "Homer S",
+        "phone_number": "+10000000000",
+        "relationship": "boss",
+        "is_self": false
+      }
+    ],
+    "MESSAGING": [
+      {
+        "message_id": "0d25dbb9-3737-5e0e-b0f0-7c1e359baccc",
+        "sender_person_id": null,
+        "sender_phone_number": "+18307976530",
+        "recipient_person_id": "3815cac9-3cab-5d75-89e2-fe12fe19779e",
+        "recipient_phone_number": "+11233344455",
+        "content": "Hey kid, you want some GPU?",
+        "creation_timestamp": 1786794127.148568
+      },
+      {
+        "message_id": "caaca9e8-7aa9-55a6-9d32-4b4aefed40d1",
+        "sender_person_id": "3815cac9-3cab-5d75-89e2-fe12fe19779e",
+        "sender_phone_number": "+11233344455",
+        "recipient_person_id": null,
+        "recipient_phone_number": "+18307976530",
+        "content": "No leave me alone",
+        "creation_timestamp": 1786797727.148579
+      },
+      {
+        "message_id": "0a0102dc-ceaf-5ebb-a665-63da99bf7c47",
+        "sender_person_id": "e3570ab6-0819-5032-be1e-2b366390c8ef",
+        "sender_phone_number": "+10000000000",
+        "recipient_person_id": "3815cac9-3cab-5d75-89e2-fe12fe19779e",
+        "recipient_phone_number": "+11233344455",
+        "content": "How's it going",
+        "creation_timestamp": 1787064250.148588
+      },
+      {
+        "message_id": "6c9382cb-720e-5f2c-8ac0-77e7ebdea446",
+        "sender_person_id": "3815cac9-3cab-5d75-89e2-fe12fe19779e",
+        "sender_phone_number": "+11233344455",
+        "recipient_person_id": "e3570ab6-0819-5032-be1e-2b366390c8ef",
+        "recipient_phone_number": "+10000000000",
+        "content": "Things are proceeding as expected",
+        "creation_timestamp": 1787064310.148598
+      },
+      {
+        "message_id": "0a0102dc-ceaf-5ebb-a665-63da99bf7c47",
+        "sender_person_id": "e3570ab6-0819-5032-be1e-2b366390c8ef",
+        "sender_phone_number": "+10000000000",
+        "recipient_person_id": "3815cac9-3cab-5d75-89e2-fe12fe19779e",
+        "recipient_phone_number": "+11233344455",
+        "content": "Good, keep me posted",
+        "creation_timestamp": 1787067971.148607
+      }
+    ],
+    "REMINDER": [
+      {
+        "reminder_id": "8f5b6fc6-1c25-5467-91ba-d4d1e17c7129",
+        "content": "Look for Company SF tickets",
+        "creation_timestamp": 1786808833.150198,
+        "reminder_timestamp": 1786981633.1502,
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "reminder_id": "da2b856e-9390-511f-bcbe-7005f72cbf5e",
+        "content": "Buy tickets for Merrily next week",
+        "creation_timestamp": 1786981633.150205,
+        "reminder_timestamp": 1787067973.150206,
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "reminder_id": "54f20be9-eac3-5e76-8e57-724e48d3d477",
+        "content": "Buy a nice rich navy bathing dress",
+        "creation_timestamp": 1787064433.15021,
+        "reminder_timestamp": 1787071633.150211,
+        "latitude": 37.3237926356735,
+        "longitude": -122.03961770355414
+      }
+    ]
+  },
+  "evaluation_targets": {
+    "milestones": {
+      "edge_list": [
+        [
+          0,
+          1
+        ]
+      ],
+      "nodes": [
+        {
+          "node_index": 0,
+          "constraints": [
+            {
+              "database_namespace": "SETTING",
+              "snapshot_constraint": "snapshot_similarity",
+              "reference_milestone_node_index": null,
+              "target_dataframe": [
+                {
+                  "wifi": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "node_index": 1,
+          "constraints": [
+            {
+              "database_namespace": "SANDBOX",
+              "snapshot_constraint": "snapshot_similarity",
+              "reference_milestone_node_index": null,
+              "target_dataframe": [
+                {
+                  "sender": "AGENT",
+                  "recipient": "USER",
+                  "content": "Wifi has been turned on."
+                }
+              ]
+            },
+            {
+              "database_namespace": "REMINDER",
+              "snapshot_constraint": "guardrail_similarity",
+              "reference_milestone_node_index": 0,
+              "target_dataframe": null
+            },
+            {
+              "database_namespace": "MESSAGING",
+              "snapshot_constraint": "guardrail_similarity",
+              "reference_milestone_node_index": 0,
+              "target_dataframe": null
+            },
+            {
+              "database_namespace": "CONTACT",
+              "snapshot_constraint": "guardrail_similarity",
+              "reference_milestone_node_index": 0,
+              "target_dataframe": null
+            }
+          ]
+        }
+      ]
+    },
+    "minefields": {
+      "edge_list": [],
+      "nodes": []
+    }
+  },
+  "tool_configuration": {
+    "allow_list": [
+      "get_location_service_status",
+      "get_low_battery_mode_status",
+      "get_cellular_service_status",
+      "set_cellular_service_status",
+      "set_low_battery_mode_status",
+      "get_wifi_status",
+      "set_wifi_status",
+      "end_conversation"
+    ],
+    "deny_list": null,
+    "augmentations": []
+  }
+}

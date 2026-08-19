@@ -1,0 +1,430 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 4
+  },
+  {
+    "role": "user",
+    "content": "I need to get online.",
+    "episode_number": 4
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_Xt9eq10u0uYwK2g40NTX8409",
+        "function": {
+          "arguments": "{}",
+          "name": "get_wifi_status"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_01_8duXD6SsJyTt8LygSdEs9302",
+        "function": {
+          "arguments": "{}",
+          "name": "get_cellular_service_status"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_02_XMVZtX9vk5BuY2EqcuKy4069",
+        "function": {
+          "arguments": "{}",
+          "name": "get_low_battery_mode_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 3309,
+      "completion_tokens": 89,
+      "total_tokens": 3398
+    }
+  },
+  {
+    "tool_call_id": "call_00_Xt9eq10u0uYwK2g40NTX8409",
+    "role": "tool",
+    "name": "get_wifi_status",
+    "content": "False",
+    "episode_number": 4
+  },
+  {
+    "tool_call_id": "call_01_8duXD6SsJyTt8LygSdEs9302",
+    "role": "tool",
+    "name": "get_cellular_service_status",
+    "content": "False",
+    "episode_number": 4
+  },
+  {
+    "tool_call_id": "call_02_XMVZtX9vk5BuY2EqcuKy4069",
+    "role": "tool",
+    "name": "get_low_battery_mode_status",
+    "content": "True",
+    "episode_number": 4
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_8a67cde150cd494c8eee0c70",
+        "function": {
+          "arguments": "{\"on\": false}",
+          "name": "set_low_battery_mode_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 3484,
+      "completion_tokens": 121,
+      "total_tokens": 3605
+    }
+  },
+  {
+    "tool_call_id": "call_8a67cde150cd494c8eee0c70",
+    "role": "tool",
+    "name": "set_low_battery_mode_status",
+    "content": "None",
+    "episode_number": 4,
+    "tool_details": {
+      "database_update": {
+        "SETTING": [
+          {
+            "device_id": "04640c30-ec89-5a3c-9fb4-4af3101c8e04",
+            "cellular": false,
+            "wifi": false,
+            "location_service": false,
+            "low_battery_mode": false,
+            "latitude": 37.334606,
+            "longitude": -122.009102
+          }
+        ]
+      },
+      "milestone_matches": [
+        {
+          "milestone_index": 0,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "low_battery_mode": false
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_af10fea5273b4eb0a61cddb9",
+        "function": {
+          "arguments": "{\"on\": true}",
+          "name": "set_wifi_status"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_eea1b7a95f924a2b9abf4636",
+        "function": {
+          "arguments": "{\"on\": true}",
+          "name": "set_cellular_service_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 3550,
+      "completion_tokens": 92,
+      "total_tokens": 3642
+    }
+  },
+  {
+    "tool_call_id": "call_af10fea5273b4eb0a61cddb9",
+    "role": "tool",
+    "name": "set_wifi_status",
+    "content": "None",
+    "episode_number": 4,
+    "tool_details": {
+      "database_update": {
+        "SETTING": [
+          {
+            "device_id": "04640c30-ec89-5a3c-9fb4-4af3101c8e04",
+            "cellular": true,
+            "wifi": true,
+            "location_service": false,
+            "low_battery_mode": false,
+            "latitude": 37.334606,
+            "longitude": -122.009102
+          }
+        ]
+      },
+      "milestone_matches": [
+        {
+          "milestone_index": 1,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "wifi": true
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "tool_call_id": "call_eea1b7a95f924a2b9abf4636",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None",
+    "episode_number": 4
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_f07d18b427a24c339eb7dba2",
+        "function": {
+          "arguments": "{}",
+          "name": "get_wifi_status"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_bc6d1989f4094f7cacc5a4e3",
+        "function": {
+          "arguments": "{}",
+          "name": "get_cellular_service_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 3664,
+      "completion_tokens": 54,
+      "total_tokens": 3718
+    }
+  },
+  {
+    "tool_call_id": "call_f07d18b427a24c339eb7dba2",
+    "role": "tool",
+    "name": "get_wifi_status",
+    "content": "True",
+    "episode_number": 4
+  },
+  {
+    "tool_call_id": "call_bc6d1989f4094f7cacc5a4e3",
+    "role": "tool",
+    "name": "get_cellular_service_status",
+    "content": "True",
+    "episode_number": 4
+  },
+  {
+    "role": "assistant",
+    "content": "You're online now! ✅\n\nHere's what I did:\n- **Low Battery Mode** was on and blocking connections, so I turned it **off**.\n- Enabled **WiFi** and **cellular service**.\n\nCurrent status:\n- 📶 WiFi: **On**\n- 📱 Cellular: **On**\n\nYou're all set for internet access. Need anything else?",
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 3669,
+      "completion_tokens": 77,
+      "total_tokens": 3746
+    },
+    "assistant_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 2,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "USER",
+                    "content": "Wifi has been turned on."
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 0.43679019421278076
+        }
+      ]
+    }
+  }
+]

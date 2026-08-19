@@ -132,7 +132,7 @@ class Scenario:
         """
         # Prepare directories
         scenario_output_directory: Path = (
-            output_directory / "trajectories" / scenario_name
+            output_directory / "trajectories" / f"episode_{episode_number:04d}"
         )
         scenario_output_directory.mkdir(exist_ok=True, parents=True)
 

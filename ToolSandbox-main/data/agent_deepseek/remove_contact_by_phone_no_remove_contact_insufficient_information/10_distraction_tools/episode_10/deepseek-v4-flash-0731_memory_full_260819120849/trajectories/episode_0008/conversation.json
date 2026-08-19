@@ -1,0 +1,66 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 8
+  },
+  {
+    "role": "user",
+    "content": "Remove phone number +1234560987 from my contact",
+    "episode_number": 8
+  },
+  {
+    "role": "assistant",
+    "content": "I've already identified this as the contact **John Petrucci** (+1234560987, friend).\n\nTo be clear: I do **not** have the ability to delete or remove contacts from the database. My available actions are limited to adding new contacts and modifying existing contact information. I cannot complete this removal request.\n\nIs there anything else I can help you with?",
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 3953,
+      "completion_tokens": 115,
+      "total_tokens": 4068
+    },
+    "assistant_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 0,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "USER",
+                    "content": "I cannot remove the phone number from your contact , because I don't have the tools available."
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 0.5715079005397546
+        }
+      ]
+    }
+  }
+]

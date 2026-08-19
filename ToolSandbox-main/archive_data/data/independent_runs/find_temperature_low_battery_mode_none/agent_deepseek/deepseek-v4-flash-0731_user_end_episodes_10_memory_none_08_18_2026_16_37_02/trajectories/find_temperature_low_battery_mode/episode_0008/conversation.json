@@ -1,0 +1,719 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 8
+  },
+  {
+    "role": "user",
+    "content": "What's the temperature right now? Resolve any issue alone",
+    "episode_number": 8
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_18447e70e64d44169d93172e",
+        "function": {
+          "arguments": "{}",
+          "name": "search_weather_around_lat_lon"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 793,
+      "completion_tokens": 109,
+      "total_tokens": 902
+    }
+  },
+  {
+    "tool_call_id": "call_18447e70e64d44169d93172e",
+    "role": "tool",
+    "name": "search_weather_around_lat_lon",
+    "content": "PermissionError: Location service is not enabled.",
+    "episode_number": 8
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_b76a153a5aca4e37b37eb671",
+        "function": {
+          "arguments": "{}",
+          "name": "get_location_service_status"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_df9337e20b3544e4bc6c0daa",
+        "function": {
+          "arguments": "{}",
+          "name": "get_wifi_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 919,
+      "completion_tokens": 97,
+      "total_tokens": 1016
+    }
+  },
+  {
+    "tool_call_id": "call_b76a153a5aca4e37b37eb671",
+    "role": "tool",
+    "name": "get_location_service_status",
+    "content": "False",
+    "episode_number": 8
+  },
+  {
+    "tool_call_id": "call_df9337e20b3544e4bc6c0daa",
+    "role": "tool",
+    "name": "get_wifi_status",
+    "content": "False",
+    "episode_number": 8
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_ed182b0f261f4daa998b17ba",
+        "function": {
+          "arguments": "{\"on\": true}",
+          "name": "set_location_service_status"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_d91d0a7f81ad4bd9af579a7d",
+        "function": {
+          "arguments": "{\"on\": true}",
+          "name": "set_wifi_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 1034,
+      "completion_tokens": 119,
+      "total_tokens": 1153
+    }
+  },
+  {
+    "tool_call_id": "call_ed182b0f261f4daa998b17ba",
+    "role": "tool",
+    "name": "set_location_service_status",
+    "content": "PermissionError: Location service cannot be turned on in low battery mode",
+    "episode_number": 8
+  },
+  {
+    "tool_call_id": "call_d91d0a7f81ad4bd9af579a7d",
+    "role": "tool",
+    "name": "set_wifi_status",
+    "content": "PermissionError: Wifi cannot be turned on in low battery mode",
+    "episode_number": 8
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-a4fe1ab0ee201987",
+        "function": {
+          "arguments": "{}",
+          "name": "get_low_battery_mode_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 1164,
+      "completion_tokens": 73,
+      "total_tokens": 1237
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-a4fe1ab0ee201987",
+    "role": "tool",
+    "name": "get_low_battery_mode_status",
+    "content": "True",
+    "episode_number": 8
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-b6c56e7e701a8d55",
+        "function": {
+          "arguments": "{\"on\": false}",
+          "name": "set_low_battery_mode_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 1249,
+      "completion_tokens": 68,
+      "total_tokens": 1317
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b6c56e7e701a8d55",
+    "role": "tool",
+    "name": "set_low_battery_mode_status",
+    "content": "None",
+    "episode_number": 8,
+    "tool_details": {
+      "database_update": {
+        "SETTING": [
+          {
+            "device_id": "04640c30-ec89-5a3c-9fb4-4af3101c8e04",
+            "cellular": false,
+            "wifi": false,
+            "location_service": false,
+            "low_battery_mode": false,
+            "latitude": 37.334606,
+            "longitude": -122.009102
+          }
+        ]
+      },
+      "milestone_matches": [
+        {
+          "milestone_index": 0,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "low_battery_mode": false
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-9d8320a3692591c2",
+        "function": {
+          "arguments": "{\"on\": true}",
+          "name": "set_location_service_status"
+        },
+        "type": "function"
+      },
+      {
+        "id": "chatcmpl-tool-a9b652f73fcbbf0d",
+        "function": {
+          "arguments": "{\"on\": true}",
+          "name": "set_wifi_status"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 1329,
+      "completion_tokens": 87,
+      "total_tokens": 1416
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-9d8320a3692591c2",
+    "role": "tool",
+    "name": "set_location_service_status",
+    "content": "None",
+    "episode_number": 8,
+    "tool_details": {
+      "database_update": {
+        "SETTING": [
+          {
+            "device_id": "04640c30-ec89-5a3c-9fb4-4af3101c8e04",
+            "cellular": false,
+            "wifi": true,
+            "location_service": true,
+            "low_battery_mode": false,
+            "latitude": 37.334606,
+            "longitude": -122.009102
+          }
+        ]
+      },
+      "milestone_matches": [
+        {
+          "milestone_index": 1,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "wifi": true
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        },
+        {
+          "milestone_index": 2,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "location_service": true
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 0,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 1.0
+        },
+        {
+          "milestone_index": 3,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "EXECUTION_ENVIRONMENT",
+                    "recipient": "AGENT",
+                    "tool_trace": "[{\"tool_name\": \"search_weather_around_lat_lon\", \"arguments\": {\"days\": 0, \"latitude\": null, \"longitude\": null}}, {\"tool_name\": \"search_weather_around_lat_lon\", \"arguments\": {\"days\": 0, \"latitude\": 37.334606, \"longitude\": -122.009102}}]"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 1,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 2,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 2,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 2,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 0.0
+        },
+        {
+          "milestone_index": 4,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "tool_trace_dependant_similarity",
+                "reference_milestone_node_index": 3,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "USER",
+                    "content": "The current temperature is {temperature} Celsius"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "SETTING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 3,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "device_id": "column_exact_match_similarity",
+                  "cellular": "column_exact_match_similarity",
+                  "wifi": "column_exact_match_similarity",
+                  "location_service": "column_exact_match_similarity",
+                  "low_battery_mode": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "MESSAGING",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 3,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "message_id": "column_exact_match_similarity",
+                  "sender_person_id": "column_exact_match_similarity",
+                  "sender_phone_number": "column_exact_match_similarity",
+                  "recipient_person_id": "column_exact_match_similarity",
+                  "recipient_phone_number": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "CONTACT",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 3,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "person_id": "column_exact_match_similarity",
+                  "name": "column_exact_match_similarity",
+                  "phone_number": "column_exact_match_similarity",
+                  "relationship": "column_rouge_l_similarity",
+                  "is_self": "column_exact_match_similarity"
+                }
+              },
+              {
+                "database_namespace": "REMINDER",
+                "snapshot_constraint": "guardrail_similarity",
+                "reference_milestone_node_index": 3,
+                "target_dataframe": null,
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "reminder_id": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "creation_timestamp": "column_exact_match_similarity",
+                  "reminder_timestamp": "column_exact_match_similarity",
+                  "latitude": "column_exact_match_similarity",
+                  "longitude": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-a9b652f73fcbbf0d",
+    "role": "tool",
+    "name": "set_wifi_status",
+    "content": "None",
+    "episode_number": 8
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_ET_86CPS30BjL9UDZzknFMX2719",
+        "function": {
+          "arguments": "{}",
+          "name": "search_weather_around_lat_lon"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 1517,
+      "completion_tokens": 47,
+      "total_tokens": 1564
+    }
+  },
+  {
+    "tool_call_id": "call_00_ET_86CPS30BjL9UDZzknFMX2719",
+    "role": "tool",
+    "name": "search_weather_around_lat_lon",
+    "content": "PermissionError: Please provide 'RAPID_API_KEY' in environment variable. You can find your API key by following https://docs.rapidapi.com/v1.0/docs/keys",
+    "episode_number": 8
+  },
+  {
+    "role": "assistant",
+    "content": "I've run into a configuration issue that I'm unable to resolve on my own.\n\nHere's what happened and what I did:\n\n1. **Location service was disabled** → I enabled it ✅\n2. **Wi-Fi was disabled** → I enabled it ✅\n3. **Low battery mode was blocking both** → I turned it off ✅\n4. **Weather lookup** → ❌ Failed with: `Missing 'RAPID_API_KEY' environment variable`\n\nThe weather API requires an API key that isn't configured in the environment. I don't have the ability to set environment variables or provide an API key, so I can't complete the temperature lookup on my own.\n\n**To proceed, you'll need to:**\n- Add your RapidAPI key to the environment variable `RAPID_API_KEY` (you can find it at https://docs.rapidapi.com/v1.0/docs/keys)\n\nOnce that's set up, I'll be happy to fetch the current temperature right away. Would you like me to try again once you've added the key?",
+    "episode_number": 8,
+    "token_usage": {
+      "prompt_tokens": 1616,
+      "completion_tokens": 329,
+      "total_tokens": 1945
+    }
+  }
+]

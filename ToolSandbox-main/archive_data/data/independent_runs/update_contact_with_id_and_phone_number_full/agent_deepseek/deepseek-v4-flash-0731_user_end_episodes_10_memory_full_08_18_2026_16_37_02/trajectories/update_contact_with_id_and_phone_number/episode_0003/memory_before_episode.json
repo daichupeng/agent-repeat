@@ -1,0 +1,84 @@
+[
+  {
+    "role": "user",
+    "content": "Update phone number of the person with id 9e137f06-916a-5310-8174-cf0b7e9f7054  to +19876543210"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user wants to update the phone number of a contact. I have the person_id. Let me call modify_contact with the new phone number.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-816b8a5c647537a6",
+        "function": {
+          "name": "modify_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\", \"phone_number\": \"+19876543210\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to update the phone number of a contact. I have the person_id. Let me call modify_contact with the new phone number.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-816b8a5c647537a6",
+    "role": "tool",
+    "name": "modify_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "The phone number for the contact with id `9e137f06-916a-5310-8174-cf0b7e9f7054` has been updated to `+19876543210`.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Update phone number of the person with id 9e137f06-916a-5310-8174-cf0b7e9f7054  to +19876543210"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user is asking to update the same contact to the same phone number. It's already been updated. I could just confirm it's already set. But let me re-run to be safe. Actually, it's idempotent. Let me just call again to confirm, or I can just note it's already done. Let me call it to fulfill the request.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ALN03Wb6uIVuNh1Qxs2z4461",
+        "function": {
+          "name": "modify_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\", \"phone_number\": \"+19876543210\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user is asking to update the same contact to the same phone number. It's already been updated. I could just confirm it's already set. But let me re-run to be safe. Actually, it's idempotent. Let me just call again to confirm, or I can just note it's already done. Let me call it to fulfill the request.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ALN03Wb6uIVuNh1Qxs2z4461",
+    "role": "tool",
+    "name": "modify_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "The phone number for the contact with id `9e137f06-916a-5310-8174-cf0b7e9f7054` is set to `+19876543210`. It was already updated to this number, so no changes were needed.",
+    "refusal": null,
+    "reasoning": null
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "role": "system",
+    "content": "-- Start of Episode 1 --"
+  },
+  {
+    "role": "user",
+    "content": "Remind me to pick up the library books next Monday 11AM"
+  },
+  {
+    "role": "assistant",
+    "content": "I'll help you set a reminder to pick up the library books. Let me first figure out what date \"next Monday\" falls on.\n\n",
+    "refusal": null,
+    "reasoning": "The user wants a reminder to pick up library books next Monday at 11AM. I need to find out what \"next Monday\" is. Let me get the current timestamp and determine next Monday.\n\nLet me get current timestamp first.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b5da9137bc642db3",
+        "function": {
+          "name": "get_current_timestamp",
+          "arguments": "{}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants a reminder to pick up library books next Monday at 11AM. I need to find out what \"next Monday\" is. Let me get the current timestamp and determine next Monday.\n\nLet me get current timestamp first.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b5da9137bc642db3",
+    "role": "tool",
+    "name": "get_current_timestamp",
+    "content": "1787111942.253885"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "Let me convert this to datetime info to understand current date.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-8e1f84298a438f31",
+        "function": {
+          "name": "timestamp_to_datetime_info",
+          "arguments": "{\"timestamp\": 1787111942.253885}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Let me convert this to datetime info to understand current date.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-8e1f84298a438f31",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 8, 'day': 19, 'hour': 11, 'minute': 59, 'second': 2, 'isoweekday': 3}"
+  },
+  {
+    "role": "assistant",
+    "content": "Today is Wednesday, August 19, 2026. So \"next Monday\" would be August 24, 2026. Let me set that reminder for 11:00 AM.\n\n",
+    "refusal": null,
+    "reasoning": "Today is Wednesday, August 19, 2026. \"Next Monday\" - today is Wednesday. Next Monday would be August 24, 2026 (the Monday of next week). Let me compute. Actually \"next Monday\" typically means the upcoming Monday, which is August 24, 2026 (5 days from Wednesday). Let me build the timestamp.\n\nLet me create a timestamp for Aug 24, 2026 at 11:00 AM.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b93c88438544c030",
+        "function": {
+          "name": "datetime_info_to_timestamp",
+          "arguments": "{\"year\": 2026, \"month\": 8, \"day\": 24, \"hour\": 11, \"minute\": 0, \"second\": 0}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Today is Wednesday, August 19, 2026. \"Next Monday\" - today is Wednesday. Next Monday would be August 24, 2026 (the Monday of next week). Let me compute. Actually \"next Monday\" typically means the upcoming Monday, which is August 24, 2026 (5 days from Wednesday). Let me build the timestamp.\n\nLet me create a timestamp for Aug 24, 2026 at 11:00 AM.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b93c88438544c030",
+    "role": "tool",
+    "name": "datetime_info_to_timestamp",
+    "content": "1787540400.0"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-94b876616f78bd29",
+        "function": {
+          "name": "add_reminder",
+          "arguments": "{\"content\": \"Pick up the library books\", \"reminder_timestamp\": 1787540400}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-94b876616f78bd29",
+    "role": "tool",
+    "name": "add_reminder",
+    "content": "'4c7de757-2950-44e2-b348-2e20931be027'"
+  },
+  {
+    "role": "assistant",
+    "content": "I've set your reminder. ✅\n\n- **Reminder:** Pick up the library books\n- **When:** Monday, August 24, 2026 at 11:00 AM\n\nIs there anything else you'd like to adjust, such as a different time or location?",
+    "refusal": null,
+    "reasoning": null
+  }
+]

@@ -53,15 +53,18 @@ def get_scenario_artifacts_path(
     assert result_summary_path.suffix == ".json", (
         f"Expected the path to the `result_summary.json` file, but got '{result_summary_path}'."
     )
-    episode_path = (
-        result_summary_path.parent
-        / "trajectories"
-        / scenario_name
-        / f"episode_{episode_number:04d}"
-    )
-    legacy_path = result_summary_path.parent / "trajectories" / scenario_name
-    if not episode_path.exists() and legacy_path.exists():
-        return legacy_path
+    trajectories_dir = result_summary_path.parent / "trajectories"
+    # Current layout: result_summary.json sits next to `trajectories/`, which
+    # contains episode folders directly (the scenario is already identified by
+    # the hierarchical directories above `result_summary.json`).
+    episode_path = trajectories_dir / f"episode_{episode_number:04d}"
+    # Older layout: trajectories were nested under an extra scenario-name folder.
+    legacy_episode_path = trajectories_dir / scenario_name / f"episode_{episode_number:04d}"
+    # Oldest layout: no per-episode subfolder at all.
+    legacy_flat_path = trajectories_dir / scenario_name
+    for candidate in (episode_path, legacy_episode_path, legacy_flat_path):
+        if candidate.exists():
+            return candidate
     return episode_path
 
 

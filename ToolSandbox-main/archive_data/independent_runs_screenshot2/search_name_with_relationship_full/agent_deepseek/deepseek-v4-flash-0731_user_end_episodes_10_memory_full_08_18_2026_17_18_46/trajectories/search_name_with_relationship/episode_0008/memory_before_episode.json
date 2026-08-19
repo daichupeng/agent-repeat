@@ -1,0 +1,189 @@
+[
+  {
+    "role": "user",
+    "content": "What is the name of my boss?"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user asks \"What is the name of my boss?\" I need to search contacts. The boss would likely be a contact with relationship \"boss\" or similar, and is_self false (the user is not their own boss presumably). Let me search contacts.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_E9woR9NKrHAlfgzJOxsb3413",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"relationship\": \"boss\"}"
+        }
+      },
+      {
+        "type": "function",
+        "index": 1,
+        "id": "call_01_NDS5fjoMHdA4SkgVvaZ00183",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"relationship\": \"manager\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user asks \"What is the name of my boss?\" I need to search contacts. The boss would likely be a contact with relationship \"boss\" or similar, and is_self false (the user is not their own boss presumably). Let me search contacts.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_E9woR9NKrHAlfgzJOxsb3413",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': 'e3570ab6-0819-5032-be1e-2b366390c8ef', 'name': 'Homer S', 'phone_number': '+10000000000', 'relationship': 'boss', 'is_self': False}]"
+  },
+  {
+    "tool_call_id": "call_01_NDS5fjoMHdA4SkgVvaZ00183",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[]"
+  },
+  {
+    "role": "assistant",
+    "content": "Your boss is **Homer S**.",
+    "refusal": null,
+    "reasoning": "The search found a contact named Homer S with relationship \"boss\". So the user's boss is Homer S.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The search found a contact named Homer S with relationship \"boss\". So the user's boss is Homer S.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "content": "What is the name of my boss?"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user is asking again \"What is the name of my boss?\" I already have the answer from the previous search. But this is a new episode context? The tool environment has been reset, but the conversation within this episode... Actually the user asked the same question again. I should just answer. I could re-search to verify, but the answer is already known: Homer S. However, to be safe, I can re-run the search since state may have reset. Let me just search again to confirm.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_fuzOnh4GNvrgiH9mn0VQ6777",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"relationship\": \"boss\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user is asking again \"What is the name of my boss?\" I already have the answer from the previous search. But this is a new episode context? The tool environment has been reset, but the conversation within this episode... Actually the user asked the same question again. I should just answer. I could re-search to verify, but the answer is already known: Homer S. However, to be safe, I can re-run the search since state may have reset. Let me just search again to confirm.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_fuzOnh4GNvrgiH9mn0VQ6777",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': 'e3570ab6-0819-5032-be1e-2b366390c8ef', 'name': 'Homer S', 'phone_number': '+10000000000', 'relationship': 'boss', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "Your boss's name is **Homer S**.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "What is the name of my boss?"
+  },
+  {
+    "role": "assistant",
+    "content": "Your boss's name is **Homer S**.",
+    "refusal": null,
+    "reasoning": "The user asks the same question again. I'll answer with the known result.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user asks the same question again. I'll answer with the known result.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "content": "What is the name of my boss?"
+  },
+  {
+    "role": "assistant",
+    "content": "Your boss's name is **Homer S**.",
+    "refusal": null,
+    "reasoning": "The user keeps asking the same question. I'll answer again consistently.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user keeps asking the same question. I'll answer again consistently.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "content": "What is the name of my boss?"
+  },
+  {
+    "role": "assistant",
+    "content": "Your boss's name is **Homer S**.",
+    "refusal": null,
+    "reasoning": "The user keeps asking the same question repeatedly. I should answer consistently. Perhaps they want me to search again, but the answer remains Homer S. I'll just answer.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user keeps asking the same question repeatedly. I should answer consistently. Perhaps they want me to search again, but the answer remains Homer S. I'll just answer.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "content": "What is the name of my boss?"
+  },
+  {
+    "role": "assistant",
+    "content": "Your boss's name is **Homer S**.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "What is the name of my boss?"
+  },
+  {
+    "role": "assistant",
+    "content": "Your boss's name is **Homer S**.",
+    "refusal": null,
+    "reasoning": "The user keeps asking the same question. The answer remains Homer S. I'll answer consistently.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user keeps asking the same question. The answer remains Homer S. I'll answer consistently.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  }
+]

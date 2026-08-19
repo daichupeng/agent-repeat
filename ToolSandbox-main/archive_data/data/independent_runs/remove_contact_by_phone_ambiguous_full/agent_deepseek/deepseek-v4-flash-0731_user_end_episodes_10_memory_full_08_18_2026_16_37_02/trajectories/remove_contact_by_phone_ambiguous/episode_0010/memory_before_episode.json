@@ -1,0 +1,779 @@
+[
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user wants to remove a contact with phone number +12453344098. I need to search contacts to find the person_id first. Let me search.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-be2e61d2e4911e33",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to remove a contact with phone number +12453344098. I need to search contacts to find the person_id first. Let me search.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-be2e61d2e4911e33",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-9f47068f5d5fdf47",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-9f47068f5d5fdf47",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal, friend) from your contacts.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user is asking to remove the same contact again. I already removed it. Let me search to confirm it's no longer there. Perhaps they want to verify. Let me search.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-bf39d5bb386ef92b",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user is asking to remove the same contact again. I already removed it. Let me search to confirm it's no longer there. Perhaps they want to verify. Let me search.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-bf39d5bb386ef92b",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "It looks like that contact is still in your database, so I'll remove it now.",
+    "refusal": null,
+    "reasoning": "Interesting, the contact still exists. Maybe the removal didn't persist, or there are multiple. Let me remove it again.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_GYLULjSr3OUJsebKM7Pz3309",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Interesting, the contact still exists. Maybe the removal didn't persist, or there are multiple. Let me remove it again.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_GYLULjSr3OUJsebKM7Pz3309",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal) from your contacts.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user is asking again to remove the same phone number. Let me search to see if it's still there.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-943975b5d22ff190",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user is asking again to remove the same phone number. Let me search to see if it's still there.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-943975b5d22ff190",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "The contact still appears in the database. Let me remove it again.\n\n",
+    "refusal": null,
+    "reasoning": "The contact still exists despite removing it twice. This is strange. Maybe the removal isn't persisting, or maybe there are multiple persons with the same phone number but same person_id. The search returns the same person each time. Let me try removing again. Perhaps the contact keeps being re-added, or the system needs a different approach. But I should follow the instructions and remove it again.\n\nLet me remove it again.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-bb337fc8504b532a",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The contact still exists despite removing it twice. This is strange. Maybe the removal isn't persisting, or maybe there are multiple persons with the same phone number but same person_id. The search returns the same person each time. Let me try removing again. Perhaps the contact keeps being re-added, or the system needs a different approach. But I should follow the instructions and remove it again.\n\nLet me remove it again.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-bb337fc8504b532a",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-817cfc8599142652",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-817cfc8599142652",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[]"
+  },
+  {
+    "role": "assistant",
+    "content": "I've successfully removed the contact with phone number +12453344098 (Fredrik Thordendal) from your contacts. It's no longer in your database.",
+    "refusal": null,
+    "reasoning": "Now the contact has been removed successfully. The search returns empty. Great.",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "Now the contact has been removed successfully. The search returns empty. Great.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user is asking again to remove the same contact. I just verified the search returns empty. Let me search again to confirm it's not there. Perhaps the user wants to double-check. I should search and confirm it's already removed.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_zzf3dcub78QUtKx4vFn49365",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user is asking again to remove the same contact. I just verified the search returns empty. Let me search again to confirm it's not there. Perhaps the user wants to double-check. I should search and confirm it's already removed.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_zzf3dcub78QUtKx4vFn49365",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "The contact has reappeared in the database. I'll remove it again.",
+    "refusal": null,
+    "reasoning": "The contact is back again. This is odd - it seems the contact keeps reappearing. The search returns the same person each time. It seems the system re-adds the contact. I need to remove it again. Let me remove it.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_pzqIe3y4lYkI8A7DOpcN4692",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The contact is back again. This is odd - it seems the contact keeps reappearing. The search returns the same person each time. It seems the system re-adds the contact. I need to remove it again. Let me remove it.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_pzqIe3y4lYkI8A7DOpcN4692",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_EDHiRaOiLMKo2ap1zMON6417",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_EDHiRaOiLMKo2ap1zMON6417",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[]"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal) from your contacts again. It's now confirmed to be gone from the database.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user is asking to remove the same contact again. This is the fifth time. Let me search to see if it's still there.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_oBeVHzr138gRfHRDus9T0070",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user is asking to remove the same contact again. This is the fifth time. Let me search to see if it's still there.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_oBeVHzr138gRfHRDus9T0070",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "The contact has reappeared. I'll remove it again.\n\n",
+    "refusal": null,
+    "reasoning": "The contact keeps coming back. Each time I remove it, and then when the next request comes, it reappears. This seems to be part of the environment simulation. I need to keep removing it each time the user asks. Let me remove it again.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-8a2865c27e4f2316",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The contact keeps coming back. Each time I remove it, and then when the next request comes, it reappears. This seems to be part of the environment simulation. I need to keep removing it each time the user asks. Let me remove it again.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-8a2865c27e4f2316",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-99300dbd1f37c63d",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-99300dbd1f37c63d",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[]"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal) from your database again. It has been confirmed removed.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user is asking once again to remove the same contact. This is repetitive. Let me search and remove it again.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-bfa5e0fac46a6b0a",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user is asking once again to remove the same contact. This is repetitive. Let me search and remove it again.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-bfa5e0fac46a6b0a",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-87d4ad74f4ca1076",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-87d4ad74f4ca1076",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-91efa03642445cd3",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-91efa03642445cd3",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[]"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal) from your contacts once again. It's now confirmed to be removed from the database.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "This is a repeating loop. The user keeps asking to remove the same contact. I've removed it multiple times and it keeps coming back. I'll continue to comply with the request by removing it each time. Let me search and remove.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-8eb39f7bab05a00c",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "This is a repeating loop. The user keeps asking to remove the same contact. I've removed it multiple times and it keeps coming back. I'll continue to comply with the request by removing it each time. Let me search and remove.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-8eb39f7bab05a00c",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_jX2sdXNCVinweFuKQtfB3912",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_jX2sdXNCVinweFuKQtfB3912",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_eAUZ9MUUN8lOOJeiELNC8277",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_eAUZ9MUUN8lOOJeiELNC8277",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[]"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal) from your contacts again. It's confirmed removed from the database.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user keeps asking to remove the same contact. This is a repeating pattern. I'll continue to comply - search and remove.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_HQdTgBA2KLEwy8qYuAvx3114",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user keeps asking to remove the same contact. This is a repeating pattern. I'll continue to comply - search and remove.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_HQdTgBA2KLEwy8qYuAvx3114",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_7DwxHv08PsBOhTwwjuM39306",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_7DwxHv08PsBOhTwwjuM39306",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_IdlXKyvrd388Uq8zB6JM6778",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_IdlXKyvrd388Uq8zB6JM6778",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[]"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal) from your contacts again. It's confirmed to no longer be in the database.",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "This is yet another repetition of the same request. The pattern seems to be that the contact keeps reappearing between turns. I'll continue to comply with the user's request each time they ask. Let me search and remove.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_fXGSfHfnZCl6GRKdrtsn0126",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "This is yet another repetition of the same request. The pattern seems to be that the contact keeps reappearing between turns. I'll continue to comply with the user's request each time they ask. Let me search and remove.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_fXGSfHfnZCl6GRKdrtsn0126",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_00_ET_mfb0QnX3URytJwjE11fG9635",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_00_ET_mfb0QnX3URytJwjE11fG9635",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b62277a1ff875256",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b62277a1ff875256",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[]"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal) from your contacts again. It's now confirmed to be removed from the database.",
+    "refusal": null,
+    "reasoning": null
+  }
+]

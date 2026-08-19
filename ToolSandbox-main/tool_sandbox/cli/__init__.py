@@ -21,6 +21,7 @@ from tool_sandbox.cli.utils import (
     TEST_SCENARIO_NAMES,
     USER_TYPE_TO_FACTORY,
     RoleImplType,
+    generate_hierarchical_output_path,
     get_category_summary,
     get_category_to_scenario_count,
     get_necessary_tool_name_to_scenario_count,
@@ -79,8 +80,8 @@ def write_result_summary(
     if git_sha is not None and has_local_changes():
         git_sha += " + local changes"
 
-    # Hierarchical trajectory output may live outside this legacy flat summary
-    # directory, so ensure the summary directory exists independently.
+    # output_directory is expected to be the same hierarchical run directory that
+    # contains this scenario's "trajectories" folder.
     output_directory.mkdir(parents=True, exist_ok=True)
     with open(output_directory / "result_summary.json", "w") as f:
         json.dump(
@@ -160,11 +161,8 @@ def run_sandbox(
     # Extract agent type (e.g., 'deepseek' from 'deepseek-v4-flash-0731')
     agent_name = agent_model_name.split('-')[0] if agent_model_name else str(agent_type).lower()
 
-    # Generate timestamp in both formats:
-    # - Long format for display: MM_DD_YYYY_HH_MM_SS
-    # - Short format for hierarchical paths: YYMMDDHHMMSS
+    # Timestamp for hierarchical paths: YYMMDDHHMMSS
     now = datetime.datetime.now()
-    timestamp_long = now.strftime('%m_%d_%Y_%H_%M_%S')
     timestamp_short = now.strftime('%y%m%d%H%M%S')
     
     print(
@@ -177,16 +175,13 @@ def run_sandbox(
     )
 
 
-    # Keep the original flat output directory for backward compatibility and result_summary.json
-    output_directory = (
-        Path(output_base_dir) / f"agent_{agent_model_name}_"
-        f"user_{user_model_name}_"
-        f"episodes_{episodes}_memory_{memory_mode.value}_"
-        f"{timestamp_long}"
-    )
     agent.teardown()
     user.teardown()
-    print(f"Storing outputs to '{output_directory}'.")
+    print(
+        f"Storing outputs under '{output_base_dir}' "
+        "(hierarchical per-scenario layout: "
+        "agent/scenario/modification/episode_N/model_memory_timestamp/)."
+    )
 
     # Print a category-wise count before playing scenarios
     category_counter: Counter[Union[ScenarioCategories, str]] = (
@@ -229,12 +224,12 @@ def run_sandbox(
         # for starting a new process eliminated the deadlock.
         mpctx = multiprocessing.get_context("spawn")
         with mpctx.Pool(min(processes, num_scenarios)) as pool:
-            sequence_results = pool.map(
+            per_scenario_results = pool.map(
                 partial(
                     run_scenario_sequence,
                     agent_type=agent_type,
                     user_type=user_type,
-                    output_directory=output_directory,
+                    output_directory=Path(output_base_dir),
                     episodes=episodes,
                     memory_mode=memory_mode,
                     episode_parameter_seed=episode_parameter_seed,
@@ -246,21 +241,16 @@ def run_sandbox(
                 ),
                 name_and_scenario_list,
             )
-            result_summary = [
-                episode_result
-                for scenario_results in sequence_results
-                for episode_result in scenario_results
-            ]
     else:
-        result_summary = []
+        per_scenario_results = []
         tqdm_iterator = tqdm(name_and_scenario_list, desc="Scenarios")
         for name_and_scenario in tqdm_iterator:
-            result_summary.extend(
+            per_scenario_results.append(
                 run_scenario_sequence(
                     name_and_scenario,
                     agent_type=agent_type,
                     user_type=user_type,
-                    output_directory=output_directory,
+                    output_directory=Path(output_base_dir),
                     episodes=episodes,
                     memory_mode=memory_mode,
                     episode_parameter_seed=episode_parameter_seed,
@@ -272,20 +262,40 @@ def run_sandbox(
                 )
             )
 
-    # Aggregate results by category
-    category_summary = get_category_summary(result_summary)
-    write_result_summary(
-        result_summary=result_summary,
-        category_summary=category_summary,
-        output_directory=output_directory,
-        episodes=episodes,
-        memory_mode=memory_mode,
-        episode_parameter_seed=episode_parameter_seed,
-        parameterize_episodes=parameterize_episodes,
-        max_steps_per_scenario={
-            name: scenario.max_messages * episodes
-            for name, scenario in name_to_scenario.items()
-        },
+    result_summary = [
+        episode_result
+        for scenario_results in per_scenario_results
+        for episode_result in scenario_results
+    ]
+
+    # Write a result_summary.json next to each scenario's own "trajectories" folder,
+    # scoped to that scenario's episodes.
+    for (name, scenario), scenario_results in zip(
+        name_and_scenario_list, per_scenario_results
+    ):
+        write_result_summary(
+            result_summary=scenario_results,
+            category_summary=get_category_summary(scenario_results),
+            output_directory=generate_hierarchical_output_path(
+                base_output_dir=Path(output_base_dir),
+                agent_name=agent_name,
+                scenario_name=name,
+                episodes=episodes,
+                model_name=agent_model_name,
+                memory_mode=memory_mode,
+                timestamp_str=timestamp_short,
+            ),
+            episodes=episodes,
+            memory_mode=memory_mode,
+            episode_parameter_seed=episode_parameter_seed,
+            parameterize_episodes=parameterize_episodes,
+            max_steps_per_scenario={name: scenario.max_messages * episodes},
+        )
+
+    print(
+        f"Wrote {len(result_summary)} episode result(s) across "
+        f"{len(name_and_scenario_list)} scenario(s); each scenario's "
+        "result_summary.json lives next to its trajectories/ folder."
     )
 
 

@@ -1,0 +1,93 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 4
+  },
+  {
+    "role": "user",
+    "content": "Remove phone number +10000000000 from my contact",
+    "episode_number": 4
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-84abaa19b09b5b1c",
+        "function": {
+          "arguments": "{\"phone_number\": \"+10000000000\"}",
+          "name": "search_contacts"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 2190,
+      "completion_tokens": 77,
+      "total_tokens": 2267
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-84abaa19b09b5b1c",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': 'e3570ab6-0819-5032-be1e-2b366390c8ef', 'name': 'Homer S', 'phone_number': '+10000000000', 'relationship': 'boss', 'is_self': False}]",
+    "episode_number": 4
+  },
+  {
+    "role": "assistant",
+    "content": "I found the contact with that phone number:\n\n- **Name:** Homer S\n- **Phone:** +10000000000\n- **Relationship:** boss\n\nHowever, I don't have a way to permanently delete a contact in my available tools — I can only add or modify contact information. \n\nCould you clarify what you'd like me to do? For example:\n1. Remove this entire contact entry?\n2. Just remove/change the phone number on this contact (e.g., set it to something else)?\n\nPlease let me know how you'd like to proceed.",
+    "episode_number": 4,
+    "token_usage": {
+      "prompt_tokens": 2337,
+      "completion_tokens": 828,
+      "total_tokens": 3165
+    },
+    "assistant_details": {
+      "milestone_matches": [
+        {
+          "milestone_index": 0,
+          "milestone": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "USER",
+                    "content": "I cannot remove the phone number from your contact , because I don't have the tools available."
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_rouge_l_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "milestone_similarity": 0.5627519785794132
+        }
+      ]
+    }
+  }
+]

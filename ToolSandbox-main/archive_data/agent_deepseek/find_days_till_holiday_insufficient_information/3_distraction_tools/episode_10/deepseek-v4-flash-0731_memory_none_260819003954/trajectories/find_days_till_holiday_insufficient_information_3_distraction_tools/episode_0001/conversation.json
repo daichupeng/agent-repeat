@@ -1,0 +1,204 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 1
+  },
+  {
+    "role": "user",
+    "content": "How many days are left until New Year's Day?",
+    "episode_number": 1,
+    "user_details": {
+      "minefield_matches": [
+        {
+          "minefield_index": 0,
+          "minefield": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "EXECUTION_ENVIRONMENT",
+                    "content": "timestamp_diff"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_contains_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "minefield_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-b5df2cddf0b58e6f",
+        "function": {
+          "arguments": "{\"holiday_name\": \"New Year's Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 1,
+    "token_usage": {
+      "prompt_tokens": 862,
+      "completion_tokens": 564,
+      "total_tokens": 1426
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b5df2cddf0b58e6f",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1767196800.0",
+    "episode_number": 1
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_05c5cc05871043edae2b3ab7",
+        "function": {
+          "arguments": "{\"timestamp\": 1767196800.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 1,
+    "token_usage": {
+      "prompt_tokens": 1537,
+      "completion_tokens": 99,
+      "total_tokens": 1636
+    }
+  },
+  {
+    "tool_call_id": "call_05c5cc05871043edae2b3ab7",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 1, 'day': 1, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 4}",
+    "episode_number": 1
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_1ac898b327274a6a861bef8d",
+        "function": {
+          "arguments": "{\"holiday_name\": \"New Year's Day\", \"year\": 2025}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_5c93b4aee1424ad69b99a2f1",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Christmas\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 1,
+    "token_usage": {
+      "prompt_tokens": 1692,
+      "completion_tokens": 872,
+      "total_tokens": 2564
+    }
+  },
+  {
+    "tool_call_id": "call_1ac898b327274a6a861bef8d",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1735660800.0",
+    "episode_number": 1
+  },
+  {
+    "tool_call_id": "call_5c93b4aee1424ad69b99a2f1",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1798128000.0",
+    "episode_number": 1
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_a03b7e6f3164493d962d0032",
+        "function": {
+          "arguments": "{\"timestamp\": 1798128000.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_8024fb6dab1043ae97ec5870",
+        "function": {
+          "arguments": "{\"timestamp\": 1735660800.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 1,
+    "token_usage": {
+      "prompt_tokens": 2593,
+      "completion_tokens": 349,
+      "total_tokens": 2942
+    }
+  },
+  {
+    "tool_call_id": "call_a03b7e6f3164493d962d0032",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 12, 'day': 25, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 5}",
+    "episode_number": 1
+  },
+  {
+    "tool_call_id": "call_8024fb6dab1043ae97ec5870",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2025, 'month': 1, 'day': 1, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 3}",
+    "episode_number": 1
+  },
+  {
+    "role": "assistant",
+    "content": "I have the holiday details I need, but to compute the exact number of days **left**, I need to know **today's date** — and the tools available to me don't provide the current date directly.\n\nHere's what I've found so far:\n- **New Year's Day (this year, 2026):** January 1, 2026 (already passed)\n- **Next New Year's Day:** January 1, 2027 would be the upcoming one if today is later in 2026\n\nCould you tell me **today's date** so I can calculate the precise number of days remaining?",
+    "episode_number": 1,
+    "token_usage": {
+      "prompt_tokens": 3053,
+      "completion_tokens": 2808,
+      "total_tokens": 5861
+    }
+  }
+]

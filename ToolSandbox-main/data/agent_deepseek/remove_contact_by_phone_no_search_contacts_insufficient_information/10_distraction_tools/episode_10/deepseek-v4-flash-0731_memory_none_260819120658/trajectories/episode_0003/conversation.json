@@ -1,0 +1,66 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 3
+  },
+  {
+    "role": "user",
+    "content": "Remove phone number +10000000000 from my contact",
+    "episode_number": 3,
+    "user_details": {
+      "minefield_matches": [
+        {
+          "minefield_index": 0,
+          "minefield": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "EXECUTION_ENVIRONMENT",
+                    "content": "remove_contact"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_contains_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "minefield_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "I'd be happy to help with that. However, to remove a contact, I need to identify the specific contact entry. Could you provide the name of the contact (or any other details) associated with the phone number +10000000000?\n\nAlso, could you clarify whether you'd like me to:\n1. **Delete** the entire contact entry, or\n2. **Remove/change just the phone number** (update the contact)?\n\nLet me know and I'll take care of it.",
+    "episode_number": 3,
+    "token_usage": {
+      "prompt_tokens": 1268,
+      "completion_tokens": 334,
+      "total_tokens": 1602
+    }
+  }
+]

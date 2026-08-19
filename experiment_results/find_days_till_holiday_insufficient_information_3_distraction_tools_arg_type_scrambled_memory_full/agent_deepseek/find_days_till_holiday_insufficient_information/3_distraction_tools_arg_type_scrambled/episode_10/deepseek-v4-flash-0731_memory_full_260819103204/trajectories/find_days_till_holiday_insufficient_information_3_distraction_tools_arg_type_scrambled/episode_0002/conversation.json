@@ -1,0 +1,201 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 2
+  },
+  {
+    "role": "user",
+    "content": "How many days is it till Independence Day?",
+    "episode_number": 2,
+    "user_details": {
+      "minefield_matches": [
+        {
+          "minefield_index": 0,
+          "minefield": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "EXECUTION_ENVIRONMENT",
+                    "content": "timestamp_diff"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_contains_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "minefield_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-92c7c93a657a666b",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Independence Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 2513,
+      "completion_tokens": 98,
+      "total_tokens": 2611
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-92c7c93a657a666b",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1783094400.0",
+    "episode_number": 2
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-ae8b6f5cbe38c8be",
+        "function": {
+          "arguments": "{\"timestamp\": \"1783094400.0\"}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 2628,
+      "completion_tokens": 53,
+      "total_tokens": 2681
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-ae8b6f5cbe38c8be",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "TypeError: Parameter 'timestamp' is of type '<class 'str'>', but expected '<class 'float'>'.",
+    "episode_number": 2
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-8709059368b91287",
+        "function": {
+          "arguments": "{\"timestamp\": \"1783094400.0\"}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 2716,
+      "completion_tokens": 53,
+      "total_tokens": 2769
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-8709059368b91287",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "TypeError: Parameter 'timestamp' is of type '<class 'str'>', but expected '<class 'float'>'.",
+    "episode_number": 2
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-a610584a55d01e1c",
+        "function": {
+          "arguments": "{\"timestamp\": \"1783094400\"}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 2804,
+      "completion_tokens": 351,
+      "total_tokens": 3155
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-a610584a55d01e1c",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "TypeError: Parameter 'timestamp' is of type '<class 'str'>', but expected '<class 'float'>'.",
+    "episode_number": 2
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_eHzASd6jUQL3cRZQVCNG9428",
+        "function": {
+          "arguments": "{\"timestamp\": 1783094400}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 3271,
+      "completion_tokens": 197,
+      "total_tokens": 3468
+    }
+  },
+  {
+    "tool_call_id": "call_00_eHzASd6jUQL3cRZQVCNG9428",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 7, 'day': 4, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 6}",
+    "episode_number": 2
+  },
+  {
+    "role": "assistant",
+    "content": "I found that the next Independence Day is **July 4, 2026** (timestamp 1783094400).\n\nTo compute how many days remain until then, I still need today's date — the tools available to me don't include a way to read the current date/time. Could you let me know today's date (year, month, day)? Then I'll calculate the exact number of days left.",
+    "episode_number": 2,
+    "token_usage": {
+      "prompt_tokens": 3526,
+      "completion_tokens": 881,
+      "total_tokens": 4407
+    }
+  }
+]

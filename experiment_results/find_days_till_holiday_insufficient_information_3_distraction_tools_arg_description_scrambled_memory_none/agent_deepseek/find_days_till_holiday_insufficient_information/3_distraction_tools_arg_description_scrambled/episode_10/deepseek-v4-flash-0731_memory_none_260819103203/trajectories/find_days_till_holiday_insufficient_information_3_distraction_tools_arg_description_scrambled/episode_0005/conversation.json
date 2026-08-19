@@ -1,0 +1,356 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 5
+  },
+  {
+    "role": "user",
+    "content": "How many days is it till Christmas Day?",
+    "episode_number": 5,
+    "user_details": {
+      "minefield_matches": [
+        {
+          "minefield_index": 0,
+          "minefield": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "EXECUTION_ENVIRONMENT",
+                    "content": "timestamp_diff"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_contains_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "minefield_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_6265df265b0949c8bc801654",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Christmas Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_965c6d194f4240508a80540d",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Christmas Day\", \"year\": 2025}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 5,
+    "token_usage": {
+      "prompt_tokens": 839,
+      "completion_tokens": 1218,
+      "total_tokens": 2057
+    }
+  },
+  {
+    "tool_call_id": "call_6265df265b0949c8bc801654",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1798128000.0",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "call_965c6d194f4240508a80540d",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1766592000.0",
+    "episode_number": 5
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_ad93c539043140fba7f0ffd1",
+        "function": {
+          "arguments": "{\"timestamp\": 1798128000.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_33c2739430144480831b7ac9",
+        "function": {
+          "arguments": "{\"timestamp\": 1766592000.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 5,
+    "token_usage": {
+      "prompt_tokens": 2088,
+      "completion_tokens": 230,
+      "total_tokens": 2318
+    }
+  },
+  {
+    "tool_call_id": "call_ad93c539043140fba7f0ffd1",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 12, 'day': 25, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 5}",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "call_33c2739430144480831b7ac9",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2025, 'month': 12, 'day': 25, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 4}",
+    "episode_number": 5
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_b8fc885db8ba4d869428a419",
+        "function": {
+          "arguments": "{\"holiday_name\": \"New Year's Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_756bf6b8e9754c4b8fd23ffd",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Independence Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_5ded34d42a534e93ae124ac5",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Thanksgiving\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_eddff446cf9f4d68b69f6103",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Veterans Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_a59326c142a44da5b290c09a",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Valentine's Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 5,
+    "token_usage": {
+      "prompt_tokens": 2429,
+      "completion_tokens": 1741,
+      "total_tokens": 4170
+    }
+  },
+  {
+    "tool_call_id": "call_b8fc885db8ba4d869428a419",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1767196800.0",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "call_756bf6b8e9754c4b8fd23ffd",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1783094400.0",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "call_5ded34d42a534e93ae124ac5",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1795622400.0",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "call_eddff446cf9f4d68b69f6103",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1794326400.0",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "call_a59326c142a44da5b290c09a",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "None",
+    "episode_number": 5
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-b87dbfeecf5b0f74",
+        "function": {
+          "arguments": "{\"timestamp\": 1767196800}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      },
+      {
+        "id": "chatcmpl-tool-a70a6a5c1f2c1f56",
+        "function": {
+          "arguments": "{\"timestamp\": 1783094400}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      },
+      {
+        "id": "chatcmpl-tool-8099f82455d3823c",
+        "function": {
+          "arguments": "{\"timestamp\": 1795622400}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      },
+      {
+        "id": "chatcmpl-tool-9e453aabc91903a3",
+        "function": {
+          "arguments": "{\"timestamp\": 1794326400}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 5,
+    "token_usage": {
+      "prompt_tokens": 4144,
+      "completion_tokens": 238,
+      "total_tokens": 4382
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b87dbfeecf5b0f74",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 1, 'day': 1, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 4}",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-a70a6a5c1f2c1f56",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 7, 'day': 4, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 6}",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-8099f82455d3823c",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 11, 'day': 26, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 4}",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-9e453aabc91903a3",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 11, 'day': 11, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 3}",
+    "episode_number": 5
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "chatcmpl-tool-93ac6602ce692eca",
+        "function": {
+          "arguments": "{\"holiday_name\": \"New Year's Eve\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "chatcmpl-tool-a8f89d5ea348b16d",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Boxing Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "chatcmpl-tool-b908465feef2251b",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Kwanzaa\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 5,
+    "token_usage": {
+      "prompt_tokens": 4593,
+      "completion_tokens": 1833,
+      "total_tokens": 6426
+    }
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-93ac6602ce692eca",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "None",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-a8f89d5ea348b16d",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "None",
+    "episode_number": 5
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b908465feef2251b",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "None",
+    "episode_number": 5
+  }
+]

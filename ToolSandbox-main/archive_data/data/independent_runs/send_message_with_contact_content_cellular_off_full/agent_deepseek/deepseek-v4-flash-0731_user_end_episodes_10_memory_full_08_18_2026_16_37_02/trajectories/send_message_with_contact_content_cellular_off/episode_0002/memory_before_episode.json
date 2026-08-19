@@ -1,0 +1,120 @@
+[
+  {
+    "role": "user",
+    "content": "Send a message to Fredrik Thordendal saying: \"How's the new album coming along.\" Resolve any issue alone."
+  },
+  {
+    "role": "assistant",
+    "content": "I'll help you send that message to Fredrik Thordendal. Let me first find their contact information.\n\n",
+    "refusal": null,
+    "reasoning": "The user wants to send a message to Fredrik Thordendal. I need to search for the contact to get their phone number. I don't have a phone number for them, so I need to search contacts.\n\nLet me search for the contact.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-b12f1c25f9a4565c",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"name\": \"Fredrik Thordendal\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to send a message to Fredrik Thordendal. I need to search for the contact to get their phone number. I don't have a phone number for them, so I need to search contacts.\n\nLet me search for the contact.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-b12f1c25f9a4565c",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "I found Fredrik Thordendal's contact information. Now let me send the message.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-883a5de9edb89aa6",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"phone_number\": \"+12453344098\", \"content\": \"How's the new album coming along.\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-883a5de9edb89aa6",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "ConnectionError: Cellular service is not enabled"
+  },
+  {
+    "role": "assistant",
+    "content": "The message failed because cellular service is disabled. Let me enable it and then resend the message.\n\n",
+    "refusal": null,
+    "reasoning": "The message failed because cellular service is not enabled. I need to enable cellular service and then send the message. Let me first check the cellular service status, and enable it.\n\nActually let me just enable it.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-95ce2cd8464bf74a",
+        "function": {
+          "name": "set_cellular_service_status",
+          "arguments": "{\"on\": true}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The message failed because cellular service is not enabled. I need to enable cellular service and then send the message. Let me first check the cellular service status, and enable it.\n\nActually let me just enable it.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-95ce2cd8464bf74a",
+    "role": "tool",
+    "name": "set_cellular_service_status",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "Cellular service is now enabled. Let me resend the message.\n\n",
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-8da97ed0a08cedf7",
+        "function": {
+          "name": "send_message_with_phone_number",
+          "arguments": "{\"content\": \"How's the new album coming along.\", \"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-8da97ed0a08cedf7",
+    "role": "tool",
+    "name": "send_message_with_phone_number",
+    "content": "'42e3d16d-fea4-4c9a-b33a-7169ccce69b6'"
+  },
+  {
+    "role": "assistant",
+    "content": "Your message has been sent to Fredrik Thordendal successfully.\n\n**Summary of what happened:**\n1. I found Fredrik Thordendal's contact information (phone number: +12453344098).\n2. My first attempt to send the message failed because cellular service was disabled.\n3. I resolved the issue by enabling cellular service, then successfully sent the message: *\"How's the new album coming along.\"*\n\nThe message was delivered successfully. Is there anything else I can help you with?",
+    "refusal": null,
+    "reasoning": null
+  }
+]

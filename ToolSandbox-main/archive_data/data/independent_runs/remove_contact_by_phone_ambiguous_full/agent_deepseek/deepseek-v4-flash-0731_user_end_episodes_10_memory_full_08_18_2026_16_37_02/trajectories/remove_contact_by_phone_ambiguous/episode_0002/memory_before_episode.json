@@ -1,0 +1,66 @@
+[
+  {
+    "role": "user",
+    "content": "Remove +12453344098 from my contact"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user wants to remove a contact with phone number +12453344098. I need to search contacts to find the person_id first. Let me search.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-be2e61d2e4911e33",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+12453344098\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to remove a contact with phone number +12453344098. I need to search contacts to find the person_id first. Let me search.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-be2e61d2e4911e33",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': '9e137f06-916a-5310-8174-cf0b7e9f7054', 'name': 'Fredrik Thordendal', 'phone_number': '+12453344098', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "chatcmpl-tool-9f47068f5d5fdf47",
+        "function": {
+          "name": "remove_contact",
+          "arguments": "{\"person_id\": \"9e137f06-916a-5310-8174-cf0b7e9f7054\"}"
+        }
+      }
+    ]
+  },
+  {
+    "tool_call_id": "chatcmpl-tool-9f47068f5d5fdf47",
+    "role": "tool",
+    "name": "remove_contact",
+    "content": "None"
+  },
+  {
+    "role": "assistant",
+    "content": "I've removed the contact with phone number +12453344098 (Fredrik Thordendal, friend) from your contacts.",
+    "refusal": null,
+    "reasoning": null
+  }
+]

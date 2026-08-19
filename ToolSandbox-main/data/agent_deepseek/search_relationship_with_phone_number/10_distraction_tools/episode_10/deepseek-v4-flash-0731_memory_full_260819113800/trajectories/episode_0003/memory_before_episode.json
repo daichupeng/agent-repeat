@@ -1,0 +1,100 @@
+[
+  {
+    "role": "system",
+    "content": "-- Start of Episode 1 --"
+  },
+  {
+    "role": "user",
+    "content": "What's my relationship with +1234560987"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user wants to know their relationship with a phone number +1234560987. I need to search contacts by phone number. But first, is this a contact in the user's contact database? Let me search contacts with that phone number. Also possibly search messages to see relationship? The contact database has a \"relationship\" field. Let me search contacts by phone number.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_046200658cfa4c7c96d25c27",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\": \"+1234560987\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user wants to know their relationship with a phone number +1234560987. I need to search contacts by phone number. But first, is this a contact in the user's contact database? Let me search contacts with that phone number. Also possibly search messages to see relationship? The contact database has a \"relationship\" field. Let me search contacts by phone number.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_046200658cfa4c7c96d25c27",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': 'a22e1984-6c6c-530c-8831-c3ea3b5138e7', 'name': 'John Petrucci', 'phone_number': '+1234560987', 'relationship': 'friend', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "Your relationship with +1234560987 (John Petrucci) is **friend**.",
+    "refusal": null,
+    "reasoning": "The search returned a contact with phone number +1234560987: John Petrucci, relationship \"friend\".",
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The search returned a contact with phone number +1234560987: John Petrucci, relationship \"friend\".",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "role": "system",
+    "content": "-- Start of Episode 2 --"
+  },
+  {
+    "role": "user",
+    "content": "What's my relationship with +10000000000"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "refusal": null,
+    "reasoning": "The user asks about their relationship with +10000000000. Let me search contacts by that phone number. Also maybe check messages.",
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_aa1891ab24fb46c6b28f00ed",
+        "function": {
+          "name": "search_contacts",
+          "arguments": "{\"phone_number\":\"+10000000000\"}"
+        }
+      }
+    ],
+    "reasoning_details": [
+      {
+        "type": "reasoning.text",
+        "text": "The user asks about their relationship with +10000000000. Let me search contacts by that phone number. Also maybe check messages.",
+        "format": "unknown",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "tool_call_id": "call_aa1891ab24fb46c6b28f00ed",
+    "role": "tool",
+    "name": "search_contacts",
+    "content": "[{'person_id': 'e3570ab6-0819-5032-be1e-2b366390c8ef', 'name': 'Homer S', 'phone_number': '+10000000000', 'relationship': 'boss', 'is_self': False}]"
+  },
+  {
+    "role": "assistant",
+    "content": "Your relationship with +10000000000 (Homer S) is **boss**.",
+    "refusal": null,
+    "reasoning": null
+  }
+]

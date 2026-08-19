@@ -1,0 +1,273 @@
+[
+  {
+    "role": "system",
+    "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous.",
+    "episode_number": 7
+  },
+  {
+    "role": "user",
+    "content": "How many days are left until New Year's Day?",
+    "episode_number": 7,
+    "user_details": {
+      "minefield_matches": [
+        {
+          "minefield_index": 0,
+          "minefield": {
+            "snapshot_constraints": [
+              {
+                "database_namespace": "SANDBOX",
+                "snapshot_constraint": "snapshot_similarity",
+                "reference_milestone_node_index": null,
+                "target_dataframe": [
+                  {
+                    "sender": "AGENT",
+                    "recipient": "EXECUTION_ENVIRONMENT",
+                    "content": "timestamp_diff"
+                  }
+                ],
+                "column_similarity_measure": {
+                  "sandbox_message_index": "column_exact_match_similarity",
+                  "sender": "column_exact_match_similarity",
+                  "recipient": "column_exact_match_similarity",
+                  "content": "column_contains_similarity",
+                  "openai_tool_call_id": "column_one_similarity",
+                  "openai_function_name": "column_one_similarity",
+                  "conversation_active": "column_exact_match_similarity",
+                  "tool_call_exception": "column_one_similarity",
+                  "tool_trace": "column_tool_trace_exact_match_similarity",
+                  "visible_to": "column_exact_match_similarity"
+                }
+              }
+            ],
+            "guardrail_database_list": [
+              "SANDBOX",
+              "SETTING",
+              "CONTACT",
+              "MESSAGING",
+              "REMINDER"
+            ],
+            "guardrail_database_exclusion_list": null
+          },
+          "minefield_similarity": 0.0
+        }
+      ]
+    }
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_QQaL249SiAT6ntWcmyMS2079",
+        "function": {
+          "arguments": "{\"holiday_name\": \"New Year's Day\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 874,
+      "completion_tokens": 1673,
+      "total_tokens": 2547
+    }
+  },
+  {
+    "tool_call_id": "call_00_QQaL249SiAT6ntWcmyMS2079",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1767196800.0",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_yYg5ZRWrpzV09LVRjBR07343",
+        "function": {
+          "arguments": "{\"timestamp\": 1767196800.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 2565,
+      "completion_tokens": 87,
+      "total_tokens": 2652
+    }
+  },
+  {
+    "tool_call_id": "call_00_yYg5ZRWrpzV09LVRjBR07343",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 1, 'day': 1, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 4}",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_cBDENonos13UwZfNB6qj1317",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Christmas\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_01_G2mCCwjlr6CdQIUWM2Pp2129",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Thanksgiving\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 2710,
+      "completion_tokens": 1055,
+      "total_tokens": 3765
+    }
+  },
+  {
+    "tool_call_id": "call_00_cBDENonos13UwZfNB6qj1317",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1798128000.0",
+    "episode_number": 7
+  },
+  {
+    "tool_call_id": "call_01_G2mCCwjlr6CdQIUWM2Pp2129",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1795622400.0",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_c871773527c74ac68f8bd175",
+        "function": {
+          "arguments": "{\"timestamp\": 1798128000.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_b8141d8c52724d4ca4b474af",
+        "function": {
+          "arguments": "{\"timestamp\": 1795622400.0}",
+          "name": "timestamp_to_datetime_info"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 3813,
+      "completion_tokens": 98,
+      "total_tokens": 3911
+    }
+  },
+  {
+    "tool_call_id": "call_c871773527c74ac68f8bd175",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 12, 'day': 25, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 5}",
+    "episode_number": 7
+  },
+  {
+    "tool_call_id": "call_b8141d8c52724d4ca4b474af",
+    "role": "tool",
+    "name": "timestamp_to_datetime_info",
+    "content": "{'year': 2026, 'month': 11, 'day': 26, 'hour': 0, 'minute': 0, 'second': 0, 'isoweekday': 4}",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_giYeTL4pM4FnrnKPS31R2425",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Christmas\", \"year\": 2025}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_01_m7CL5IscnQcbqWCQnzco4408",
+        "function": {
+          "arguments": "{\"holiday_name\": \"New Year's Day\", \"year\": 2025}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 4006,
+      "completion_tokens": 844,
+      "total_tokens": 4850
+    }
+  },
+  {
+    "tool_call_id": "call_00_giYeTL4pM4FnrnKPS31R2425",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1766592000.0",
+    "episode_number": 7
+  },
+  {
+    "tool_call_id": "call_01_m7CL5IscnQcbqWCQnzco4408",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "1735660800.0",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_00_IKFQqU53YKub6rpxrzkJ8951",
+        "function": {
+          "arguments": "{\"holiday_name\": \"Nonexistent Holiday XYZ\"}",
+          "name": "search_holiday"
+        },
+        "type": "function"
+      }
+    ],
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 4882,
+      "completion_tokens": 5926,
+      "total_tokens": 10808
+    }
+  },
+  {
+    "tool_call_id": "call_00_IKFQqU53YKub6rpxrzkJ8951",
+    "role": "tool",
+    "name": "search_holiday",
+    "content": "None",
+    "episode_number": 7
+  },
+  {
+    "role": "assistant",
+    "content": "I found that the next New Year's Day is **January 1, 2026** (based on the holiday lookup).\n\nTo compute how many days are left, I need today's date as the reference point — but the tools available to me don't expose the current date/time directly.\n\nCould you confirm **today's date** (and whether you mean the upcoming New Year's Day on January 1, 2026)? Once I have that, I can calculate the exact number of days remaining.",
+    "episode_number": 7,
+    "token_usage": {
+      "prompt_tokens": 10821,
+      "completion_tokens": 909,
+      "total_tokens": 11730
+    }
+  }
+]
